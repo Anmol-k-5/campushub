@@ -1,7 +1,12 @@
 // ============================================================
 // CAMPUSHUB API & MULTI-USER AUTHENTICATION CLIENT
-// Dual-Mode: REST API (server.py) + Client-Side Multi-Account Fallback
+// Triple-Tier Architecture:
+// 1. Supabase Cloud Database (Global Multi-Device Sync)
+// 2. Python REST API Server (server.py + SQLite campus.db)
+// 3. Client-Side Multi-Account Storage (Offline Fallback)
 // ============================================================
+import { supabaseService } from './supabase.js';
+import { config } from './config.js';
 
 class ApiClient {
   constructor() {
@@ -38,10 +43,14 @@ class ApiClient {
     }
   }
 
-  // Check if server REST API is alive
+  isSupabaseActive() {
+    return supabaseService.isReady();
+  }
+
+  // Check if local server REST API is alive
   async checkServerHealth() {
     try {
-      const res = await fetch('/api/health', { method: 'GET', signal: AbortSignal.timeout(2000) });
+      const res = await fetch('/api/health', { method: 'GET', signal: AbortSignal.timeout(1500) });
       this.serverAvailable = res.ok;
       return this.serverAvailable;
     } catch {
@@ -63,8 +72,20 @@ class ApiClient {
   // AUTHENTICATION: LOGIN
   // ------------------------------------------------------------
   async login(email, password) {
-    const isOnline = await this.checkServerHealth();
+    // 1. Priority 1: Supabase Cloud
+    if (supabaseService.isReady()) {
+      try {
+        const res = await supabaseService.signIn(email, password);
+        const token = res.session?.access_token || 'supabase_token_' + Date.now();
+        this.setSession(token, res.user);
+        return { success: true, user: res.user, token };
+      } catch (err) {
+        throw err;
+      }
+    }
 
+    // 2. Priority 2: Local Python REST API Server
+    const isOnline = await this.checkServerHealth();
     if (isOnline) {
       try {
         const res = await fetch('/api/auth/login', {
@@ -83,7 +104,7 @@ class ApiClient {
       }
     }
 
-    // Fallback: Local multi-account verification
+    // 3. Priority 3: Local multi-account verification
     return await this.localLogin(email, password);
   }
 
@@ -122,6 +143,20 @@ class ApiClient {
         const token = 'offline_token_' + Date.now();
         this.setSession(token, facUser);
         return { success: true, user: facUser, token };
+      } else if (cleanEmail === 'admin@campus.edu' && password === 'admin123') {
+        const admUser = {
+          id: 'demo-3',
+          name: 'Dean of Student Affairs',
+          email: 'admin@campus.edu',
+          rollNo: 'ADM-001',
+          department: 'Central Administration',
+          role: 'Admin',
+          year: 'Officer',
+          avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&auto=format&fit=crop&q=80'
+        };
+        const token = 'offline_token_' + Date.now();
+        this.setSession(token, admUser);
+        return { success: true, user: admUser, token };
       }
       throw new Error('Invalid email or password. Please check your credentials.');
     }
@@ -142,8 +177,20 @@ class ApiClient {
   // AUTHENTICATION: REGISTER
   // ------------------------------------------------------------
   async register(userData) {
-    const isOnline = await this.checkServerHealth();
+    // 1. Priority 1: Supabase Cloud
+    if (supabaseService.isReady()) {
+      try {
+        const res = await supabaseService.signUp(userData.email, userData.password, userData);
+        const token = res.session?.access_token || 'supabase_token_' + Date.now();
+        this.setSession(token, res.user);
+        return { success: true, user: res.user, token };
+      } catch (err) {
+        throw err;
+      }
+    }
 
+    // 2. Priority 2: Local Python REST API Server
+    const isOnline = await this.checkServerHealth();
     if (isOnline) {
       try {
         const res = await fetch('/api/auth/register', {
@@ -162,7 +209,7 @@ class ApiClient {
       }
     }
 
-    // Fallback: Local multi-account registration
+    // 3. Priority 3: Local multi-account registration
     return await this.localRegister(userData);
   }
 
@@ -212,14 +259,16 @@ class ApiClient {
   // AUTHENTICATION: LOGOUT
   // ------------------------------------------------------------
   async logout() {
+    if (supabaseService.isReady()) {
+      await supabaseService.signOut();
+    }
+
     const token = this.getToken();
-    if (token) {
+    if (token && !token.startsWith('offline_') && !token.startsWith('supabase_')) {
       try {
         await fetch('/api/auth/logout', {
           method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
+          headers: { 'Authorization': `Bearer ${token}` }
         });
       } catch {}
     }
@@ -234,8 +283,21 @@ class ApiClient {
     const user = this.getCurrentUser();
     if (!user) return null;
 
+    // 1. Supabase Cloud Check
+    if (supabaseService.isReady()) {
+      try {
+        const cloudState = await supabaseService.getUserState(user.id);
+        if (cloudState) {
+          return key === 'full_state' ? cloudState : cloudState[key];
+        }
+      } catch (err) {
+        console.warn('Could not read user data from Supabase:', err);
+      }
+    }
+
+    // 2. Python REST API Server Check
     const token = this.getToken();
-    if (token && !token.startsWith('offline_')) {
+    if (token && !token.startsWith('offline_') && !token.startsWith('supabase_')) {
       try {
         const res = await fetch('/api/data', {
           headers: { 'Authorization': `Bearer ${token}` }
@@ -247,7 +309,7 @@ class ApiClient {
       } catch {}
     }
 
-    // Local user data slice
+    // 3. Local user data slice fallback
     try {
       const raw = localStorage.getItem(`${this.offlineDataPrefix}${user.id}_${key}`);
       return raw ? JSON.parse(raw) : null;
@@ -260,12 +322,21 @@ class ApiClient {
     const user = this.getCurrentUser();
     if (!user) return false;
 
-    // Save locally
+    // Always save locally as instant cache
     localStorage.setItem(`${this.offlineDataPrefix}${user.id}_${key}`, JSON.stringify(content));
 
-    // Save to remote server if connected
+    // 1. Supabase Cloud Save
+    if (supabaseService.isReady()) {
+      try {
+        await supabaseService.saveUserState(user.id, content);
+      } catch (err) {
+        console.warn('Could not save user data to Supabase:', err);
+      }
+    }
+
+    // 2. Python REST API Server Save
     const token = this.getToken();
-    if (token && !token.startsWith('offline_')) {
+    if (token && !token.startsWith('offline_') && !token.startsWith('supabase_')) {
       try {
         await fetch('/api/data', {
           method: 'POST',

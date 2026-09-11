@@ -1134,11 +1134,319 @@ function triggerConfetti() {
 }
 
 
+// --- FILE: js/config.js ---
+// ============================================================
+// CAMPUSHUB CONFIGURATION & CLOUD KEYS
+// Supabase credentials management (local storage + defaults)
+// ============================================================
+
+const STORAGE_URL_KEY = 'campushub_supabase_url';
+const STORAGE_ANON_KEY = 'campushub_supabase_anon_key';
+
+const config = {
+  getSupabaseUrl() {
+    return localStorage.getItem(STORAGE_URL_KEY) || '';
+  },
+
+  getSupabaseAnonKey() {
+    return localStorage.getItem(STORAGE_ANON_KEY) || '';
+  },
+
+  setSupabaseCredentials(url, anonKey) {
+    if (url) localStorage.setItem(STORAGE_URL_KEY, url.trim());
+    if (anonKey) localStorage.setItem(STORAGE_ANON_KEY, anonKey.trim());
+  },
+
+  clearSupabaseCredentials() {
+    localStorage.removeItem(STORAGE_URL_KEY);
+    localStorage.removeItem(STORAGE_ANON_KEY);
+  },
+
+  isSupabaseConfigured() {
+    const url = this.getSupabaseUrl();
+    const key = this.getSupabaseAnonKey();
+    return Boolean(url && key && url.startsWith('http') && key.length > 20);
+  }
+};
+
+const SUPABASE_SCHEMA_SQL = `-- 1. Create user_profiles Table
+CREATE TABLE IF NOT EXISTS public.user_profiles (
+    id UUID REFERENCES auth.users(id) ON DELETE CASCADE PRIMARY KEY,
+    email TEXT UNIQUE NOT NULL,
+    name TEXT NOT NULL,
+    roll_no TEXT,
+    department TEXT DEFAULT 'Computer Science & Engineering',
+    role TEXT DEFAULT 'Student',
+    year TEXT DEFAULT '1st Year',
+    avatar TEXT,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 2. Create user_states Table
+CREATE TABLE IF NOT EXISTS public.user_states (
+    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE PRIMARY KEY,
+    state JSONB NOT NULL DEFAULT '{}'::jsonb,
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 3. Enable Row Level Security (RLS)
+ALTER TABLE public.user_profiles ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.user_states ENABLE ROW LEVEL SECURITY;
+
+-- 4. RLS Policies for user_profiles
+DROP POLICY IF EXISTS "Users can view their own profile" ON public.user_profiles;
+CREATE POLICY "Users can view their own profile" ON public.user_profiles FOR SELECT USING (auth.uid() = id);
+
+DROP POLICY IF EXISTS "Users can insert their own profile" ON public.user_profiles;
+CREATE POLICY "Users can insert their own profile" ON public.user_profiles FOR INSERT WITH CHECK (auth.uid() = id);
+
+DROP POLICY IF EXISTS "Users can update their own profile" ON public.user_profiles;
+CREATE POLICY "Users can update their own profile" ON public.user_profiles FOR UPDATE USING (auth.uid() = id);
+
+-- 5. RLS Policies for user_states
+DROP POLICY IF EXISTS "Users can view their own state" ON public.user_states;
+CREATE POLICY "Users can view their own state" ON public.user_states FOR SELECT USING (auth.uid() = user_id);
+
+DROP POLICY IF EXISTS "Users can insert their own state" ON public.user_states;
+CREATE POLICY "Users can insert their own state" ON public.user_states FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+DROP POLICY IF EXISTS "Users can update their own state" ON public.user_states;
+CREATE POLICY "Users can update their own state" ON public.user_states FOR UPDATE USING (auth.uid() = user_id);
+
+-- 6. Trigger for updated_at timestamps
+CREATE OR REPLACE FUNCTION public.handle_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS set_user_profiles_updated_at ON public.user_profiles;
+CREATE TRIGGER set_user_profiles_updated_at BEFORE UPDATE ON public.user_profiles FOR EACH ROW EXECUTE FUNCTION public.handle_updated_at();
+
+DROP TRIGGER IF EXISTS set_user_states_updated_at ON public.user_states;
+CREATE TRIGGER set_user_states_updated_at BEFORE UPDATE ON public.user_states FOR EACH ROW EXECUTE FUNCTION public.handle_updated_at();
+`;
+
+
+// --- FILE: js/supabase.js ---
+// ============================================================
+// CAMPUSHUB SUPABASE CLOUD CLIENT WRAPPER
+// Real-time PostgreSQL database & GoTrue authentication
+// ============================================================
+
+
+class SupabaseService {
+  constructor() {
+    this.client = null;
+    this.initClient();
+  }
+
+  initClient() {
+    if (typeof window !== 'undefined' && window.supabase && config.isSupabaseConfigured()) {
+      try {
+        const url = config.getSupabaseUrl();
+        const key = config.getSupabaseAnonKey();
+        this.client = window.supabase.createClient(url, key);
+        return true;
+      } catch (err) {
+        console.warn('Failed to initialize Supabase client:', err);
+        this.client = null;
+        return false;
+      }
+    }
+    this.client = null;
+    return false;
+  }
+
+  isReady() {
+    if (!this.client && config.isSupabaseConfigured()) {
+      this.initClient();
+    }
+    return Boolean(this.client);
+  }
+
+  // ------------------------------------------------------------
+  // AUTHENTICATION
+  // ------------------------------------------------------------
+  async signUp(email, password, metadata = {}) {
+    if (!this.isReady()) throw new Error('Supabase client is not configured.');
+
+    const cleanEmail = email.trim().toLowerCase();
+    const { data, error } = await this.client.auth.signUp({
+      email: cleanEmail,
+      password,
+      options: {
+        data: {
+          name: metadata.name,
+          role: metadata.role || 'Student',
+          department: metadata.department,
+          year: metadata.year
+        }
+      }
+    });
+
+    if (error) throw error;
+    if (!data || !data.user) throw new Error('Signup failed. No user returned.');
+
+    const user = data.user;
+    const formattedProfile = {
+      id: user.id,
+      email: user.email,
+      name: metadata.name || user.email.split('@')[0],
+      rollNo: metadata.rollNo || `STU-${Math.floor(1000 + Math.random() * 9000)}`,
+      department: metadata.department || 'Computer Science & Engineering',
+      role: metadata.role || 'Student',
+      year: metadata.year || '1st Year',
+      avatar: metadata.avatar || `https://api.dicebear.com/7.x/bottts/svg?seed=${cleanEmail}`
+    };
+
+    // Insert profile into public.user_profiles
+    try {
+      await this.client.from('user_profiles').upsert([{
+        id: formattedProfile.id,
+        email: formattedProfile.email,
+        name: formattedProfile.name,
+        roll_no: formattedProfile.rollNo,
+        department: formattedProfile.department,
+        role: formattedProfile.role,
+        year: formattedProfile.year,
+        avatar: formattedProfile.avatar
+      }]);
+    } catch (profErr) {
+      console.warn('Could not insert profile into user_profiles table:', profErr);
+    }
+
+    return { user: formattedProfile, session: data.session };
+  }
+
+  async signIn(email, password) {
+    if (!this.isReady()) throw new Error('Supabase client is not configured.');
+
+    const cleanEmail = email.trim().toLowerCase();
+    const { data, error } = await this.client.auth.signInWithPassword({
+      email: cleanEmail,
+      password
+    });
+
+    if (error) throw error;
+    if (!data || !data.user) throw new Error('Authentication failed.');
+
+    const user = data.user;
+
+    // Fetch user profile from user_profiles table
+    let profile = null;
+    try {
+      const { data: profData } = await this.client
+        .from('user_profiles')
+        .select('*')
+        .eq('id', user.id)
+        .single();
+      profile = profData;
+    } catch (e) {
+      console.warn('Could not fetch user_profiles row:', e);
+    }
+
+    const formattedProfile = {
+      id: user.id,
+      email: user.email,
+      name: (profile && profile.name) || user.user_metadata?.name || user.email.split('@')[0],
+      rollNo: (profile && profile.roll_no) || `STU-${Math.floor(1000 + Math.random() * 9000)}`,
+      department: (profile && profile.department) || user.user_metadata?.department || 'Computer Science & Engineering',
+      role: (profile && profile.role) || user.user_metadata?.role || 'Student',
+      year: (profile && profile.year) || user.user_metadata?.year || '1st Year',
+      avatar: (profile && profile.avatar) || `https://api.dicebear.com/7.x/bottts/svg?seed=${cleanEmail}`
+    };
+
+    return { user: formattedProfile, session: data.session };
+  }
+
+  async signOut() {
+    if (this.client) {
+      try {
+        await this.client.auth.signOut();
+      } catch (err) {
+        console.warn('Supabase signOut error:', err);
+      }
+    }
+  }
+
+  async getCurrentSessionUser() {
+    if (!this.isReady()) return null;
+    try {
+      const { data } = await this.client.auth.getUser();
+      return data?.user || null;
+    } catch {
+      return null;
+    }
+  }
+
+  // ------------------------------------------------------------
+  // USER STATE & DATABASE STORAGE
+  // ------------------------------------------------------------
+  async saveUserState(userId, state) {
+    if (!this.isReady() || !userId) return false;
+    try {
+      const { error } = await this.client.from('user_states').upsert({
+        user_id: userId,
+        state: state
+      });
+      if (error) throw error;
+      return true;
+    } catch (err) {
+      console.warn('Supabase saveUserState error:', err);
+      return false;
+    }
+  }
+
+  async getUserState(userId) {
+    if (!this.isReady() || !userId) return null;
+    try {
+      const { data, error } = await this.client
+        .from('user_states')
+        .select('state')
+        .eq('user_id', userId)
+        .single();
+
+      if (error || !data) return null;
+      return data.state;
+    } catch (err) {
+      console.warn('Supabase getUserState error:', err);
+      return null;
+    }
+  }
+
+  // Quick test connection
+  async testConnection(url, anonKey) {
+    if (!window.supabase) {
+      throw new Error('Supabase JS library is not loaded in browser.');
+    }
+    const tempClient = window.supabase.createClient(url.trim(), anonKey.trim());
+    // Try simple query or auth check
+    const { error } = await tempClient.from('user_profiles').select('count', { count: 'exact', head: true });
+    // If error code is 42P01 (relation doesn't exist yet), the connection is still valid!
+    if (error && error.code !== '42P01' && error.message && !error.message.includes('permission')) {
+      throw new Error(error.message);
+    }
+    return true;
+  }
+}
+
+const supabaseService = new SupabaseService();
+
+
 // --- FILE: js/api.js ---
 // ============================================================
 // CAMPUSHUB API & MULTI-USER AUTHENTICATION CLIENT
-// Dual-Mode: REST API (server.py) + Client-Side Multi-Account Fallback
+// Triple-Tier Architecture:
+// 1. Supabase Cloud Database (Global Multi-Device Sync)
+// 2. Python REST API Server (server.py + SQLite campus.db)
+// 3. Client-Side Multi-Account Storage (Offline Fallback)
 // ============================================================
+
+
 
 class ApiClient {
   constructor() {
@@ -1175,10 +1483,14 @@ class ApiClient {
     }
   }
 
-  // Check if server REST API is alive
+  isSupabaseActive() {
+    return supabaseService.isReady();
+  }
+
+  // Check if local server REST API is alive
   async checkServerHealth() {
     try {
-      const res = await fetch('/api/health', { method: 'GET', signal: AbortSignal.timeout(2000) });
+      const res = await fetch('/api/health', { method: 'GET', signal: AbortSignal.timeout(1500) });
       this.serverAvailable = res.ok;
       return this.serverAvailable;
     } catch {
@@ -1200,8 +1512,20 @@ class ApiClient {
   // AUTHENTICATION: LOGIN
   // ------------------------------------------------------------
   async login(email, password) {
-    const isOnline = await this.checkServerHealth();
+    // 1. Priority 1: Supabase Cloud
+    if (supabaseService.isReady()) {
+      try {
+        const res = await supabaseService.signIn(email, password);
+        const token = res.session?.access_token || 'supabase_token_' + Date.now();
+        this.setSession(token, res.user);
+        return { success: true, user: res.user, token };
+      } catch (err) {
+        throw err;
+      }
+    }
 
+    // 2. Priority 2: Local Python REST API Server
+    const isOnline = await this.checkServerHealth();
     if (isOnline) {
       try {
         const res = await fetch('/api/auth/login', {
@@ -1220,7 +1544,7 @@ class ApiClient {
       }
     }
 
-    // Fallback: Local multi-account verification
+    // 3. Priority 3: Local multi-account verification
     return await this.localLogin(email, password);
   }
 
@@ -1259,6 +1583,20 @@ class ApiClient {
         const token = 'offline_token_' + Date.now();
         this.setSession(token, facUser);
         return { success: true, user: facUser, token };
+      } else if (cleanEmail === 'admin@campus.edu' && password === 'admin123') {
+        const admUser = {
+          id: 'demo-3',
+          name: 'Dean of Student Affairs',
+          email: 'admin@campus.edu',
+          rollNo: 'ADM-001',
+          department: 'Central Administration',
+          role: 'Admin',
+          year: 'Officer',
+          avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&auto=format&fit=crop&q=80'
+        };
+        const token = 'offline_token_' + Date.now();
+        this.setSession(token, admUser);
+        return { success: true, user: admUser, token };
       }
       throw new Error('Invalid email or password. Please check your credentials.');
     }
@@ -1279,8 +1617,20 @@ class ApiClient {
   // AUTHENTICATION: REGISTER
   // ------------------------------------------------------------
   async register(userData) {
-    const isOnline = await this.checkServerHealth();
+    // 1. Priority 1: Supabase Cloud
+    if (supabaseService.isReady()) {
+      try {
+        const res = await supabaseService.signUp(userData.email, userData.password, userData);
+        const token = res.session?.access_token || 'supabase_token_' + Date.now();
+        this.setSession(token, res.user);
+        return { success: true, user: res.user, token };
+      } catch (err) {
+        throw err;
+      }
+    }
 
+    // 2. Priority 2: Local Python REST API Server
+    const isOnline = await this.checkServerHealth();
     if (isOnline) {
       try {
         const res = await fetch('/api/auth/register', {
@@ -1299,7 +1649,7 @@ class ApiClient {
       }
     }
 
-    // Fallback: Local multi-account registration
+    // 3. Priority 3: Local multi-account registration
     return await this.localRegister(userData);
   }
 
@@ -1349,14 +1699,16 @@ class ApiClient {
   // AUTHENTICATION: LOGOUT
   // ------------------------------------------------------------
   async logout() {
+    if (supabaseService.isReady()) {
+      await supabaseService.signOut();
+    }
+
     const token = this.getToken();
-    if (token) {
+    if (token && !token.startsWith('offline_') && !token.startsWith('supabase_')) {
       try {
         await fetch('/api/auth/logout', {
           method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
+          headers: { 'Authorization': `Bearer ${token}` }
         });
       } catch {}
     }
@@ -1371,8 +1723,21 @@ class ApiClient {
     const user = this.getCurrentUser();
     if (!user) return null;
 
+    // 1. Supabase Cloud Check
+    if (supabaseService.isReady()) {
+      try {
+        const cloudState = await supabaseService.getUserState(user.id);
+        if (cloudState) {
+          return key === 'full_state' ? cloudState : cloudState[key];
+        }
+      } catch (err) {
+        console.warn('Could not read user data from Supabase:', err);
+      }
+    }
+
+    // 2. Python REST API Server Check
     const token = this.getToken();
-    if (token && !token.startsWith('offline_')) {
+    if (token && !token.startsWith('offline_') && !token.startsWith('supabase_')) {
       try {
         const res = await fetch('/api/data', {
           headers: { 'Authorization': `Bearer ${token}` }
@@ -1384,7 +1749,7 @@ class ApiClient {
       } catch {}
     }
 
-    // Local user data slice
+    // 3. Local user data slice fallback
     try {
       const raw = localStorage.getItem(`${this.offlineDataPrefix}${user.id}_${key}`);
       return raw ? JSON.parse(raw) : null;
@@ -1397,12 +1762,21 @@ class ApiClient {
     const user = this.getCurrentUser();
     if (!user) return false;
 
-    // Save locally
+    // Always save locally as instant cache
     localStorage.setItem(`${this.offlineDataPrefix}${user.id}_${key}`, JSON.stringify(content));
 
-    // Save to remote server if connected
+    // 1. Supabase Cloud Save
+    if (supabaseService.isReady()) {
+      try {
+        await supabaseService.saveUserState(user.id, content);
+      } catch (err) {
+        console.warn('Could not save user data to Supabase:', err);
+      }
+    }
+
+    // 2. Python REST API Server Save
     const token = this.getToken();
-    if (token && !token.startsWith('offline_')) {
+    if (token && !token.startsWith('offline_') && !token.startsWith('supabase_')) {
       try {
         await fetch('/api/data', {
           method: 'POST',
@@ -2509,7 +2883,10 @@ function renderLanding(container) {
 // ============================================================
 // CAMPUSHUB AUTHENTICATION VIEW (Sign In & Sign Up)
 // User registration, password authentication, and session handling
+// Supports Supabase Cloud Database + Local Server + Offline Fallback
 // ============================================================
+
+
 
 
 
@@ -2518,14 +2895,36 @@ function renderAuth(container) {
   let mode = window.location.hash === '#register' ? 'register' : 'login'; // 'login' | 'register'
   let errorMessage = '';
   let isLoading = false;
+  let showSupabaseModal = false;
+  let isTestingSupabase = false;
+  let supabaseModalError = '';
+  let supabaseModalSuccess = '';
 
   function render() {
     container.innerHTML = `
-      <div class="min-h-[80vh] flex items-center justify-center p-4">
+      <div class="min-h-[80vh] flex items-center justify-center p-4 relative">
         <div class="w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-2xl overflow-hidden animate-fade-in">
           
           <!-- Auth Header Banner -->
           <div class="p-8 text-center bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-600 text-white relative">
+            
+            <!-- Supabase Cloud Connection Status Pill -->
+            <div class="flex items-center justify-center mb-3">
+              ${supabaseService.isReady() ? `
+                <button id="btn-open-supabase" type="button" class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-emerald-500/25 hover:bg-emerald-500/35 text-emerald-100 border border-emerald-300/40 shadow-sm transition-all cursor-pointer">
+                  <span class="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span>
+                  <span>Supabase Cloud Connected</span>
+                  <i data-lucide="settings" class="w-3.5 h-3.5 ml-0.5 opacity-80"></i>
+                </button>
+              ` : `
+                <button id="btn-open-supabase" type="button" class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-white/20 hover:bg-white/30 text-white border border-white/30 shadow-sm transition-all cursor-pointer">
+                  <i data-lucide="cloud" class="w-3.5 h-3.5 mr-0.5"></i>
+                  <span>Connect Supabase Cloud</span>
+                  <i data-lucide="chevron-right" class="w-3 h-3 ml-0.5 opacity-80"></i>
+                </button>
+              `}
+            </div>
+
             <div class="w-14 h-14 mx-auto rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-2xl shadow-lg mb-3">
               🎓
             </div>
@@ -2680,10 +3079,120 @@ function renderAuth(container) {
           </div>
 
           <!-- Footer -->
-          <div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/40 border-t border-slate-100 dark:border-slate-800 text-center text-xs text-slate-500">
-            <span>Encrypted with SHA-256 & Salt • SQLite DB Ready</span>
+          <div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/40 border-t border-slate-100 dark:border-slate-800 text-center text-xs text-slate-500 flex items-center justify-center space-x-2">
+            ${supabaseService.isReady() ? `
+              <span class="inline-flex items-center text-emerald-600 dark:text-emerald-400 font-semibold">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
+                Connected to Supabase PostgreSQL Cloud
+              </span>
+            ` : `
+              <span>Encrypted with SHA-256 & Salt • Ready for Cloud Sync</span>
+            `}
           </div>
         </div>
+
+        <!-- Supabase Cloud Settings Modal Dialog -->
+        ${showSupabaseModal ? `
+          <div id="supabase-modal-backdrop" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="w-full max-w-lg bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden animate-fade-in flex flex-col max-h-[90vh]">
+              
+              <!-- Modal Header -->
+              <div class="p-6 bg-gradient-to-r from-emerald-600 to-teal-700 text-white flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl">
+                    ⚡
+                  </div>
+                  <div>
+                    <h3 class="text-lg font-black leading-snug">Supabase Cloud Database</h3>
+                    <p class="text-xs text-emerald-100">Global multi-device sync & PostgreSQL Auth</p>
+                  </div>
+                </div>
+                <button id="btn-close-supabase-modal" type="button" class="w-8 h-8 rounded-full bg-black/20 hover:bg-black/30 flex items-center justify-center text-white transition-colors">
+                  <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+              </div>
+
+              <!-- Modal Body -->
+              <div class="p-6 overflow-y-auto space-y-4 text-slate-700 dark:text-slate-200">
+                <!-- Status Messages -->
+                ${supabaseModalError ? `
+                  <div class="p-3 rounded-xl bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-900 text-red-700 dark:text-red-300 text-xs flex items-start space-x-2">
+                    <i data-lucide="alert-triangle" class="w-4 h-4 shrink-0 mt-0.5"></i>
+                    <span>${supabaseModalError}</span>
+                  </div>
+                ` : ''}
+
+                ${supabaseModalSuccess ? `
+                  <div class="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-900 text-emerald-700 dark:text-emerald-300 text-xs flex items-start space-x-2">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 shrink-0 mt-0.5"></i>
+                    <span>${supabaseModalSuccess}</span>
+                  </div>
+                ` : ''}
+
+                <!-- Setup Steps Guide -->
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-xs space-y-2.5">
+                  <div class="font-bold text-slate-900 dark:text-white flex items-center justify-between">
+                    <span>How to connect your free Supabase project:</span>
+                    <a href="https://supabase.com/dashboard" target="_blank" rel="noopener noreferrer" class="text-indigo-600 dark:text-indigo-400 hover:underline flex items-center space-x-1">
+                      <span>Open Supabase</span>
+                      <i data-lucide="external-link" class="w-3 h-3"></i>
+                    </a>
+                  </div>
+                  <ol class="list-decimal list-inside space-y-1 text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <li>Create a free account at <strong>supabase.com</strong> and click <strong>New project</strong>.</li>
+                    <li>Open <strong>SQL Editor</strong>, paste our schema script, and click <strong>Run</strong>:</li>
+                  </ol>
+                  <button id="btn-copy-sql-schema" type="button" class="w-full py-2 px-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 font-semibold flex items-center justify-center space-x-2 border border-indigo-200 dark:border-indigo-800 transition-colors">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                    <span id="copy-sql-label">📋 1-Click Copy Database Schema (SQL)</span>
+                  </button>
+                  <ol start="3" class="list-decimal list-inside space-y-1 text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <li>Go to <strong>Project Settings ➔ API</strong>, copy your <strong>URL</strong> and <strong>anon public key</strong>, and paste below:</li>
+                  </ol>
+                </div>
+
+                <!-- Input Credentials -->
+                <div class="space-y-3">
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Project URL</label>
+                    <input id="input-supabase-url" type="url" placeholder="https://xyzprojectid.supabase.co" value="${config.getSupabaseUrl()}" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-mono focus:outline-none focus:border-emerald-500 dark:text-white" />
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Anon Public Key</label>
+                    <input id="input-supabase-key" type="password" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." value="${config.getSupabaseAnonKey()}" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-mono focus:outline-none focus:border-emerald-500 dark:text-white" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Modal Footer Actions -->
+              <div class="p-6 bg-slate-50 dark:bg-slate-800/40 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between space-x-3">
+                ${config.isSupabaseConfigured() ? `
+                  <button id="btn-disconnect-supabase" type="button" class="px-3 py-2 rounded-xl text-xs font-bold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 border border-red-200 dark:border-red-900 transition-colors">
+                    Disconnect
+                  </button>
+                ` : `<div></div>`}
+
+                <div class="flex items-center space-x-2">
+                  <button id="btn-cancel-supabase" type="button" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                    Cancel
+                  </button>
+                  <button id="btn-save-supabase" type="button" ${isTestingSupabase ? 'disabled' : ''} class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md shadow-emerald-600/30 transition-all flex items-center space-x-2 disabled:opacity-50">
+                    ${isTestingSupabase ? `
+                      <span class="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                      <span>Testing Connection...</span>
+                    ` : `
+                      <i data-lucide="save" class="w-3.5 h-3.5"></i>
+                      <span>Save & Connect</span>
+                    `}
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        ` : ''}
+
       </div>
     `;
 
@@ -2699,6 +3208,96 @@ function renderAuth(container) {
     document.getElementById('btn-switch-register')?.addEventListener('click', () => {
       mode = 'register';
       errorMessage = '';
+      render();
+    });
+
+    // Supabase Modal triggers
+    document.getElementById('btn-open-supabase')?.addEventListener('click', () => {
+      showSupabaseModal = true;
+      supabaseModalError = '';
+      supabaseModalSuccess = '';
+      render();
+    });
+
+    document.getElementById('btn-close-supabase-modal')?.addEventListener('click', () => {
+      showSupabaseModal = false;
+      render();
+    });
+
+    document.getElementById('btn-cancel-supabase')?.addEventListener('click', () => {
+      showSupabaseModal = false;
+      render();
+    });
+
+    // Copy SQL Schema Button
+    document.getElementById('btn-copy-sql-schema')?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(SUPABASE_SCHEMA_SQL);
+        const label = document.getElementById('copy-sql-label');
+        if (label) label.textContent = '✅ Schema Copied to Clipboard!';
+        showToast('SQL Schema copied to clipboard! Paste it into Supabase SQL Editor.', 'success');
+        setTimeout(() => {
+          if (label) label.textContent = '📋 1-Click Copy Database Schema (SQL)';
+        }, 3000);
+      } catch (err) {
+        const temp = document.createElement('textarea');
+        temp.value = SUPABASE_SCHEMA_SQL;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+        showToast('SQL Schema copied to clipboard!', 'success');
+      }
+    });
+
+    // Save & Connect Supabase
+    document.getElementById('btn-save-supabase')?.addEventListener('click', async () => {
+      const urlInput = document.getElementById('input-supabase-url');
+      const keyInput = document.getElementById('input-supabase-key');
+      const url = urlInput ? urlInput.value.trim() : '';
+      const key = keyInput ? keyInput.value.trim() : '';
+
+      if (!url || !key) {
+        supabaseModalError = 'Please provide both your Supabase Project URL and Anon Public Key.';
+        render();
+        return;
+      }
+
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        supabaseModalError = 'Project URL must start with https:// (e.g. https://yourid.supabase.co)';
+        render();
+        return;
+      }
+
+      isTestingSupabase = true;
+      supabaseModalError = '';
+      supabaseModalSuccess = '';
+      render();
+
+      try {
+        await supabaseService.testConnection(url, key);
+        config.setSupabaseCredentials(url, key);
+        supabaseService.initClient();
+        isTestingSupabase = false;
+        supabaseModalSuccess = 'Successfully connected to Supabase Cloud Database!';
+        showToast('Supabase Cloud Database connected successfully!', 'success');
+        setTimeout(() => {
+          showSupabaseModal = false;
+          render();
+        }, 1200);
+      } catch (err) {
+        isTestingSupabase = false;
+        supabaseModalError = `Connection test failed: ${err.message || 'Check your URL and Anon Key'}`;
+        render();
+      }
+    });
+
+    // Disconnect Supabase
+    document.getElementById('btn-disconnect-supabase')?.addEventListener('click', () => {
+      config.clearSupabaseCredentials();
+      supabaseService.initClient();
+      showToast('Supabase disconnected. Using local & offline mode.', 'info');
+      showSupabaseModal = false;
       render();
     });
 
@@ -2765,6 +3364,7 @@ function renderAuth(container) {
 
   render();
 }
+
 
 
 // --- FILE: js/views/dashboard.js ---
