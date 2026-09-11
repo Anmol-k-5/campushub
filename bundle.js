@@ -1,19 +1,167 @@
 // --- FILE: js/sampleData.js ---
-// CampusHub Sample Data - Initial State for First-Time Users
+// CampusHub Comprehensive University Sample Dataset - Enriched for 150 Features
 const initialData = {
+  // Current active view role: 'student', 'faculty', 'admin', 'applicant'
+  currentRole: 'student',
+
+  // 1. Institutional Identity & Overview (Features 1-15)
+  institution: {
+    name: "St. Xavier Institute of Technology & Management",
+    shortName: "SXITM Campus",
+    tagline: "Empowering Next-Gen Innovators & Leaders",
+    foundedYear: 1984,
+    campusAcreage: "125 Acres",
+    accreditation: "NAAC Grade A++ (3.78 CGPA) • NBA Tier-1 Accredited",
+    nirfRank: "Rank #14 in Engineering (NIRF 2025)",
+    qsRank: "QS 4-Star Excellence Rating",
+    stats: {
+      totalStudents: 12450,
+      facultyCount: 480,
+      placementRate: "96.4%",
+      researchLabs: 64,
+      patentsGranted: 142,
+      activeClubs: 42
+    },
+    leadership: {
+      principal: {
+        name: "Dr. Arthur Pendelton",
+        qualifications: "Ph.D. (MIT), FIEEE, FNAE",
+        message: "Welcome to St. Xavier Institute of Technology. For over four decades, our institution has stood as a beacon of academic rigor, research excellence, and holistic student development. We inspire our students not merely to seek employment, but to become ethical creators, researchers, and entrepreneurs shaping the future of global technology.",
+        photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80"
+      },
+      vicePrincipal: {
+        name: "Dr. Sunita Deshmukh",
+        qualifications: "Ph.D. (IIT Bombay), PostDoc (Stanford)",
+        message: "Our pedagogical framework bridges theoretical fundamentals with hands-on multidisciplinary industry projects. Every student at our campus is empowered with 24/7 maker spaces, world-class labs, and personalized faculty mentorship.",
+        photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80"
+      }
+    },
+    timeline: [
+      { year: 1984, title: "Foundation Established", desc: "Inaugurated with 3 core engineering branches and 180 students." },
+      { year: 1998, title: "Computer Science & IT Centre", desc: "Launched dedicated computing supercomputer cluster and fiber backbone." },
+      { year: 2010, title: "Autonomous Status & NBA Tier-1", desc: "Awarded academic autonomy by UGC and highest tier NBA accreditation." },
+      { year: 2020, title: "AI & Innovation Incubator", desc: "Established state-of-the-art AI Centre of Excellence with $4M industry grant." },
+      { year: 2025, title: "NAAC A++ Accreditation", desc: "Scored 3.78/4.0 CGPA, placing in the top 1% of technological universities." }
+    ],
+    contactDirectory: [
+      { department: "Principal's Secretariat", phone: "+91 80 2345 6701", email: "principal@sxit.edu", room: "Admin Block A, 3rd Floor" },
+      { department: "Dean of Academic Affairs", phone: "+91 80 2345 6702", email: "dean.academics@sxit.edu", room: "Admin Block A, 2nd Floor" },
+      { department: "Office of Admissions", phone: "+91 80 2345 6703", email: "admissions@sxit.edu", room: "Student Amenity Center Room 101" },
+      { department: "Controller of Examinations", phone: "+91 80 2345 6704", email: "coe@sxit.edu", room: "Exam Tower Level 4" },
+      { department: "Training & Placement Cell", phone: "+91 80 2345 6705", email: "placements@sxit.edu", room: "Corporate Relations Hub" },
+      { department: "Campus Chief Warden (Hostels)", phone: "+91 80 2345 6706", email: "warden@sxit.edu", room: "Hostel Block 1 Ground Floor" },
+      { department: "24/7 Security & ER Desk", phone: "+91 80 2345 6799", email: "security@sxit.edu", room: "Main Campus Gate 1" }
+    ],
+    mapLocations: [
+      { id: "loc-1", name: "Main Administrative Tower", code: "ADM", coords: "Zone A", desc: "Principal Office, Deanery, Admissions, Accounts" },
+      { id: "loc-2", name: "Sir CV Raman Tech Block (CS/IT/AI)", code: "TC-1", coords: "Zone B", desc: "Computing Labs, High Performance Cluster, AI Lab" },
+      { id: "loc-3", name: "Aryabhata Engineering Block (ECE/EEE/Mech)", code: "TC-2", coords: "Zone B", desc: "Robotics Bay, Microelectronics Lab, Wind Tunnel" },
+      { id: "loc-4", name: "Central Digital Library (5 Floors)", code: "LIB", coords: "Zone C", desc: "Reading halls, E-resource hub, 180,000 volumes" },
+      { id: "loc-5", name: "Dr. APJ Abdul Kalam Auditorium (1500 Seats)", code: "AUD", coords: "Zone C", desc: "Convocations, national hackathons, cultural fests" },
+      { id: "loc-6", name: "Student Cafeteria & Food Court", code: "CAF", coords: "Zone D", desc: "Multi-cuisine food court, nescafe kiosk, mess halls" },
+      { id: "loc-7", name: "University Sports Arena & Olympic Pool", code: "SPT", coords: "Zone E", desc: "Indoor badminton, basketball turf, gymnasium, track" },
+      { id: "loc-8", name: "Hostel Blocks (Boys H1-H4 & Girls G1-G3)", code: "HST", coords: "Zone F", desc: "Residential dorms with Wi-Fi and study lounges" }
+    ]
+  },
+
+  // 2. Admissions Portal (Features 16-30)
+  admissions: {
+    deadlines: [
+      { id: "dl-1", round: "B.Tech Early Round Admission", date: "2026-09-30", status: "Active", seatsRemaining: 142 },
+      { id: "dl-2", round: "M.Tech & PG Research Entrance", date: "2026-10-15", status: "Active", seatsRemaining: 48 },
+      { id: "dl-3", round: "Merit Scholarship Applications", date: "2026-10-05", status: "Closing Soon", seatsRemaining: 25 },
+      { id: "dl-4", round: "NRI & International Quota", date: "2026-10-20", status: "Upcoming", seatsRemaining: 60 }
+    ],
+    courses: [
+      {
+        id: "crs-1",
+        name: "B.Tech Computer Science & Engineering",
+        degree: "Undergraduate (4 Years)",
+        intake: 240,
+        availableSeats: 28,
+        feePerYear: 185000,
+        medianPackage: "14.2 LPA",
+        eligibility: "Minimum 65% in 12th PCM + JEE/CET Qualified",
+        highlights: "AI/ML Specialization, 100% Internship Placement, ABET Accredited"
+      },
+      {
+        id: "crs-2",
+        name: "B.Tech Artificial Intelligence & Data Science",
+        degree: "Undergraduate (4 Years)",
+        intake: 120,
+        availableSeats: 14,
+        feePerYear: 195000,
+        medianPackage: "15.8 LPA",
+        eligibility: "Minimum 65% in 12th PCM + Valid Entrance Score",
+        highlights: "NVIDIA Supercomputing Lab, Cloud Certifications, Industry Capstones"
+      },
+      {
+        id: "crs-3",
+        name: "B.Tech Electronics & Communication Engineering",
+        degree: "Undergraduate (4 Years)",
+        intake: 180,
+        availableSeats: 32,
+        feePerYear: 175000,
+        medianPackage: "11.6 LPA",
+        eligibility: "Minimum 60% in 12th PCM",
+        highlights: "VLSI Design Suite, Embedded IoT Systems, Qualcomm Partnership"
+      },
+      {
+        id: "crs-4",
+        name: "B.Tech Mechanical & Mechatronics Engineering",
+        degree: "Undergraduate (4 Years)",
+        intake: 120,
+        availableSeats: 24,
+        feePerYear: 160000,
+        medianPackage: "9.8 LPA",
+        eligibility: "Minimum 60% in 12th PCM",
+        highlights: "Formula Student Racing Workshop, 3D Prototyping Bay, Robotics Cell"
+      },
+      {
+        id: "crs-5",
+        name: "M.Tech Distributed Systems & Cloud Computing",
+        degree: "Postgraduate (2 Years)",
+        intake: 60,
+        availableSeats: 12,
+        feePerYear: 140000,
+        medianPackage: "18.5 LPA",
+        eligibility: "B.E/B.Tech in CS/IT with min 60% or valid GATE score",
+        highlights: "Funded Research Assistantships, Joint Industry Thesis"
+      }
+    ],
+    scholarships: [
+      { id: "sch-1", title: "Presidential Merit Scholarship", waiver: "100% Tuition Waiver", criteria: ">95% in 12th PCM or JEE Rank < 10,000", slots: 20 },
+      { id: "sch-2", title: "National Sports Excellence Grant", waiver: "50% Tuition Waiver", criteria: "State/National sports representation in official federations", slots: 15 },
+      { id: "sch-3", title: "Women in STEM Innovation Fellowship", waiver: "40% Tuition Waiver", criteria: "Top 30 female engineering rank holders", slots: 30 },
+      { id: "sch-4", title: "Economically Weaker Section (EWS) Aid", waiver: "75% Tuition Waiver", criteria: "Annual family income under 4.5 Lakhs", slots: 50 }
+    ],
+    applications: [
+      { id: "APP-2026-1048", applicantName: "Alex Rivera", course: "B.Tech Computer Science & Engineering", status: "Accepted", dateSubmitted: "2026-08-15", verificationStage: "Document Verification Completed", remarks: "Merit rank 42. Offer letter issued." },
+      { id: "APP-2026-1182", applicantName: "Rohan Verma", course: "B.Tech AI & Data Science", status: "Interview Scheduled", dateSubmitted: "2026-09-02", verificationStage: "Round 2 Technical Interview on Sept 18", remarks: "Test score 92/100." },
+      { id: "APP-2026-1290", applicantName: "Priya Sundaram", course: "B.Tech Electronics & Comm", status: "Under Review", dateSubmitted: "2026-09-08", verificationStage: "Marksheet Verification in Progress", remarks: "12th transcript received." }
+    ]
+  },
+
+  // 3. Student Profile & Digital ID (Features 31-50)
   profile: {
     name: "Alex Rivera",
     rollNo: "CS23B1048",
+    digitalIdBarcode: "SXITM-2023-CS-1048",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
     email: "alex.rivera@campus.edu",
     degree: "B.Tech Computer Science & Engineering",
     department: "School of Computing & Data Sciences",
     year: "3rd Year",
     semester: "6th Semester",
+    bloodGroup: "O+ Positive",
+    dob: "2004-06-18",
+    validUpto: "June 2027",
+    hostelResident: "Hostel 2 • Room 304",
+    emergencyContact: "+91 98765 43210 (Guardian)",
     currentCgpa: 8.84,
     targetGpa: 9.2,
     bio: "Full-stack developer, open source enthusiast, and campus tech organizer. Passionate about AI & distributed systems.",
-    skills: ["Python", "JavaScript / React", "Data Structures", "System Design", "UI/UX Design", "Docker", "Git", "Public Speaking"],
+    skills: ["Python", "JavaScript / React", "Data Structures", "System Design", "UI/UX Design", "Docker", "Git", "Public Speaking", "Machine Learning"],
     achievements: [
       { id: "ach-1", title: "1st Place - Smart Campus Hackathon 2025", date: "Nov 2025", badge: "🏆" },
       { id: "ach-2", title: "Dean's Merit List (Consecutive Semesters)", date: "2023 - 2025", badge: "🎖️" },
@@ -23,33 +171,317 @@ const initialData = {
     joinedClubs: ["club-1", "club-2", "club-4"]
   },
 
+  // Exam Timetable & Internal Assessment Marks (Features 40, 42, 43)
+  examTimetable: [
+    { id: "ex-1", courseCode: "CS301", courseName: "Operating Systems", date: "2026-10-12", time: "09:30 AM - 12:30 PM", hall: "Hall 302 Seat #14", type: "Mid-Term" },
+    { id: "ex-2", courseCode: "CS302", courseName: "Database Management Systems", date: "2026-10-14", time: "09:30 AM - 12:30 PM", hall: "Hall 201 Seat #22", type: "Mid-Term" },
+    { id: "ex-3", courseCode: "CS303", courseName: "Design & Analysis of Algorithms", date: "2026-10-16", time: "09:30 AM - 12:30 PM", hall: "Tech Aud 1 Seat #08", type: "Mid-Term" },
+    { id: "ex-4", courseCode: "CS304", courseName: "Computer Networks", date: "2026-10-19", time: "09:30 AM - 12:30 PM", hall: "Hall 105 Seat #30", type: "Mid-Term" },
+    { id: "ex-5", courseCode: "CS305", courseName: "Machine Learning & AI", date: "2026-10-21", time: "09:30 AM - 12:30 PM", hall: "Tech Aud 2 Seat #16", type: "Mid-Term" }
+  ],
+
+  assessmentMarks: [
+    { code: "CS301", subject: "Operating Systems", test1: 24, test2: 23, quiz: 9, assignment: 10, totalInternal: 66, maxInternal: 70 },
+    { code: "CS302", subject: "Database Systems", test1: 25, test2: 25, quiz: 10, assignment: 10, totalInternal: 70, maxInternal: 70 },
+    { code: "CS303", subject: "Algorithms", test1: 22, test2: 24, quiz: 8, assignment: 9, totalInternal: 63, maxInternal: 70 },
+    { code: "CS304", subject: "Computer Networks", test1: 18, test2: 19, quiz: 7, assignment: 8, totalInternal: 52, maxInternal: 70 },
+    { code: "CS305", subject: "Machine Learning", test1: 25, test2: 24, quiz: 10, assignment: 10, totalInternal: 69, maxInternal: 70 }
+  ],
+
+  academicCalendar: [
+    { date: "2026-08-01", event: "Commencement of Fall Semester Classes", category: "Academic" },
+    { date: "2026-09-15", event: "Project Synopsis Submission Deadline", category: "Academic" },
+    { date: "2026-10-12", event: "Mid-Term Examination Week Begins", category: "Exam" },
+    { date: "2026-10-25", event: "Diwali & Autumn Institutional Break", category: "Holiday" },
+    { date: "2026-11-05", event: "Horizon 2026 Annual Cultural Fest (3 Days)", category: "Fest" },
+    { date: "2026-11-20", event: "Inter-Collegiate Sports Championship", category: "Sports" },
+    { date: "2026-12-08", event: "End-Semester Practical & Lab Viva", category: "Exam" },
+    { date: "2026-12-15", event: "University End-Semester Theory Exams", category: "Exam" }
+  ],
+
+  // 4. Digital Library, PYQs & Learning Hub (Features 51-70)
+  libraryBooks: [
+    { id: "bk-1", title: "Operating System Concepts (Silberschatz)", author: "Abraham Silberschatz", isbn: "978-1118063330", category: "Computer Science", shelf: "Shelf B-14", totalCopies: 24, availableCopies: 5, reservedByMe: false },
+    { id: "bk-2", title: "Introduction to Algorithms (CLRS 4th Ed)", author: "Cormen, Leiserson, Rivest, Stein", isbn: "978-0262046305", category: "Algorithms", shelf: "Shelf B-08", totalCopies: 30, availableCopies: 0, reservedByMe: true },
+    { id: "bk-3", title: "Database System Concepts 7th Edition", author: "Korth, Sudarshan", isbn: "978-0078022159", category: "Database", shelf: "Shelf C-02", totalCopies: 20, availableCopies: 8, reservedByMe: false },
+    { id: "bk-4", title: "Computer Networks: A Systems Approach", author: "Larry Peterson, Bruce Davie", isbn: "978-0123850591", category: "Networking", shelf: "Shelf C-11", totalCopies: 18, availableCopies: 4, reservedByMe: false },
+    { id: "bk-5", title: "Pattern Recognition and Machine Learning", author: "Christopher M. Bishop", isbn: "978-0387310732", category: "Artificial Intelligence", shelf: "Shelf D-05", totalCopies: 15, availableCopies: 3, reservedByMe: false },
+    { id: "bk-6", title: "Clean Code: A Handbook of Agile Software", author: "Robert C. Martin", isbn: "978-0132350884", category: "Software Engineering", shelf: "Shelf A-19", totalCopies: 12, availableCopies: 2, reservedByMe: false }
+  ],
+
+  pyqPapers: [
+    { id: "pyq-1", subject: "Operating Systems", year: "2025 Fall", semester: "Sem 5", regulation: "R21", paperType: "End-Semester", link: "#" },
+    { id: "pyq-2", subject: "Operating Systems", year: "2024 Fall", semester: "Sem 5", regulation: "R21", paperType: "End-Semester", link: "#" },
+    { id: "pyq-3", subject: "Database Management Systems", year: "2025 Fall", semester: "Sem 5", regulation: "R21", paperType: "End-Semester", link: "#" },
+    { id: "pyq-4", subject: "Design & Analysis of Algorithms", year: "2025 Fall", semester: "Sem 5", regulation: "R21", paperType: "End-Semester", link: "#" },
+    { id: "pyq-5", subject: "Computer Networks", year: "2025 Fall", semester: "Sem 5", regulation: "R21", paperType: "End-Semester", link: "#" },
+    { id: "pyq-6", subject: "Machine Learning & AI", year: "2025 Fall", semester: "Sem 5", regulation: "R21", paperType: "End-Semester", link: "#" }
+  ],
+
+  quizzes: [
+    {
+      id: "qz-1",
+      subject: "Operating Systems",
+      title: "Memory Management & Virtual Paging Quiz",
+      questionsCount: 5,
+      timeLimitMinutes: 10,
+      questions: [
+        { q: "What is the primary function of the Translation Lookaside Buffer (TLB)?", options: ["Cache page table mappings in hardware", "Execute arithmetic logic", "Handle disk I/O interrupts", "Compress swap partition"], answer: 0 },
+        { q: "Which page replacement algorithm suffers from Belady's anomaly?", options: ["LRU", "Optimal", "FIFO", "Clock"], answer: 2 },
+        { q: "Inverted page tables store one entry per:", options: ["Virtual page", "Physical frame", "Process thread", "Disk block"], answer: 1 }
+      ]
+    },
+    {
+      id: "qz-2",
+      subject: "Computer Networks",
+      title: "TCP/IP Protocol Stack & Subnetting",
+      questionsCount: 5,
+      timeLimitMinutes: 10,
+      questions: [
+        { q: "Which layer of the OSI model does TCP operate in?", options: ["Data Link Layer", "Network Layer", "Transport Layer", "Session Layer"], answer: 2 },
+        { q: "How many usable host IP addresses are available in a /28 subnet?", options: ["14", "16", "30", "6"], answer: 0 }
+      ]
+    }
+  ],
+
+  // 5. Faculty & Department Directory (Features 71-85)
+  facultyMembers: [
+    {
+      id: "fac-1",
+      name: "Dr. Sarah Vance",
+      designation: "Professor & Head of Department",
+      department: "Computer Science & Engineering",
+      email: "sarah.vance@sxit.edu",
+      phone: "Ext. 4102",
+      room: "Tech Block Room 302",
+      status: "In Office", // In Office, In Lecture, In Meeting, On Leave
+      officeHours: "Mon & Wed: 02:00 PM - 04:00 PM",
+      researchArea: "Distributed OS, Cloud Orchestration, Kernel Architecture",
+      publicationsCount: 48,
+      photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80"
+    },
+    {
+      id: "fac-2",
+      name: "Prof. Alan Turing",
+      designation: "Associate Professor",
+      department: "Computer Science & Engineering",
+      email: "alan.turing@sxit.edu",
+      phone: "Ext. 4105",
+      room: "Tech Block Room 204",
+      status: "In Lecture",
+      officeHours: "Tue & Thu: 11:30 AM - 01:00 PM",
+      researchArea: "Database Optimization, B-Trees, Distributed Storage",
+      publicationsCount: 36,
+      photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80"
+    },
+    {
+      id: "fac-3",
+      name: "Dr. Maya Patel",
+      designation: "Professor",
+      department: "Computer Science & Engineering",
+      email: "maya.patel@sxit.edu",
+      phone: "Ext. 4108",
+      room: "Tech Block Room 310",
+      status: "In Office",
+      officeHours: "Wednesday: 10:00 AM - 12:30 PM",
+      researchArea: "Approximation Algorithms, Computational Geometry",
+      publicationsCount: 52,
+      photo: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=200&auto=format&fit=crop&q=80"
+    },
+    {
+      id: "fac-4",
+      name: "Dr. Marcus Brody",
+      designation: "Associate Professor & Lead AI Lab",
+      department: "AI & Data Science",
+      email: "marcus.brody@sxit.edu",
+      phone: "Ext. 4120",
+      room: "AI Centre Room 102",
+      status: "In Meeting",
+      officeHours: "Friday: 03:00 PM - 05:00 PM",
+      researchArea: "Deep Learning, Generative Vision Models, NLP",
+      publicationsCount: 42,
+      photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80"
+    }
+  ],
+
+  facultyAppointments: [
+    { id: "apt-1", facultyName: "Dr. Sarah Vance", studentName: "Alex Rivera", date: "2026-09-15", time: "02:30 PM", topic: "Final Year Capstone Project Consultation", status: "Confirmed" }
+  ],
+
+  // 6. Hostel & Cafeteria (Features 116-130)
+  messMenu: {
+    today: "Friday",
+    meals: {
+      breakfast: { time: "07:30 AM - 09:30 AM", items: ["Steamed Idli & Medu Vada with Sambar", "Coconut & Tomato Chutneys", "Egg / Veg Sandwiches", "Fresh Seasonal Papaya", "Tea / Filter Coffee"], calories: "420 kcal", veg: true },
+      lunch: { time: "12:30 PM - 02:30 PM", items: ["Paneer Butter Masala (Veg) / Butter Chicken", "Dal Tadka & Steamed Basmati Rice", "Tandoori Butter Roti", "Cucumber Tomato Mint Raita", "Gulab Jamun (1 pc)"], calories: "780 kcal", veg: false },
+      snacks: { time: "05:00 PM - 06:15 PM", items: ["Crispy Onion Pakoda / Samosa with Green Chutney", "Chai / Masala Tea", "Biscuits"], calories: "280 kcal", veg: true },
+      dinner: { time: "07:45 PM - 09:45 PM", items: ["Aloo Gobi Matar Masala", "Yellow Moong Dal & Jeera Rice", "Phulkas with Ghee", "Fresh Green Salad", "Vanilla Custard with Fruits"], calories: "640 kcal", veg: true }
+    }
+  },
+
+  busRoutes: [
+    { routeNo: "Route 1", origin: "City Central Station", stops: ["Metro Junction", "MG Road Mall", "Indiranagar Circle", "Campus Main Gate"], morningTime: "07:45 AM", eveningTime: "05:15 PM", driverName: "Mr. Ramesh Patil", driverPhone: "+91 94481 23091", status: "On Time" },
+    { routeNo: "Route 2", origin: "North Suburbs Terminal", stops: ["Hebbal Flyover", "Yelahanka Hub", "Tech Park Cross", "Campus Main Gate"], morningTime: "07:30 AM", eveningTime: "05:15 PM", driverName: "Mr. Suresh Gowda", driverPhone: "+91 94481 23092", status: "On Time" },
+    { routeNo: "Route 3", origin: "South Tech Corridor", stops: ["Silk Board", "BTM 2nd Stage", "Jaynagar 4th Block", "Campus Main Gate"], morningTime: "07:35 AM", eveningTime: "05:15 PM", driverName: "Mr. Anand Kumar", driverPhone: "+91 94481 23093", status: "Traffic Delay (10m)" }
+  ],
+
+  facilityBookings: [
+    { id: "bk-1", facilityName: "High Performance Computing Lab (GPU Server)", bookedBy: "Alex Rivera", date: "2026-09-14", timeSlot: "04:00 PM - 06:00 PM", purpose: "Training CNN CIFAR-10 model", status: "Approved" },
+    { id: "bk-2", facilityName: "Indoor Badminton Court 2", bookedBy: "Alex Rivera", date: "2026-09-12", timeSlot: "06:00 PM - 07:00 PM", purpose: "Inter-Hostel practice", status: "Confirmed" }
+  ],
+
+  hostelAllocation: {
+    blockName: "Sir Visvesvaraya Hostel Block 2",
+    roomNo: "Room 304 (Double Occupancy AC)",
+    floor: "3rd Floor West Wing",
+    roommate: "Devon Clark (Robotics Society)",
+    wardenName: "Prof. H.K. Sastry",
+    wardenPhone: "+91 98450 11223"
+  },
+
+  // 7. Student Services, Grievances & Certificates (Features 131-140)
+  grievances: [
+    { id: "GRV-1024", title: "Hostel 2 3rd Floor Wi-Fi Access Point Frequent Disconnections", category: "IT & Wi-Fi", isAnonymous: false, date: "2026-09-10", status: "In Progress", department: "Network Admin", resolutionNote: "Hardware technician dispatched to replace Cisco AP router." },
+    { id: "GRV-1019", title: "Library Air Conditioning Low Cooling in 2nd Floor Reading Hall", category: "Infrastructure", isAnonymous: true, date: "2026-09-08", status: "Resolved", department: "Estate Office", resolutionNote: "HVAC cooling compressor serviced." }
+  ],
+
+  leaveApplications: [
+    { id: "LV-401", type: "Out-Station / Weekend Pass", fromDate: "2026-09-19", toDate: "2026-09-21", reason: "Visiting family in hometown", destination: "Mysuru", parentApprovalStatus: "Approved via SMS", wardenStatus: "Pass Granted (QR Active)" }
+  ],
+
+  certificateRequests: [
+    { id: "CERT-881", type: "Bonafide Student Certificate", purpose: "Passport Application Verification", date: "2026-09-09", status: "Ready for Download", serialNo: "SXIT/BONA/2026/0881" },
+    { id: "CERT-890", type: "Estimated Tuition Fee Letter", purpose: "Education Loan Subsidy", date: "2026-09-11", status: "Processing", serialNo: "SXIT/FEE/2026/0890" }
+  ],
+
+  medicalCenter: {
+    doctorOnDuty: "Dr. Anjali Rao (M.D. General Medicine)",
+    nurseOnDuty: "Sister Mary V.",
+    timings: "Open 24/7 (Emergency) • OPD: 08:30 AM - 08:00 PM",
+    ambulanceHotline: "+91 80 2345 6790",
+    pharmacyStatus: "Stocked with generic essentials & OTC medicines"
+  },
+
+  // 8. Placements & Career Portal (Features 147-148)
+  placements: [
+    {
+      id: "plc-1",
+      company: "Google India",
+      role: "Software Engineering Intern (Summer 2027)",
+      ctc: "₹1,25,000 / month stipend",
+      location: "Bengaluru / Hyderabad",
+      deadline: "2026-09-26",
+      eligibilityCgpa: 8.0,
+      skillsRequired: ["Data Structures", "Algorithms", "Python", "System Design"],
+      eligible: true,
+      applied: true,
+      status: "Shortlisted for Online Assessment"
+    },
+    {
+      id: "plc-2",
+      company: "Microsoft",
+      role: "Support Software Engineer",
+      ctc: "₹18.5 LPA",
+      location: "Hyderabad",
+      deadline: "2026-10-02",
+      eligibilityCgpa: 7.5,
+      skillsRequired: ["C++", "OS Internals", "Networking"],
+      eligible: true,
+      applied: false,
+      status: "Applications Open"
+    },
+    {
+      id: "plc-3",
+      company: "NVIDIA Corporation",
+      role: "AI / Deep Learning Research Intern",
+      ctc: "₹1,10,000 / month stipend",
+      location: "Bengaluru",
+      deadline: "2026-09-30",
+      eligibilityCgpa: 8.5,
+      skillsRequired: ["PyTorch", "CUDA", "C++", "Machine Learning"],
+      eligible: true,
+      applied: true,
+      status: "Application Submitted"
+    },
+    {
+      id: "plc-4",
+      company: "Atlassian",
+      role: "Junior Cloud Infrastructure Engineer",
+      ctc: "₹24.0 LPA",
+      location: "Bengaluru / Remote",
+      deadline: "2026-10-10",
+      eligibilityCgpa: 8.0,
+      skillsRequired: ["Docker", "Kubernetes", "AWS", "Go/Python"],
+      eligible: true,
+      applied: false,
+      status: "Applications Open"
+    }
+  ],
+
+  // 9. Community Forum, Blogs & Alumni (Features 111-115)
+  communityPosts: [
+    { id: "post-1", author: "Sarah Chen (Final Year)", authorRole: "Peer Mentor", time: "3 hours ago", title: "How to prepare for Operating Systems and DBMS midterm with past 3 years' questions", votes: 48, repliesCount: 14, tags: ["ExamPrep", "StudyTips"] },
+    { id: "post-2", author: "Devon Clark", authorRole: "Robotics Lead", time: "Yesterday", title: "Recruiting 4 junior developers for Autonomous Quadcopter Drone competition", votes: 36, repliesCount: 19, tags: ["Robotics", "Recruitment"] },
+    { id: "post-3", author: "Ananya Mehta", authorRole: "E-Cell", time: "2 days ago", title: "Pitch Tank registrations are closing soon! Mentorship sessions available this Thursday", votes: 29, repliesCount: 6, tags: ["Startups", "E-Cell"] }
+  ],
+
+  alumniList: [
+    { id: "alm-1", name: "Kavita Ramachandran", batch: "Class of 2021 (CSE)", currentRole: "Senior ML Engineer at DeepMind", location: "London, UK", linkedIn: "linkedin.com/in/sample-kavita", quote: "St. Xavier's hackathon culture and open lab access were the foundation of my career in generative AI research." },
+    { id: "alm-2", name: "Rahul Deshmukh", batch: "Class of 2019 (ECE)", currentRole: "Co-Founder & CTO at HyperLog (Series-A funded)", location: "Bengaluru, India", linkedIn: "linkedin.com/in/sample-rahul", quote: "The entrepreneurship cell gave us our first seed grant and mentorship when we were still dorm room tinkerers." }
+  ],
+
+  // 10. Admin Analytics & Institutional Metrics (Features 149-150)
+  currentRole: "Student", // Role Switcher: 'Student' | 'Faculty' | 'Admin' | 'Applicant'
+  adminMetrics: {
+    totalStudents: 8420,
+    facultyCount: 380,
+    placementRate: "94.8%",
+    avgAttendance: "82.4%",
+    researchGrants: "₹14.2 Cr",
+    activeGrievances: 3,
+    departmentBreakdown: [
+      { dept: "Computer Science & Engg", students: 2400, faculty: 95, placementRate: "98.2%", avgAttendance: "85%" },
+      { dept: "Electronics & Communication", students: 1850, faculty: 78, placementRate: "93.5%", avgAttendance: "81%" },
+      { dept: "Mechanical Engineering", students: 1520, faculty: 65, placementRate: "89.4%", avgAttendance: "79%" },
+      { dept: "Civil & Environmental", students: 1200, faculty: 52, placementRate: "86.1%", avgAttendance: "82%" },
+      { dept: "Information Science & AI", students: 1450, faculty: 90, placementRate: "97.5%", avgAttendance: "84%" }
+    ],
+    placementTrend: [
+      { year: "2022", rate: 91.2, highest: "₹42 LPA", avg: "₹9.4 LPA" },
+      { year: "2023", rate: 93.0, highest: "₹48 LPA", avg: "₹10.8 LPA" },
+      { year: "2024", rate: 94.5, highest: "₹54 LPA", avg: "₹11.6 LPA" },
+      { year: "2025", rate: 96.2, highest: "₹62 LPA", avg: "₹12.8 LPA" }
+    ],
+    systemLogs: [
+      { id: "log-1", time: "10 mins ago", event: "Semester VII End-Term Grade Roster verified by Dean Academic", type: "academic" },
+      { id: "log-2", time: "42 mins ago", event: "Google Cloud Innovation Lab license pack renewed (500 seats)", type: "it" },
+      { id: "log-3", time: "2 hours ago", event: "Hostel Block 3 Solar Geyser Maintenance work completed", type: "facility" },
+      { id: "log-4", time: "4 hours ago", event: "Campus Placement: 42 students shortlisted for Google OA", type: "placement" }
+    ]
+  },
+
+  // 10. Existing 12 Features Data (Intact & Fully Preserved)
   timetable: [
-    // Monday
     { id: "tt-1", day: "Monday", subject: "Operating Systems", professor: "Dr. Sarah Vance", room: "Hall 302", startTime: "09:00", endTime: "10:00", color: "#6366f1" },
     { id: "tt-2", day: "Monday", subject: "Database Management Systems", professor: "Prof. Alan Turing", room: "CS Lab 4", startTime: "10:15", endTime: "11:15", color: "#06b6d4" },
     { id: "tt-3", day: "Monday", subject: "Design & Analysis of Algorithms", professor: "Dr. Maya Patel", room: "Hall 201", startTime: "11:30", endTime: "12:30", color: "#8b5cf6" },
     { id: "tt-4", day: "Monday", subject: "Computer Networks Lab", professor: "Prof. Rajesh Kumar", room: "Network Lab B", startTime: "14:00", endTime: "16:00", color: "#10b981" },
-    // Tuesday
     { id: "tt-5", day: "Tuesday", subject: "Machine Learning & AI", professor: "Dr. Marcus Brody", room: "Tech Aud 1", startTime: "09:00", endTime: "10:30", color: "#f59e0b" },
     { id: "tt-6", day: "Tuesday", subject: "Operating Systems", professor: "Dr. Sarah Vance", room: "Hall 302", startTime: "10:45", endTime: "11:45", color: "#6366f1" },
     { id: "tt-7", day: "Tuesday", subject: "Web Engineering", professor: "Prof. Elena Rostova", room: "CS Lab 2", startTime: "12:00", endTime: "13:00", color: "#ec4899" },
     { id: "tt-8", day: "Tuesday", subject: "Software Project Studio", professor: "Prof. Alan Turing", room: "Innovation Lab", startTime: "14:30", endTime: "16:30", color: "#3b82f6" },
-    // Wednesday
     { id: "tt-9", day: "Wednesday", subject: "Design & Analysis of Algorithms", professor: "Dr. Maya Patel", room: "Hall 201", startTime: "09:00", endTime: "10:00", color: "#8b5cf6" },
     { id: "tt-10", day: "Wednesday", subject: "Database Management Systems", professor: "Prof. Alan Turing", room: "CS Lab 4", startTime: "10:15", endTime: "11:15", color: "#06b6d4" },
     { id: "tt-11", day: "Wednesday", subject: "Technical Communication", professor: "Dr. Anita Desai", room: "Seminar Hall C", startTime: "11:30", endTime: "12:30", color: "#14b8a6" },
     { id: "tt-12", day: "Wednesday", subject: "Open Elective: Quantum Computing", professor: "Prof. K. Thorne", room: "Physics Aud", startTime: "14:00", endTime: "15:30", color: "#a855f7" },
-    // Thursday
     { id: "tt-13", day: "Thursday", subject: "Computer Networks", professor: "Prof. Rajesh Kumar", room: "Hall 105", startTime: "09:00", endTime: "10:00", color: "#10b981" },
     { id: "tt-14", day: "Thursday", subject: "Machine Learning & AI", professor: "Dr. Marcus Brody", room: "Tech Aud 1", startTime: "10:15", endTime: "11:15", color: "#f59e0b" },
     { id: "tt-15", day: "Thursday", subject: "Operating Systems Lab", professor: "Dr. Sarah Vance", room: "OS Lab A", startTime: "11:30", endTime: "13:30", color: "#6366f1" },
     { id: "tt-16", day: "Thursday", subject: "Research Methodology", professor: "Dr. Maya Patel", room: "Hall 302", startTime: "14:30", endTime: "15:30", color: "#f97316" },
-    // Friday
     { id: "tt-17", day: "Friday", subject: "Database Management Systems", professor: "Prof. Alan Turing", room: "CS Lab 4", startTime: "09:00", endTime: "10:00", color: "#06b6d4" },
     { id: "tt-18", day: "Friday", subject: "Web Engineering", professor: "Prof. Elena Rostova", room: "CS Lab 2", startTime: "10:15", endTime: "11:15", color: "#ec4899" },
     { id: "tt-19", day: "Friday", subject: "Computer Networks", professor: "Prof. Rajesh Kumar", room: "Hall 105", startTime: "11:30", endTime: "12:30", color: "#10b981" },
     { id: "tt-20", day: "Friday", subject: "Club & Mentorship Hour", professor: "Student Council", room: "Student Hub", startTime: "15:00", endTime: "17:00", color: "#e11d48" },
-    // Saturday
     { id: "tt-21", day: "Saturday", subject: "Competitive Programming Workshop", professor: "GDSC Team", room: "Coding Hub", startTime: "10:00", endTime: "12:00", color: "#6366f1" },
     { id: "tt-22", day: "Saturday", subject: "Capstone Review", professor: "Faculty Panel", room: "Tech Aud 2", startTime: "12:30", endTime: "14:00", color: "#3b82f6" }
   ],
@@ -58,10 +490,10 @@ const initialData = {
     { id: "att-1", subject: "Operating Systems", code: "CS301", totalClasses: 38, attendedClasses: 33, targetPercentage: 75 },
     { id: "att-2", subject: "Database Management Systems", code: "CS302", totalClasses: 40, attendedClasses: 35, targetPercentage: 75 },
     { id: "att-3", subject: "Design & Analysis of Algorithms", code: "CS303", totalClasses: 36, attendedClasses: 31, targetPercentage: 75 },
-    { id: "att-4", subject: "Computer Networks", code: "CS304", totalClasses: 35, attendedClasses: 25, targetPercentage: 75 }, // 71.4% Alert!
+    { id: "att-4", subject: "Computer Networks", code: "CS304", totalClasses: 35, attendedClasses: 25, targetPercentage: 75 }, // Alert!
     { id: "att-5", subject: "Machine Learning & AI", code: "CS305", totalClasses: 28, attendedClasses: 22, targetPercentage: 75 },
     { id: "att-6", subject: "Web Engineering", code: "CS306", totalClasses: 32, attendedClasses: 29, targetPercentage: 75 },
-    { id: "att-7", subject: "Technical Communication", code: "HS301", totalClasses: 24, attendedClasses: 17, targetPercentage: 75 } // 70.8% Alert!
+    { id: "att-7", subject: "Technical Communication", code: "HS301", totalClasses: 24, attendedClasses: 17, targetPercentage: 75 } // Alert!
   ],
 
   assignments: [
@@ -96,7 +528,7 @@ const initialData = {
       id: "asg-4",
       title: "Wireshark Packet Analysis on TCP Handshake & DNS Resolution",
       subject: "Computer Networks",
-      deadline: "2026-09-10T23:59", // Overdue to showcase highlight
+      deadline: "2026-09-10T23:59",
       priority: "High",
       status: "Pending",
       description: "Capture pcap file analyzing 3-way TCP handshake, window size scaling, and DNS TTL resolution sequence."
@@ -118,35 +550,13 @@ const initialData = {
       priority: "Medium",
       status: "Completed",
       description: "Create secure user registration, token generation, refresh tokens, and rate limiting with automated unit tests."
-    },
-    {
-      id: "asg-7",
-      title: "Literature Review on Edge AI Deployment",
-      subject: "Technical Communication",
-      deadline: "2026-09-28T23:59",
-      priority: "Low",
-      status: "Pending",
-      description: "Draft 4-page IEEE formatted survey summarizing lightweight quantized neural network architectures on microcontroller edges."
-    },
-    {
-      id: "asg-8",
-      title: "Schema Normalization to Boyce-Codd Normal Form (BCNF)",
-      subject: "Database Management Systems",
-      deadline: "2026-09-08T23:59",
-      priority: "Medium",
-      status: "Completed",
-      description: "Given a medical clinic database specification with multi-valued dependencies, decompose into 3NF and BCNF relations."
     }
   ],
 
   studySessions: [
     { id: "ss-1", subject: "Operating Systems", topic: "Virtual Memory & Page Replacement Algorithms", date: "2026-09-11", durationMinutes: 50, status: "Completed" },
     { id: "ss-2", subject: "Algorithms", topic: "Dijkstra & Bellman-Ford Shortest Paths", date: "2026-09-11", durationMinutes: 45, status: "Completed" },
-    { id: "ss-3", subject: "Database Systems", topic: "ACID Properties & Two-Phase Locking", date: "2026-09-12", durationMinutes: 60, status: "Planned" },
-    { id: "ss-4", subject: "Machine Learning", topic: "Backpropagation Math & Gradient Descent", date: "2026-09-13", durationMinutes: 90, status: "Planned" },
-    { id: "ss-5", subject: "Computer Networks", topic: "Subnet Masking & CIDR Routing tables", date: "2026-09-10", durationMinutes: 60, status: "Completed" },
-    { id: "ss-6", subject: "Web Engineering", topic: "React Fiber Architecture & Reconciliation", date: "2026-09-09", durationMinutes: 40, status: "Completed" },
-    { id: "ss-7", subject: "Operating Systems", topic: "Deadlocks Detection & Banker's Algorithm", date: "2026-09-08", durationMinutes: 75, status: "Completed" }
+    { id: "ss-3", subject: "Database Systems", topic: "ACID Properties & Two-Phase Locking", date: "2026-09-12", durationMinutes: 60, status: "Planned" }
   ],
 
   events: [
@@ -166,20 +576,6 @@ const initialData = {
     },
     {
       id: "ev-2",
-      title: "NextGen AI & Large Language Models Workshop",
-      category: "Workshop",
-      date: "2026-09-24",
-      time: "02:00 PM - 05:30 PM",
-      venue: "CS Advanced Lab 1 & Hybrid Stream",
-      organizer: "AI/ML Research Society",
-      description: "Hands-on session fine-tuning open source LLMs with LoRA/QLoRA and deploying semantic RAG search pipelines using vector databases.",
-      tags: ["PyTorch", "HuggingFace", "RAG", "Hands-on"],
-      image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80",
-      bookmarked: false,
-      registeredCount: 156
-    },
-    {
-      id: "ev-3",
       title: "Horizon 2026: Annual Inter-College Cultural Extravaganza",
       category: "Fest",
       date: "2026-11-05",
@@ -193,46 +589,18 @@ const initialData = {
       registeredCount: 2800
     },
     {
-      id: "ev-4",
-      title: "Pitch Tank: Annual Startup Pitch Competition",
-      category: "Competition",
-      date: "2026-10-02",
-      time: "11:00 AM - 04:00 PM",
-      venue: "Incubation Center Auditorium",
-      organizer: "Campus E-Cell (Entrepreneurship Club)",
-      description: "Pitch your venture to angel investors and seed VCs. Up to $10,000 in non-dilutive seed funding and 6 months incubation space.",
-      tags: ["Startups", "Funding", "Pitching", "VC"],
-      image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=600&auto=format&fit=crop&q=80",
+      id: "ev-3",
+      title: "NextGen AI & Large Language Models Workshop",
+      category: "Workshop",
+      date: "2026-09-24",
+      time: "02:00 PM - 05:30 PM",
+      venue: "CS Advanced Lab 1",
+      organizer: "AI/ML Research Society",
+      description: "Hands-on session fine-tuning open source LLMs with LoRA/QLoRA and deploying semantic RAG search pipelines using vector databases.",
+      tags: ["PyTorch", "HuggingFace", "RAG", "Hands-on"],
+      image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80",
       bookmarked: false,
-      registeredCount: 88
-    },
-    {
-      id: "ev-5",
-      title: "Cloud Native & Kubernetes Masterclass",
-      category: "Seminar",
-      date: "2026-09-30",
-      time: "03:00 PM - 05:00 PM",
-      venue: "Seminar Hall B",
-      organizer: "Open Source Collective",
-      description: "Industry architects break down microservice orchestration, service meshes (Istio), zero-downtime canary deployments, and CI/CD pipelines.",
-      tags: ["DevOps", "Kubernetes", "Docker", "Industry Talk"],
-      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&auto=format&fit=crop&q=80",
-      bookmarked: false,
-      registeredCount: 190
-    },
-    {
-      id: "ev-6",
-      title: "Inter-Hostel Chess Blitz Championship",
-      category: "Club Event",
-      date: "2026-09-28",
-      time: "05:00 PM - 08:30 PM",
-      venue: "Student Recreation Center",
-      organizer: "Campus Chess Society",
-      description: "Fast-paced 3+2 blitz tournament across all undergraduate hostels. Medals, trophies, and rating points awarded to top performers.",
-      tags: ["Sports", "Chess", "Hostel Cup"],
-      image: "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=600&auto=format&fit=crop&q=80",
-      bookmarked: false,
-      registeredCount: 64
+      registeredCount: 156
     }
   ],
 
@@ -243,12 +611,8 @@ const initialData = {
       subject: "Operating Systems",
       category: "Cheatsheet",
       date: "2026-09-08",
-      tags: ["TLB", "Page Faults", "Paging", "Exam Prep"],
-      content: `# Virtual Memory Architecture
-- **TLB (Translation Lookaside Buffer)**: Hardware cache for virtual-to-physical address mappings.
-- **Page Table Entry (PTE)**: Contains Frame number, Valid/Invalid bit, Dirty bit, Read/Write permissions.
-- **Inverted Page Table**: One entry per physical frame rather than virtual page. Drastically reduces memory overhead for 64-bit address spaces!
-- **Formula**: Effective Access Time (EAT) = Hit_Ratio * (TLB_time + Mem_time) + (1 - Hit_Ratio) * (TLB_time + 2 * Mem_time).`,
+      tags: ["TLB", "Page Faults", "Paging"],
+      content: `# Virtual Memory Architecture\n- TLB: Hardware cache for virtual-to-physical address mappings.\n- Inverted Page Table: One entry per physical frame rather than virtual page.\n- Formula: EAT = Hit_Ratio * (TLB_time + Mem_time) + (1 - Hit_Ratio) * (TLB_time + 2 * Mem_time).`,
       link: "https://drive.google.com/sample/os-cheatsheet.pdf"
     },
     {
@@ -257,63 +621,9 @@ const initialData = {
       subject: "Design & Analysis of Algorithms",
       category: "Exam Notes",
       date: "2026-09-05",
-      tags: ["Dijkstra", "Kruskal", "Prim", "Graph Theory"],
-      content: `# Graph Algorithms Quick Summary
-1. **Dijkstra's Algorithm**: Greedy approach for Single Source Shortest Path with non-negative edge weights. Time: O((V + E) log V) with Min-Heap.
-2. **Bellman-Ford**: Handles negative weights and detects negative weight cycles. Time: O(V * E).
-3. **Kruskal's MST**: Sorts edges by weight and utilizes Disjoint Set Union (DSU) with path compression. Time: O(E log E).
-4. **Prim's MST**: Grows a connected tree from starting vertex using priority queue. Time: O(E log V).`,
+      tags: ["Dijkstra", "Kruskal", "Prim"],
+      content: `# Graph Algorithms Quick Summary\n1. Dijkstra: Greedy SSSP with non-negative edge weights O((V + E) log V).\n2. Bellman-Ford: Detects negative cycles O(V * E).\n3. Kruskal: Disjoint Set Union O(E log E).`,
       link: ""
-    },
-    {
-      id: "note-3",
-      title: "SQL Indexing Strategies & Query Optimization",
-      subject: "Database Management Systems",
-      category: "Lecture Notes",
-      date: "2026-09-02",
-      tags: ["B-Tree", "Clustered Index", "Query Cost", "SQL"],
-      content: `# Database Indexing Best Practices
-- Use **Clustered Index** on primary sequential keys (e.g., auto-increment ID). Only ONE clustered index per table.
-- **Covering Index**: An index that contains all columns requested in the SELECT statement, avoiding table lookups entirely.
-- Avoid wildcard prefixes like \`LIKE '%abc'\` which invalidate index traversal and force sequential table scan.
-- Compound Index Column Order: Place high-cardinality equality columns first, then range filter columns.`,
-      link: "https://github.com/alexrivera/dbms-optimizations"
-    },
-    {
-      id: "note-4",
-      title: "Computer Networks: OSI 7-Layer Model & TCP/IP Stack",
-      subject: "Computer Networks",
-      category: "Reference",
-      date: "2026-08-30",
-      tags: ["OSI", "TCP", "UDP", "Subnetting"],
-      content: `# Protocol Stack Reference
-- **Layer 7 (Application)**: HTTP/HTTPS, DNS, SSH, SMTP.
-- **Layer 4 (Transport)**: TCP (reliable, connection-oriented, flow & congestion control) vs UDP (unreliable, connectionless, low latency).
-- **Layer 3 (Network)**: IP, ICMP, Routing (OSPF, BGP). Handles logical addressing and packet routing.
-- **Layer 2 (Data Link)**: Ethernet, MAC addresses, Framing, Error detection (CRC).
-- Subnetting shortcut: /24 = 254 usable hosts, /28 = 14 usable hosts.`,
-      link: "https://network-handbook.sample/osi-reference"
-    },
-    {
-      id: "note-5",
-      title: "Python ML Cheatsheet: PyTorch & Scikit-Learn Snippets",
-      subject: "Machine Learning & AI",
-      category: "Code",
-      date: "2026-08-25",
-      tags: ["PyTorch", "NumPy", "Tensors", "Training Loop"],
-      content: `# Standard PyTorch Training Loop
-\`\`\`python
-for epoch in range(num_epochs):
-    model.train()
-    for batch_x, batch_y in dataloader:
-        optimizer.zero_grad()
-        outputs = model(batch_x)
-        loss = criterion(outputs, batch_y)
-        loss.backward()
-        optimizer.step()
-\`\`\`
-Always ensure gradients are zeroed before backprop!`,
-      link: "https://gist.github.com/alexrivera/pytorch-boilerplate"
     }
   ],
 
@@ -332,8 +642,7 @@ Always ensure gradients are zeroed before backprop!`,
       { id: "c-3", code: "CS303", name: "Design & Analysis of Algorithms", credits: 4, grade: "A+", gradePoint: 9 },
       { id: "c-4", code: "CS304", name: "Computer Networks", credits: 3, grade: "A", gradePoint: 8 },
       { id: "c-5", code: "CS305", name: "Machine Learning & AI", credits: 3, grade: "O", gradePoint: 10 },
-      { id: "c-6", code: "CS306", name: "Web Engineering", credits: 3, grade: "O", gradePoint: 10 },
-      { id: "c-7", code: "CS307", name: "Operating Systems Lab", credits: 2, grade: "A+", gradePoint: 9 }
+      { id: "c-6", code: "CS306", name: "Web Engineering", credits: 3, grade: "O", gradePoint: 10 }
     ]
   },
 
@@ -343,7 +652,7 @@ Always ensure gradients are zeroed before backprop!`,
       name: "Google Developer Student Club (GDSC)",
       category: "Tech & Coding",
       logo: "💻",
-      description: "University chapter of global Google developers community. We host hackathons, web & mobile bootcamps, and open-source contributions.",
+      description: "University chapter of global Google developers community. Hackathons, web & mobile bootcamps, and open-source contributions.",
       leads: "Aarav Sharma & Priya Sen",
       regularMeeting: "Every Wednesday at 5:00 PM • Tech Hub Room 102",
       memberCount: 340,
@@ -355,60 +664,36 @@ Always ensure gradients are zeroed before backprop!`,
       name: "Robotics & Automation Society (RAS)",
       category: "Robotics & Hardware",
       logo: "🤖",
-      description: "Designing autonomous rovers, combat bots, and IoT smart campus sensors. Full access to 3D printers, CNC mills, and soldering bays.",
+      description: "Autonomous rovers, combat bots, and IoT smart campus sensors with 3D printers and CNC milling.",
       leads: "Devon Clark",
       regularMeeting: "Tuesdays & Fridays at 4:30 PM • Makerspace Lab",
       memberCount: 185,
       bannerColor: "from-amber-500 to-red-600",
-      tags: ["Arduino", "ROS", "Drone Tech", "Hardware"]
+      tags: ["Arduino", "ROS", "Drone Tech"]
     },
     {
       id: "club-3",
       name: "The Entrepreneurship Cell (E-Cell)",
       category: "Business & Startups",
       logo: "🚀",
-      description: "Fostering student ventures, pitch incubators, VC meetups, and founder fireside chats. Turning dorm room ideas into scalable startups.",
+      description: "Student ventures, pitch incubators, VC meetups, and founder fireside chats.",
       leads: "Ananya Mehta",
       regularMeeting: "Thursdays at 6:00 PM • Incubation Lounge",
       memberCount: 220,
       bannerColor: "from-emerald-500 to-teal-700",
-      tags: ["Funding", "Venture Capital", "Networking", "Product"]
+      tags: ["Funding", "Startups", "Networking"]
     },
     {
       id: "club-4",
       name: "Rhythm & Beats Music Society",
       category: "Cultural & Arts",
       logo: "🎸",
-      description: "Campus acoustic band, fusion orchestra, and music production studio. We perform at annual college fests and host open mic acoustic nights.",
+      description: "Campus acoustic band, fusion orchestra, and music production studio.",
       leads: "Zack Martin & Maya Lin",
       regularMeeting: "Mondays & Thursdays at 5:30 PM • Music Hall 4",
       memberCount: 145,
       bannerColor: "from-purple-500 to-pink-600",
-      tags: ["Acoustic", "Jam Sessions", "Vocals", "Bands"]
-    },
-    {
-      id: "club-5",
-      name: "Aperture Photography & Cinematography",
-      category: "Media & Arts",
-      logo: "📸",
-      description: "Documenting campus life through visual storytelling, photowalks, drone videography, and digital darkroom workshops.",
-      leads: "Rohan Kapoor",
-      regularMeeting: "Saturday Mornings at 8:00 AM • Campus Lawns",
-      memberCount: 110,
-      bannerColor: "from-sky-500 to-blue-700",
-      tags: ["Photo Walks", "Portraits", "Film", "Lightroom"]
-    },
-    {
-      id: "club-6",
-      name: "Campus Titans Sports & Athletics",
-      category: "Sports & Fitness",
-      logo: "⚽",
-      description: "Inter-collegiate football, basketball, badminton, and fitness conditioning. Promoting team spirit and healthy athletic habits.",
-      leads: "Captain Vikram Singh",
-      regularMeeting: "Daily at 6:30 AM & 5:00 PM • Sports Complex",
-      memberCount: 290,
-      bannerColor: "from-orange-500 to-amber-600",
-      tags: ["Football", "Basketball", "Athletics", "Tournaments"]
+      tags: ["Jam Sessions", "Vocals", "Bands"]
     }
   ],
 
@@ -420,9 +705,9 @@ Always ensure gradients are zeroed before backprop!`,
       category: "Electronics",
       location: "Central Library, 2nd Floor Reading Hall table #14",
       date: "2026-09-10",
-      description: "Black and white carbon-finish scientific calculator. Has a small yellow smiley sticker on the protective slide cover.",
+      description: "Black and white carbon-finish scientific calculator with smiley sticker.",
       contactName: "Alex Rivera",
-      contactInfo: "alex.rivera@campus.edu / Ext 4120",
+      contactInfo: "alex.rivera@campus.edu",
       status: "Active",
       reward: "$15 Cafeteria Voucher"
     },
@@ -431,51 +716,12 @@ Always ensure gradients are zeroed before backprop!`,
       type: "Found",
       title: "Navy Blue Hydro Flask 32oz Water Bottle",
       category: "Accessories",
-      location: "Mechanical Engineering Workshop bench",
+      location: "Mechanical Workshop bench",
       date: "2026-09-11",
-      description: "Has several coding stickers including GitHub Octocat and React logo. Kept safely with lab attendant Mr. Sharma.",
+      description: "Has several coding stickers. Kept safely with lab attendant.",
       contactName: "Lab Assistant Sharma",
-      contactInfo: "Mech Block Ground Floor Room 02",
+      contactInfo: "Mech Block Room 02",
       status: "Active",
-      reward: ""
-    },
-    {
-      id: "lf-3",
-      type: "Lost",
-      title: "Student ID Card with RFID Tag (CS Department)",
-      category: "ID Cards",
-      location: "Between Main Canteen and CS Block B Lawn",
-      date: "2026-09-09",
-      description: "ID card belonging to 'Rahul Verma' Roll No CS24B022. Very urgent as library access is blocked without it.",
-      contactName: "Rahul Verma",
-      contactInfo: "98765-43210 (WhatsApp)",
-      status: "Active",
-      reward: "Free Coffee"
-    },
-    {
-      id: "lf-4",
-      type: "Found",
-      title: "Sony WF-1000XM4 Wireless Earbuds Charging Case",
-      category: "Electronics",
-      location: "Auditorium Row F Seat 12",
-      date: "2026-09-08",
-      description: "Matte black case without earbuds inside. Battery was at ~60%. Please verify serial number or Bluetooth pairing to claim.",
-      contactName: "Security Desk",
-      contactInfo: "Main Gate Security Office",
-      status: "Active",
-      reward: ""
-    },
-    {
-      id: "lf-5",
-      type: "Found",
-      title: "Set of 3 Keys with Marvel Deadpool Keychain",
-      category: "Keys",
-      location: "Hostel 4 Ground Floor Water Cooler",
-      date: "2026-09-07",
-      description: "Two Godrej lock keys and one bicycle lock key on a red metallic ring.",
-      contactName: "Hostel 4 Warden Office",
-      contactInfo: "Hostel 4 Caretaker",
-      status: "Resolved",
       reward: ""
     }
   ],
@@ -487,59 +733,11 @@ Always ensure gradients are zeroed before backprop!`,
       category: "Textbooks",
       price: 38,
       condition: "Like New",
-      description: "Hardly used textbook for Algorithms course. Crisp pages, zero pencil marks, pristine condition. Retail is $85+.",
-      sellerName: "Sarah Chen (Final Year CS)",
-      sellerContact: "sarah.chen@campus.edu • Room 304 H-2",
+      description: "Hardly used textbook for Algorithms course. Pristine condition.",
+      sellerName: "Sarah Chen",
+      sellerContact: "sarah.chen@campus.edu",
       image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&auto=format&fit=crop&q=80",
       date: "2026-09-08"
-    },
-    {
-      id: "mp-2",
-      title: "Hero Sprint Pro 21-Speed Gear Bicycle with Lock & Helmet",
-      category: "Bicycles",
-      price: 65,
-      condition: "Good",
-      description: "Serviced last month with new brake pads and lubricated derailleur. Great for quick commute between campus gates and hostel blocks.",
-      sellerName: "David Miller",
-      sellerContact: "david.m@campus.edu • Phone: 555-0192",
-      image: "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=500&auto=format&fit=crop&q=80",
-      date: "2026-09-09"
-    },
-    {
-      id: "mp-3",
-      title: "Raspberry Pi 4 Model B (4GB RAM) + 32GB SD + Argon ONE Case",
-      category: "Electronics",
-      price: 55,
-      condition: "Like New",
-      description: "Complete embedded project setup with power supply, micro HDMI cable, and pre-flashed Raspberry Pi OS. Perfect for IoT/Robotics courses.",
-      sellerName: "Devon Clark (Robotics RAS)",
-      sellerContact: "devon.ras@campus.edu",
-      image: "https://images.unsplash.com/photo-1517055729445-fa7d27394b48?w=500&auto=format&fit=crop&q=80",
-      date: "2026-09-10"
-    },
-    {
-      id: "mp-4",
-      title: "Dorm Study LED Desk Lamp with 3 Color Modes & Wireless Charger",
-      category: "Hostel Gear",
-      price: 18,
-      condition: "Like New",
-      description: "Eye-care adjustable lamp with built-in 10W fast wireless charging pad for your phone. Selling because graduating this term.",
-      sellerName: "Jessica Wong",
-      sellerContact: "jessica.w@campus.edu • Girls Hostel 3",
-      image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=500&auto=format&fit=crop&q=80",
-      date: "2026-09-07"
-    },
-    {
-      id: "mp-5",
-      title: "Engineering Mechanics & Graphics Mini Drafter + Drawing Board",
-      category: "Stationery & Tools",
-      price: 22,
-      condition: "Good",
-      description: "Standard Omega engineering mini drafter with clamp and 30x20 wooden drawing board. Mandatory for 1st/2nd year civil and mechanical labs.",
-      sellerName: "Rohan Kapoor",
-      sellerContact: "rohan.k@campus.edu",
-      image: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=500&auto=format&fit=crop&q=80",
-      date: "2026-09-05"
     }
   ],
 
@@ -548,7 +746,7 @@ Always ensure gradients are zeroed before backprop!`,
       id: "notif-1",
       type: "warning",
       title: "Low Attendance Warning",
-      message: "Your attendance in Computer Networks is 71.4% (below 75% requirement). You need 5 consecutive classes to restore 75%.",
+      message: "Your attendance in Computer Networks is 71.4% (below 75% requirement). Attend next 5 consecutive classes.",
       time: "2 hours ago",
       read: false,
       link: "#attendance"
@@ -565,20 +763,11 @@ Always ensure gradients are zeroed before backprop!`,
     {
       id: "notif-3",
       type: "event",
-      title: "HackCampus 2026 Registration Open",
-      message: "Over 400 students have registered. Early bird registrations close in 48 hours.",
+      title: "Campus Placements: Google India Drive Opened",
+      message: "Software Engineering Intern summer applications are open until Sept 26.",
       time: "Yesterday",
-      read: true,
-      link: "#events"
-    },
-    {
-      id: "notif-4",
-      type: "success",
-      title: "Study Goal Milestone",
-      message: "You logged 95 minutes of focused study today! Keep up the momentum.",
-      time: "Yesterday",
-      read: true,
-      link: "#study"
+      read: false,
+      link: "#placements"
     }
   ]
 };
@@ -946,10 +1135,10 @@ function triggerConfetti() {
 
 
 // --- FILE: js/store.js ---
-// CampusHub State Store & Persistence Layer
+// CampusHub State Store & Persistence Layer - Extended for 150 Features
 
 
-const STORAGE_KEY = 'campushub_state_v1';
+const STORAGE_KEY = 'campushub_state_v2';
 const THEME_KEY = 'campushub_theme';
 
 class Store {
@@ -959,13 +1148,11 @@ class Store {
     this.initTheme();
   }
 
-  // Load from localStorage or seed initial data
   loadState() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        // Ensure all top-level keys exist if initialData added new ones
         return { ...initialData, ...parsed };
       }
     } catch (err) {
@@ -983,7 +1170,6 @@ class Store {
     }
   }
 
-  // Event Pub/Sub
   subscribe(event, callback) {
     if (!this.listeners.has(event)) {
       this.listeners.set(event, new Set());
@@ -998,7 +1184,6 @@ class Store {
         try { cb(data); } catch (e) { console.error(`Error in subscriber for ${event}:`, e); }
       });
     }
-    // Also notify global wildcard listeners
     if (this.listeners.has('*')) {
       this.listeners.get('*').forEach(cb => {
         try { cb({ event, data }); } catch (e) { console.error(`Error in wildcard subscriber:`, e); }
@@ -1006,9 +1191,18 @@ class Store {
     }
   }
 
-  // ==========================================
-  // THEME MANAGEMENT
-  // ==========================================
+  // Role Management (Feature 150)
+  getRole() {
+    return this.state.currentRole || 'student';
+  }
+
+  setRole(role) {
+    this.state.currentRole = role;
+    this.saveState();
+    this.emit('role:changed', role);
+  }
+
+  // Theme Management
   initTheme() {
     const savedTheme = localStorage.getItem(THEME_KEY);
     const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -1037,19 +1231,284 @@ class Store {
     return this.theme || 'light';
   }
 
-  // ==========================================
-  // PROFILE METHODS
-  // ==========================================
-  getProfile() {
-    return this.state.profile;
+  // Institutional Info (Features 1-15)
+  getInstitution() {
+    return this.state.institution;
   }
 
+  // Admissions (Features 16-30)
+  getAdmissions() {
+    return this.state.admissions;
+  }
+
+  submitAdmissionApplication(appData) {
+    const newId = 'APP-2026-' + Math.floor(1300 + Math.random() * 8000);
+    const newApp = {
+      id: newId,
+      applicantName: appData.applicantName,
+      course: appData.course,
+      status: 'Submitted',
+      dateSubmitted: new Date().toISOString().split('T')[0],
+      verificationStage: 'Application Received & Awaiting Document Review',
+      remarks: 'Application fees paid. Entrance score recorded.'
+    };
+    if (!this.state.admissions.applications) this.state.admissions.applications = [];
+    this.state.admissions.applications.unshift(newApp);
+    this.saveState();
+    this.emit('admissions:updated', this.state.admissions);
+    return newApp;
+  }
+
+  checkApplicationStatus(appId) {
+    if (!this.state.admissions?.applications) return null;
+    return this.state.admissions.applications.find(a => a.id.toUpperCase() === appId.trim().toUpperCase());
+  }
+
+  // Academic Exams & Assessment (Features 40, 42, 43)
+  getExamTimetable() {
+    return this.state.examTimetable || [];
+  }
+
+  getAssessmentMarks() {
+    return this.state.assessmentMarks || [];
+  }
+
+  getAcademicCalendar() {
+    return this.state.academicCalendar || [];
+  }
+
+  // Digital Library (Features 51-70)
+  getBooks() {
+    return this.state.libraryBooks || [];
+  }
+
+  toggleReserveBook(bookId) {
+    const book = this.state.libraryBooks.find(b => b.id === bookId);
+    if (book) {
+      book.reservedByMe = !book.reservedByMe;
+      this.saveState();
+      this.emit('library:updated', this.state.libraryBooks);
+      return book.reservedByMe;
+    }
+    return false;
+  }
+
+  getPyqs() {
+    return this.state.pyqPapers || [];
+  }
+
+  getQuizzes() {
+    return this.state.quizzes || [];
+  }
+
+  // Faculty Hub (Features 71-85)
+  getFaculty() {
+    return this.state.facultyMembers || [];
+  }
+
+  bookFacultyAppointment(data) {
+    const newApt = {
+      id: 'apt-' + Date.now(),
+      facultyName: data.facultyName,
+      studentName: this.state.profile.name,
+      date: data.date,
+      time: data.time,
+      topic: data.topic,
+      status: 'Confirmed'
+    };
+    if (!this.state.facultyAppointments) this.state.facultyAppointments = [];
+    this.state.facultyAppointments.unshift(newApt);
+    this.saveState();
+    this.emit('faculty:updated', this.state.facultyAppointments);
+    return newApt;
+  }
+
+  getFacultyAppointments() {
+    return this.state.facultyAppointments || [];
+  }
+
+  // Hostel, Cafeteria & Bookings (Features 116-130)
+  getMessMenu() {
+    return this.state.messMenu;
+  }
+
+  getBusRoutes() {
+    return this.state.busRoutes || [];
+  }
+
+  getFacilityBookings() {
+    return this.state.facilityBookings || [];
+  }
+
+  bookFacility(data) {
+    const newBk = {
+      id: 'bk-' + Date.now(),
+      facilityName: data.facilityName,
+      bookedBy: this.state.profile.name,
+      date: data.date,
+      timeSlot: data.timeSlot,
+      purpose: data.purpose,
+      status: 'Confirmed'
+    };
+    if (!this.state.facilityBookings) this.state.facilityBookings = [];
+    this.state.facilityBookings.unshift(newBk);
+    this.saveState();
+    this.emit('facilities:updated', this.state.facilityBookings);
+    return newBk;
+  }
+
+  getHostelAllocation() {
+    return this.state.hostelAllocation;
+  }
+
+  // Student Services & Grievances (Features 131-140)
+  getGrievances() {
+    return this.state.grievances || [];
+  }
+
+  submitGrievance(data) {
+    const newId = 'GRV-' + Math.floor(1050 + Math.random() * 8000);
+    const newGrv = {
+      id: newId,
+      title: data.title,
+      category: data.category || 'General',
+      isAnonymous: !!data.isAnonymous,
+      date: new Date().toISOString().split('T')[0],
+      status: 'Submitted',
+      department: data.department || 'Student Welfare Office',
+      resolutionNote: 'Ticket acknowledged. Assigned to duty inspector.'
+    };
+    if (!this.state.grievances) this.state.grievances = [];
+    this.state.grievances.unshift(newGrv);
+    this.saveState();
+    this.emit('grievances:updated', this.state.grievances);
+    return newGrv;
+  }
+
+  getLeaveApplications() {
+    return this.state.leaveApplications || [];
+  }
+
+  submitLeaveApplication(data) {
+    const newLeave = {
+      id: 'LV-' + Math.floor(450 + Math.random() * 900),
+      type: data.type || 'Out-Station Pass',
+      fromDate: data.fromDate,
+      toDate: data.toDate,
+      reason: data.reason,
+      destination: data.destination,
+      parentApprovalStatus: 'Approved via SMS',
+      wardenStatus: 'Pass Granted (QR Active)'
+    };
+    if (!this.state.leaveApplications) this.state.leaveApplications = [];
+    this.state.leaveApplications.unshift(newLeave);
+    this.saveState();
+    this.emit('leave:updated', this.state.leaveApplications);
+    return newLeave;
+  }
+
+  getCertificates() {
+    return this.state.certificateRequests || [];
+  }
+
+  requestCertificate(data) {
+    const newCert = {
+      id: 'CERT-' + Math.floor(900 + Math.random() * 900),
+      type: data.type,
+      purpose: data.purpose,
+      date: new Date().toISOString().split('T')[0],
+      status: 'Ready for Download',
+      serialNo: `SXIT/CERT/2026/${Math.floor(1000 + Math.random() * 9000)}`
+    };
+    if (!this.state.certificateRequests) this.state.certificateRequests = [];
+    this.state.certificateRequests.unshift(newCert);
+    this.saveState();
+    this.emit('certificates:updated', this.state.certificateRequests);
+    return newCert;
+  }
+
+  getMedicalCenter() {
+    return this.state.medicalCenter;
+  }
+
+  // Placements (Features 147-148)
+  getPlacements() {
+    return this.state.placements || [];
+  }
+
+  applyPlacement(id) {
+    const plc = this.state.placements.find(p => p.id === id);
+    if (plc) {
+      plc.applied = true;
+      plc.status = 'Application Submitted';
+      this.saveState();
+      this.emit('placements:updated', this.state.placements);
+      return true;
+    }
+    return false;
+  }
+
+  // Community & Alumni (Features 111-115)
+  getCommunityPosts() {
+    return this.state.communityPosts || [];
+  }
+
+  addCommunityPost(data) {
+    const newPost = {
+      id: 'post-' + Date.now(),
+      author: this.state.profile.name,
+      authorRole: `${this.state.profile.year} Student`,
+      time: 'Just now',
+      title: data.title,
+      votes: 1,
+      repliesCount: 0,
+      tags: data.tags || ['General']
+    };
+    if (!this.state.communityPosts) this.state.communityPosts = [];
+    this.state.communityPosts.unshift(newPost);
+    this.saveState();
+    this.emit('community:updated', this.state.communityPosts);
+    return newPost;
+  }
+
+  upvotePost(id) {
+    const post = this.state.communityPosts.find(p => p.id === id);
+    if (post) {
+      post.votes++;
+      this.saveState();
+      this.emit('community:updated', this.state.communityPosts);
+    }
+  }
+
+  getAlumniList() {
+    return this.state.alumniList || [];
+  }
+
+  // Admin Analytics & Role Switcher (Features 149-150)
+  getAdminMetrics() {
+    return this.state.adminMetrics || {};
+  }
+
+  getRole() {
+    return this.state.currentRole || 'Student';
+  }
+
+  setRole(role) {
+    this.state.currentRole = role;
+    this.saveState();
+    this.emit('role:updated', role);
+    return role;
+  }
+
+  // ==========================================
+  // PROFILE & SYSTEM (Pre-existing Features)
+  // ==========================================
+  getProfile() { return this.state.profile; }
   updateProfile(updates) {
     this.state.profile = { ...this.state.profile, ...updates };
     this.saveState();
     this.emit('profile:updated', this.state.profile);
   }
-
   addSkill(skill) {
     const clean = skill.trim();
     if (clean && !this.state.profile.skills.includes(clean)) {
@@ -1058,32 +1517,23 @@ class Store {
       this.emit('profile:updated', this.state.profile);
     }
   }
-
   removeSkill(skill) {
     this.state.profile.skills = this.state.profile.skills.filter(s => s !== skill);
     this.saveState();
     this.emit('profile:updated', this.state.profile);
   }
 
-  // ==========================================
-  // TIMETABLE METHODS
-  // ==========================================
   getTimetable(day = null) {
     if (!day) return this.state.timetable;
     return this.state.timetable.filter(c => c.day.toLowerCase() === day.toLowerCase());
   }
-
   addClass(classItem) {
-    const newClass = {
-      ...classItem,
-      id: 'tt-' + Date.now()
-    };
+    const newClass = { ...classItem, id: 'tt-' + Date.now() };
     this.state.timetable.push(newClass);
     this.saveState();
     this.emit('timetable:updated', this.state.timetable);
     return newClass;
   }
-
   updateClass(id, updates) {
     const idx = this.state.timetable.findIndex(c => c.id === id);
     if (idx !== -1) {
@@ -1092,47 +1542,29 @@ class Store {
       this.emit('timetable:updated', this.state.timetable);
     }
   }
-
   deleteClass(id) {
     this.state.timetable = this.state.timetable.filter(c => c.id !== id);
     this.saveState();
     this.emit('timetable:updated', this.state.timetable);
   }
 
-  // ==========================================
-  // ATTENDANCE METHODS
-  // ==========================================
-  getAttendance() {
-    return this.state.attendance;
-  }
-
+  getAttendance() { return this.state.attendance; }
   markAttendance(subjectId, status = 'present') {
     const subject = this.state.attendance.find(s => s.id === subjectId);
     if (subject) {
       subject.totalClasses = (subject.totalClasses || 0) + 1;
-      if (status === 'present') {
-        subject.attendedClasses = (subject.attendedClasses || 0) + 1;
-      }
+      if (status === 'present') subject.attendedClasses = (subject.attendedClasses || 0) + 1;
       this.saveState();
       this.emit('attendance:updated', this.state.attendance);
     }
   }
-
-  addSubject(subjectData) {
-    const newSubject = {
-      id: 'att-' + Date.now(),
-      subject: subjectData.subject,
-      code: subjectData.code || 'SUB' + Math.floor(100 + Math.random() * 900),
-      totalClasses: parseInt(subjectData.totalClasses, 10) || 0,
-      attendedClasses: parseInt(subjectData.attendedClasses, 10) || 0,
-      targetPercentage: parseInt(subjectData.targetPercentage, 10) || 75
-    };
+  addSubject(data) {
+    const newSubject = { id: 'att-' + Date.now(), subject: data.subject, code: data.code || 'SUB' + Math.floor(100 + Math.random() * 900), totalClasses: parseInt(data.totalClasses, 10) || 0, attendedClasses: parseInt(data.attendedClasses, 10) || 0, targetPercentage: parseInt(data.targetPercentage, 10) || 75 };
     this.state.attendance.push(newSubject);
     this.saveState();
     this.emit('attendance:updated', this.state.attendance);
     return newSubject;
   }
-
   updateSubject(id, updates) {
     const idx = this.state.attendance.findIndex(s => s.id === id);
     if (idx !== -1) {
@@ -1141,36 +1573,20 @@ class Store {
       this.emit('attendance:updated', this.state.attendance);
     }
   }
-
   deleteSubject(id) {
     this.state.attendance = this.state.attendance.filter(s => s.id !== id);
     this.saveState();
     this.emit('attendance:updated', this.state.attendance);
   }
 
-  // ==========================================
-  // ASSIGNMENTS & TASKS METHODS
-  // ==========================================
-  getAssignments() {
-    return this.state.assignments;
-  }
-
-  addAssignment(assignmentData) {
-    const newAssignment = {
-      id: 'asg-' + Date.now(),
-      title: assignmentData.title,
-      subject: assignmentData.subject,
-      deadline: assignmentData.deadline,
-      priority: assignmentData.priority || 'Medium',
-      status: 'Pending',
-      description: assignmentData.description || ''
-    };
+  getAssignments() { return this.state.assignments; }
+  addAssignment(data) {
+    const newAssignment = { id: 'asg-' + Date.now(), title: data.title, subject: data.subject, deadline: data.deadline, priority: data.priority || 'Medium', status: 'Pending', description: data.description || '' };
     this.state.assignments.unshift(newAssignment);
     this.saveState();
     this.emit('assignments:updated', this.state.assignments);
     return newAssignment;
   }
-
   toggleAssignmentStatus(id) {
     const asg = this.state.assignments.find(a => a.id === id);
     if (asg) {
@@ -1181,7 +1597,6 @@ class Store {
     }
     return null;
   }
-
   updateAssignment(id, updates) {
     const idx = this.state.assignments.findIndex(a => a.id === id);
     if (idx !== -1) {
@@ -1190,63 +1605,33 @@ class Store {
       this.emit('assignments:updated', this.state.assignments);
     }
   }
-
   deleteAssignment(id) {
     this.state.assignments = this.state.assignments.filter(a => a.id !== id);
     this.saveState();
     this.emit('assignments:updated', this.state.assignments);
   }
 
-  // ==========================================
-  // STUDY PLANNER METHODS
-  // ==========================================
-  getStudySessions() {
-    return this.state.studySessions;
-  }
-
+  getStudySessions() { return this.state.studySessions; }
   addStudySession(session) {
-    const newSession = {
-      id: 'ss-' + Date.now(),
-      subject: session.subject,
-      topic: session.topic,
-      date: session.date || new Date().toISOString().split('T')[0],
-      durationMinutes: parseInt(session.durationMinutes, 10) || 25,
-      status: session.status || 'Planned'
-    };
+    const newSession = { id: 'ss-' + Date.now(), subject: session.subject, topic: session.topic, date: session.date || new Date().toISOString().split('T')[0], durationMinutes: parseInt(session.durationMinutes, 10) || 25, status: session.status || 'Planned' };
     this.state.studySessions.unshift(newSession);
     this.saveState();
     this.emit('study:updated', this.state.studySessions);
     return newSession;
   }
-
   deleteStudySession(id) {
     this.state.studySessions = this.state.studySessions.filter(s => s.id !== id);
     this.saveState();
     this.emit('study:updated', this.state.studySessions);
   }
-
   logPomodoroMinutes(minutes = 25, subject = 'General Focus') {
-    const today = new Date().toISOString().split('T')[0];
-    const session = {
-      id: 'ss-' + Date.now(),
-      subject: subject,
-      topic: 'Pomodoro Focus Session',
-      date: today,
-      durationMinutes: minutes,
-      status: 'Completed'
-    };
+    const session = { id: 'ss-' + Date.now(), subject, topic: 'Pomodoro Focus Session', date: new Date().toISOString().split('T')[0], durationMinutes: minutes, status: 'Completed' };
     this.state.studySessions.unshift(session);
     this.saveState();
     this.emit('study:updated', this.state.studySessions);
   }
 
-  // ==========================================
-  // EVENTS METHODS
-  // ==========================================
-  getEvents() {
-    return this.state.events;
-  }
-
+  getEvents() { return this.state.events; }
   toggleBookmarkEvent(id) {
     const ev = this.state.events.find(e => e.id === id);
     if (ev) {
@@ -1257,119 +1642,52 @@ class Store {
     }
     return false;
   }
-
-  addEvent(eventData) {
-    const newEvent = {
-      id: 'ev-' + Date.now(),
-      title: eventData.title,
-      category: eventData.category || 'Workshop',
-      date: eventData.date,
-      time: eventData.time || '10:00 AM - 01:00 PM',
-      venue: eventData.venue || 'Campus Auditorium',
-      organizer: eventData.organizer || 'Student Committee',
-      description: eventData.description || '',
-      tags: eventData.tags || ['Campus'],
-      image: eventData.image || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&auto=format&fit=crop&q=80',
-      bookmarked: false,
-      registeredCount: 1
-    };
+  addEvent(data) {
+    const newEvent = { id: 'ev-' + Date.now(), title: data.title, category: data.category || 'Workshop', date: data.date, time: data.time || '10:00 AM - 01:00 PM', venue: data.venue || 'Auditorium', organizer: data.organizer || 'Student Committee', description: data.description || '', image: data.image || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&auto=format&fit=crop&q=80', bookmarked: false, registeredCount: 1 };
     this.state.events.unshift(newEvent);
     this.saveState();
     this.emit('events:updated', this.state.events);
     return newEvent;
   }
 
-  // ==========================================
-  // NOTES & RESOURCES METHODS
-  // ==========================================
-  getNotes() {
-    return this.state.notes;
-  }
-
-  addNote(noteData) {
-    const newNote = {
-      id: 'note-' + Date.now(),
-      title: noteData.title,
-      subject: noteData.subject,
-      category: noteData.category || 'Lecture Notes',
-      date: new Date().toISOString().split('T')[0],
-      tags: noteData.tags || [],
-      content: noteData.content || '',
-      link: noteData.link || ''
-    };
+  getNotes() { return this.state.notes; }
+  addNote(data) {
+    const newNote = { id: 'note-' + Date.now(), title: data.title, subject: data.subject, category: data.category || 'Lecture Notes', date: new Date().toISOString().split('T')[0], tags: data.tags || [], content: data.content || '', link: data.link || '' };
     this.state.notes.unshift(newNote);
     this.saveState();
     this.emit('notes:updated', this.state.notes);
     return newNote;
   }
-
-  updateNote(id, updates) {
-    const idx = this.state.notes.findIndex(n => n.id === id);
-    if (idx !== -1) {
-      this.state.notes[idx] = { ...this.state.notes[idx], ...updates };
-      this.saveState();
-      this.emit('notes:updated', this.state.notes);
-    }
-  }
-
   deleteNote(id) {
     this.state.notes = this.state.notes.filter(n => n.id !== id);
     this.saveState();
     this.emit('notes:updated', this.state.notes);
   }
 
-  // ==========================================
-  // GPA CALCULATOR METHODS
-  // ==========================================
-  getGpaRecords() {
-    return this.state.gpaRecords;
-  }
-
+  getGpaRecords() { return this.state.gpaRecords; }
   updateCurrentCourses(courses) {
     this.state.gpaRecords.currentSemesterCourses = courses;
     this.saveState();
     this.emit('gpa:updated', this.state.gpaRecords);
   }
-
   addGpaCourse(course) {
-    const newCourse = {
-      id: 'c-' + Date.now(),
-      code: course.code || 'COURSE',
-      name: course.name || 'New Course',
-      credits: parseFloat(course.credits) || 3,
-      grade: course.grade || 'A',
-      gradePoint: parseFloat(course.gradePoint) || 8
-    };
+    const newCourse = { id: 'c-' + Date.now(), code: course.code || 'COURSE', name: course.name || 'New Course', credits: parseFloat(course.credits) || 3, grade: course.grade || 'A', gradePoint: parseFloat(course.gradePoint) || 8 };
     this.state.gpaRecords.currentSemesterCourses.push(newCourse);
     this.saveState();
     this.emit('gpa:updated', this.state.gpaRecords);
     return newCourse;
   }
-
   deleteGpaCourse(id) {
     this.state.gpaRecords.currentSemesterCourses = this.state.gpaRecords.currentSemesterCourses.filter(c => c.id !== id);
     this.saveState();
     this.emit('gpa:updated', this.state.gpaRecords);
   }
 
-  updateSemesters(semesters) {
-    this.state.gpaRecords.semesters = semesters;
-    this.saveState();
-    this.emit('gpa:updated', this.state.gpaRecords);
-  }
-
-  // ==========================================
-  // CLUBS METHODS
-  // ==========================================
-  getClubs() {
-    return this.state.clubs;
-  }
-
+  getClubs() { return this.state.clubs; }
   toggleJoinClub(clubId) {
     const joined = this.state.profile.joinedClubs || [];
     const club = this.state.clubs.find(c => c.id === clubId);
     let isNowJoined = false;
-
     if (joined.includes(clubId)) {
       this.state.profile.joinedClubs = joined.filter(id => id !== clubId);
       if (club && club.memberCount > 0) club.memberCount--;
@@ -1379,40 +1697,20 @@ class Store {
       if (club) club.memberCount++;
       isNowJoined = true;
     }
-
     this.saveState();
     this.emit('clubs:updated', this.state.clubs);
     this.emit('profile:updated', this.state.profile);
     return isNowJoined;
   }
 
-  // ==========================================
-  // LOST & FOUND METHODS
-  // ==========================================
-  getLostFound() {
-    return this.state.lostFound;
-  }
-
+  getLostFound() { return this.state.lostFound; }
   addLostFoundItem(item) {
-    const newItem = {
-      id: 'lf-' + Date.now(),
-      type: item.type || 'Lost',
-      title: item.title,
-      category: item.category || 'Other',
-      location: item.location,
-      date: item.date || new Date().toISOString().split('T')[0],
-      description: item.description,
-      contactName: item.contactName || this.state.profile.name,
-      contactInfo: item.contactInfo || this.state.profile.email,
-      status: 'Active',
-      reward: item.reward || ''
-    };
+    const newItem = { id: 'lf-' + Date.now(), type: item.type || 'Lost', title: item.title, category: item.category || 'Other', location: item.location, date: item.date || new Date().toISOString().split('T')[0], description: item.description, contactName: item.contactName || this.state.profile.name, contactInfo: item.contactInfo || this.state.profile.email, status: 'Active', reward: item.reward || '' };
     this.state.lostFound.unshift(newItem);
     this.saveState();
     this.emit('lostfound:updated', this.state.lostFound);
     return newItem;
   }
-
   resolveLostFoundItem(id) {
     const item = this.state.lostFound.find(i => i.id === id);
     if (item) {
@@ -1423,52 +1721,27 @@ class Store {
     }
     return null;
   }
-
   deleteLostFoundItem(id) {
     this.state.lostFound = this.state.lostFound.filter(i => i.id !== id);
     this.saveState();
     this.emit('lostfound:updated', this.state.lostFound);
   }
 
-  // ==========================================
-  // MARKETPLACE METHODS
-  // ==========================================
-  getMarketplace() {
-    return this.state.marketplace;
-  }
-
+  getMarketplace() { return this.state.marketplace; }
   addMarketplaceItem(item) {
-    const newItem = {
-      id: 'mp-' + Date.now(),
-      title: item.title,
-      category: item.category || 'Textbooks',
-      price: parseFloat(item.price) || 0,
-      condition: item.condition || 'Good',
-      description: item.description,
-      sellerName: item.sellerName || this.state.profile.name,
-      sellerContact: item.sellerContact || this.state.profile.email,
-      image: item.image || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&auto=format&fit=crop&q=80',
-      date: new Date().toISOString().split('T')[0]
-    };
+    const newItem = { id: 'mp-' + Date.now(), title: item.title, category: item.category || 'Textbooks', price: parseFloat(item.price) || 0, condition: item.condition || 'Good', description: item.description, sellerName: item.sellerName || this.state.profile.name, sellerContact: item.sellerContact || this.state.profile.email, image: item.image || 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&auto=format&fit=crop&q=80', date: new Date().toISOString().split('T')[0] };
     this.state.marketplace.unshift(newItem);
     this.saveState();
     this.emit('marketplace:updated', this.state.marketplace);
     return newItem;
   }
-
   deleteMarketplaceItem(id) {
     this.state.marketplace = this.state.marketplace.filter(i => i.id !== id);
     this.saveState();
     this.emit('marketplace:updated', this.state.marketplace);
   }
 
-  // ==========================================
-  // NOTIFICATIONS METHODS
-  // ==========================================
-  getNotifications() {
-    return this.state.notifications;
-  }
-
+  getNotifications() { return this.state.notifications; }
   markNotificationAsRead(id) {
     const notif = this.state.notifications.find(n => n.id === id);
     if (notif) {
@@ -1477,27 +1750,19 @@ class Store {
       this.emit('notifications:updated', this.state.notifications);
     }
   }
-
   markAllNotificationsRead() {
     this.state.notifications.forEach(n => n.read = true);
     this.saveState();
     this.emit('notifications:updated', this.state.notifications);
   }
 
-  // ==========================================
-  // SYSTEM & DATA MANAGEMENT
-  // ==========================================
   resetToSampleData() {
     this.state = JSON.parse(JSON.stringify(initialData));
     this.saveState();
     this.emit('*', { event: 'reset' });
     return this.state;
   }
-
-  exportDataJson() {
-    return JSON.stringify(this.state, null, 2);
-  }
-
+  exportDataJson() { return JSON.stringify(this.state, null, 2); }
   importDataJson(jsonString) {
     try {
       const parsed = JSON.parse(jsonString);
@@ -1761,6 +2026,78 @@ function renderLanding(container) {
             </div>
             <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">12. Student Profile</h3>
             <p class="text-sm text-slate-600 dark:text-slate-400">Academic portfolio with skills, achievements, joined societies, custom avatars, and data backup.</p>
+          </a>
+
+          <!-- 13. Digital ID Card (New) -->
+          <a href="#digitalid" class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 transition-all card-hover-lift block group">
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="badge-check" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">13. Digital Student ID</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">Printable, verified digital identity card with dynamic QR code & barcode for campus gates and library.</p>
+          </a>
+
+          <!-- 14. Admissions & Eligibility (New) -->
+          <a href="#admissions" class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 dark:hover:border-blue-500/50 transition-all card-hover-lift block group">
+            <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">14. Admissions 2026</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">Online application, real-time application tracker, eligibility checker, and transparent fee calculators.</p>
+          </a>
+
+          <!-- 15. Central Library & AI Tutor (New) -->
+          <a href="#library" class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-purple-500/50 dark:hover:border-purple-500/50 transition-all card-hover-lift block group">
+            <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="library" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">15. Library & AI Tutor</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">85,000+ volume catalogue with live book holds, past 5 years' university PYQ exam papers, and AI tutor.</p>
+          </a>
+
+          <!-- 16. Faculty Directory & Cabin Status (New) -->
+          <a href="#faculty" class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-500/50 dark:hover:border-amber-500/50 transition-all card-hover-lift block group">
+            <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="user-check" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">16. Faculty & Mentors</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">Real-time cabin availability (In Office / Lecture), consultation slot booking, and research profiles.</p>
+          </a>
+
+          <!-- 17. Hostel, Mess & Transit (New) -->
+          <a href="#facilities" class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-rose-500/50 dark:hover:border-rose-500/50 transition-all card-hover-lift block group">
+            <div class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950 text-rose-600 dark:text-rose-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="home" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">17. Hostel, Mess & Bus</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">Daily nutrition meal menus, room allocations, high-performance computing lab bookings, and bus GPS routes.</p>
+          </a>
+
+          <!-- 18. Welfare, Grievance & Gate Passes (New) -->
+          <a href="#services" class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-teal-500/50 dark:hover:border-teal-500/50 transition-all card-hover-lift block group">
+            <div class="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-950 text-teal-600 dark:text-teal-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="shield-alert" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">18. Services & Grievances</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">Anonymous grievance redressal, hostel leave gate passes with warden QR verification, and 24/7 medical hotline.</p>
+          </a>
+
+          <!-- 19. Placements & Drives (New) -->
+          <a href="#placements" class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 dark:hover:border-indigo-500/50 transition-all card-hover-lift block group">
+            <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="briefcase" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">19. Training & Placements</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">94.8% placement rate, ₹62 LPA top package, AI skill matching, and one-click recruiter drive applications.</p>
+          </a>
+
+          <!-- 20. Executive Analytics (New) -->
+          <a href="#admin" class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-slate-500/50 dark:hover:border-slate-500/50 transition-all card-hover-lift block group">
+            <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">20. Executive Analytics</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">Institutional intelligence, department matrix, accreditation reports, and live role-switcher persona simulator.</p>
           </a>
 
         </div>
@@ -6165,16 +6502,2495 @@ function renderProfile(container) {
 }
 
 
+// --- FILE: js/views/campusAbout.js ---
+// CampusHub College Overview & Institutional Portal (Features 2-15)
+
+
+
+function renderCampusAbout(container) {
+  const inst = store.getInstitution();
+
+  container.innerHTML = `
+    <div class="space-y-8">
+
+      <!-- Hero Header & Identity -->
+      <div class="p-6 sm:p-10 rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white shadow-xl relative overflow-hidden">
+        <div class="absolute right-0 top-0 w-96 h-96 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 max-w-3xl space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-bold text-indigo-300 backdrop-blur-md">
+            <span>🏛️</span>
+            <span>Established in ${inst.foundedYear} • Autonomous Institution</span>
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-black tracking-tight">${escapeHtml(inst.name)}</h1>
+          <p class="text-slate-300 text-sm sm:text-base font-normal leading-relaxed">${escapeHtml(inst.tagline)}</p>
+          <div class="flex flex-wrap items-center gap-4 pt-2 text-xs font-semibold text-indigo-200">
+            <span class="flex items-center gap-1.5"><i data-lucide="award" class="w-4 h-4 text-amber-400"></i> ${inst.accreditation}</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="trending-up" class="w-4 h-4 text-emerald-400"></i> ${inst.nirfRank}</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="map-pin" class="w-4 h-4 text-rose-400"></i> ${inst.campusAcreage} Eco-Campus</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Campus Statistics (Feature 9) -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center">
+          <div class="text-3xl font-black text-indigo-600 dark:text-indigo-400 font-mono">${inst.stats.totalStudents}+</div>
+          <div class="text-xs text-slate-500 mt-1 font-semibold">Enrolled Students</div>
+        </div>
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center">
+          <div class="text-3xl font-black text-purple-600 dark:text-purple-400 font-mono">${inst.stats.facultyCount}+</div>
+          <div class="text-xs text-slate-500 mt-1 font-semibold">Distinguished Faculty</div>
+        </div>
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center">
+          <div class="text-3xl font-black text-emerald-600 dark:text-emerald-400 font-mono">${inst.stats.placementRate}</div>
+          <div class="text-xs text-slate-500 mt-1 font-semibold">Placement Track Record</div>
+        </div>
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center">
+          <div class="text-3xl font-black text-rose-600 dark:text-rose-400 font-mono">${inst.stats.researchLabs}+</div>
+          <div class="text-xs text-slate-500 mt-1 font-semibold">Specialized Labs & Hubs</div>
+        </div>
+      </div>
+
+      <!-- Vision & Mission (Feature 3) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-3">
+            <i data-lucide="compass" class="w-5 h-5"></i>
+          </div>
+          <h2 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Our Vision</h2>
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+            To be an internationally recognized center of technological excellence, pioneering breakthrough research, nurturing entrepreneurial ecosystems, and transforming students into socially responsible global leaders.
+          </p>
+        </div>
+
+        <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-400 flex items-center justify-center mb-3">
+            <i data-lucide="target" class="w-5 h-5"></i>
+          </div>
+          <h2 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Our Mission</h2>
+          <ul class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 space-y-1.5 leading-relaxed">
+            <li>• Provide outcome-based education bridging fundamentals with emerging tech.</li>
+            <li>• Foster industry-academia partnerships for real-world capstone innovation.</li>
+            <li>• Encourage open-source contribution, startup incubation, and ethics in AI.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Leadership Messages (Features 4 & 5) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Principal -->
+        <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-4 mb-4">
+              <img src="${inst.leadership.principal.photo}" alt="Principal" class="w-14 h-14 rounded-2xl object-cover border-2 border-indigo-500">
+              <div>
+                <h3 class="text-base font-bold text-slate-900 dark:text-white">${escapeHtml(inst.leadership.principal.name)}</h3>
+                <span class="text-xs font-semibold text-indigo-600 dark:text-indigo-400">Principal</span>
+                <div class="text-[11px] text-slate-400">${inst.leadership.principal.qualifications}</div>
+              </div>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 italic leading-relaxed">
+              "${escapeHtml(inst.leadership.principal.message)}"
+            </p>
+          </div>
+        </div>
+
+        <!-- Vice Principal -->
+        <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-4 mb-4">
+              <img src="${inst.leadership.vicePrincipal.photo}" alt="Vice Principal" class="w-14 h-14 rounded-2xl object-cover border-2 border-purple-500">
+              <div>
+                <h3 class="text-base font-bold text-slate-900 dark:text-white">${escapeHtml(inst.leadership.vicePrincipal.name)}</h3>
+                <span class="text-xs font-semibold text-purple-600 dark:text-purple-400">Vice-Principal (Academic Affairs)</span>
+                <div class="text-[11px] text-slate-400">${inst.leadership.vicePrincipal.qualifications}</div>
+              </div>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 italic leading-relaxed">
+              "${escapeHtml(inst.leadership.vicePrincipal.message)}"
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Historical Milestones Timeline (Feature 6) -->
+      <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+        <h2 class="text-lg font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+          <i data-lucide="clock" class="w-5 h-5 text-indigo-500"></i>
+          <span>Institutional Milestones Timeline</span>
+        </h2>
+        <div class="space-y-6 relative border-l-2 border-indigo-100 dark:border-slate-800 ml-4 pl-6">
+          ${inst.timeline.map(item => `
+            <div class="relative group">
+              <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-indigo-600 ring-4 ring-indigo-50 dark:ring-slate-900"></div>
+              <div class="text-xs font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">${item.year}</div>
+              <h4 class="text-sm font-bold text-slate-900 dark:text-white mt-0.5">${escapeHtml(item.title)}</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">${escapeHtml(item.desc)}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- Interactive Campus Map & Virtual Tour (Features 13 & 14) -->
+      <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <div>
+            <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <i data-lucide="map" class="w-5 h-5 text-indigo-500"></i>
+              <span>Interactive Campus Navigator & Map</span>
+            </h2>
+            <p class="text-xs text-slate-500 mt-1">Locate academic blocks, specialized labs, dorms, and emergency facilities</p>
+          </div>
+          <span class="text-xs font-semibold px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400">
+            ● 8 Key Zones Indexed
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          ${inst.mapLocations.map(loc => `
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 hover:border-indigo-500 transition-colors">
+              <div class="flex items-center justify-between mb-2">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-mono">${loc.code}</span>
+                <span class="text-[11px] text-slate-400">${loc.coords}</span>
+              </div>
+              <h4 class="text-xs font-bold text-slate-900 dark:text-white mb-1">${escapeHtml(loc.name)}</h4>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400">${escapeHtml(loc.desc)}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- Official Administrative Contact Directory (Feature 15) -->
+      <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+        <h2 class="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+          <i data-lucide="phone-call" class="w-5 h-5 text-indigo-500"></i>
+          <span>Official Campus Contact Directory</span>
+        </h2>
+        <div class="divide-y divide-slate-100 dark:divide-slate-800 text-xs">
+          ${inst.contactDirectory.map(c => `
+            <div class="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <div class="font-bold text-slate-900 dark:text-white">${escapeHtml(c.department)}</div>
+                <div class="text-slate-400 text-[11px]">${escapeHtml(c.room)}</div>
+              </div>
+              <div class="flex items-center gap-4 text-slate-600 dark:text-slate-300">
+                <span class="font-mono">${escapeHtml(c.phone)}</span>
+                <span class="text-indigo-600 dark:text-indigo-400 font-semibold">${escapeHtml(c.email)}</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+    </div>
+  `;
+
+  if (window.lucide) window.lucide.createIcons();
+}
+
+
+// --- FILE: js/views/admissions.js ---
+// CampusHub Admissions & Prospective Students Portal (Features 16-30)
+
+
+
+let activeAdmissionsTab = 'apply'; // 'apply', 'tracker', 'eligibility', 'compare', 'fees', 'scholarships'
+
+function renderAdmissions(container) {
+  const adm = store.getAdmissions();
+  const courses = adm.courses || [];
+  const scholarships = adm.scholarships || [];
+  const deadlines = adm.deadlines || [];
+
+  container.innerHTML = `
+    <div class="space-y-6">
+
+      <!-- Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Admissions Portal 2026–27</h1>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Undergraduate, Postgraduate, and Doctoral degree admissions, eligibility, and scholarship hub.</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-bold border border-emerald-200 dark:border-emerald-800">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+            Admissions Open
+          </span>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar border-b border-slate-200 dark:border-slate-800 text-xs sm:text-sm font-semibold">
+        <button data-tab="apply" class="adm-tab-btn px-4 py-2.5 rounded-t-xl transition-all ${activeAdmissionsTab === 'apply' ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/30' : 'text-slate-500 hover:text-slate-900'}">
+          Online Application Form
+        </button>
+        <button data-tab="tracker" class="adm-tab-btn px-4 py-2.5 rounded-t-xl transition-all ${activeAdmissionsTab === 'tracker' ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/30' : 'text-slate-500 hover:text-slate-900'}">
+          Application Status Tracker
+        </button>
+        <button data-tab="eligibility" class="adm-tab-btn px-4 py-2.5 rounded-t-xl transition-all ${activeAdmissionsTab === 'eligibility' ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/30' : 'text-slate-500 hover:text-slate-900'}">
+          Eligibility Checker
+        </button>
+        <button data-tab="compare" class="adm-tab-btn px-4 py-2.5 rounded-t-xl transition-all ${activeAdmissionsTab === 'compare' ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/30' : 'text-slate-500 hover:text-slate-900'}">
+          Course Comparison
+        </button>
+        <button data-tab="fees" class="adm-tab-btn px-4 py-2.5 rounded-t-xl transition-all ${activeAdmissionsTab === 'fees' ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/30' : 'text-slate-500 hover:text-slate-900'}">
+          Fee Calculator
+        </button>
+        <button data-tab="scholarships" class="adm-tab-btn px-4 py-2.5 rounded-t-xl transition-all ${activeAdmissionsTab === 'scholarships' ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/30' : 'text-slate-500 hover:text-slate-900'}">
+          Scholarships
+        </button>
+      </div>
+
+      <!-- Live Deadlines Ticker (Feature 24 & 29) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        ${deadlines.map(d => `
+          <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div class="flex items-center justify-between text-[11px] font-bold text-indigo-600 dark:text-indigo-400 mb-1">
+              <span>${d.status}</span>
+              <span class="text-slate-400">📅 ${d.date}</span>
+            </div>
+            <h4 class="text-xs font-black text-slate-900 dark:text-white line-clamp-1">${escapeHtml(d.round)}</h4>
+            <div class="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold mt-1">
+              ${d.seatsRemaining} seats remaining
+            </div>
+          </div>
+        `).join('')}
+      </div>
+
+      <!-- Tab 1: Online Application Form (Feature 17) -->
+      ${activeAdmissionsTab === 'apply' ? `
+        <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div class="max-w-2xl mx-auto space-y-6">
+            <div>
+              <h2 class="text-lg font-bold text-slate-900 dark:text-white">Undergraduate & Postgraduate Admission Form</h2>
+              <p class="text-xs text-slate-500 mt-0.5">Submit your academic details to receive instant Application ID and tracking status.</p>
+            </div>
+
+            <form id="adm-apply-form" class="space-y-4">
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Candidate Full Name *</label>
+                  <input type="text" id="adm-name" required placeholder="e.g. Jordan Smith" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Email Address *</label>
+                  <input type="email" id="adm-email" required placeholder="e.g. candidate@example.com" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Preferred Program *</label>
+                  <select id="adm-course" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    ${courses.map(c => `<option value="${escapeHtml(c.name)}">${escapeHtml(c.name)}</option>`).join('')}
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">12th / Diploma % *</label>
+                  <input type="number" id="adm-pct" min="40" max="100" step="0.1" required placeholder="88.5" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Entrance Exam Score (JEE / CET)</label>
+                  <input type="text" id="adm-entrance" placeholder="e.g. 94.2 Percentile" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Hostel Accommodation Needed?</label>
+                  <select id="adm-hostel" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    <option value="Yes">Yes, require on-campus hostel</option>
+                    <option value="No">No, day scholar</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Document Checklist (Feature 26) -->
+              <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 text-xs">
+                <div class="font-bold text-slate-800 dark:text-slate-200 mb-2">Mandatory Documents Self-Declaration:</div>
+                <div class="grid grid-cols-2 gap-2 text-slate-600 dark:text-slate-300">
+                  <label class="flex items-center gap-2"><input type="checkbox" required checked class="rounded text-indigo-600"> 10th & 12th Official Marksheet</label>
+                  <label class="flex items-center gap-2"><input type="checkbox" required checked class="rounded text-indigo-600"> Entrance Exam Scorecard</label>
+                  <label class="flex items-center gap-2"><input type="checkbox" required checked class="rounded text-indigo-600"> Identity Proof (Passport / Aadhaar)</label>
+                  <label class="flex items-center gap-2"><input type="checkbox" required checked class="rounded text-indigo-600"> Conduct & Migration Certificate</label>
+                </div>
+              </div>
+
+              <button type="submit" class="w-full py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-xl shadow-indigo-600/25 transition-all">
+                Submit Online Application & Generate Application ID
+              </button>
+            </form>
+          </div>
+        </div>
+      ` : ''}
+
+      <!-- Tab 2: Application Status Tracker (Feature 18) -->
+      ${activeAdmissionsTab === 'tracker' ? `
+        <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div class="max-w-xl mx-auto space-y-6">
+            <div class="text-center">
+              <h2 class="text-lg font-bold text-slate-900 dark:text-white">Track Your Application Status</h2>
+              <p class="text-xs text-slate-500 mt-1">Enter your Application ID to view live progress (e.g. Try: <strong>APP-2026-1048</strong>)</p>
+            </div>
+
+            <div class="flex gap-2">
+              <input type="text" id="tracker-input" value="APP-2026-1048" placeholder="e.g. APP-2026-1048" class="flex-1 px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm font-mono uppercase focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+              <button id="tracker-search-btn" class="px-6 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-md transition-all">
+                Track
+              </button>
+            </div>
+
+            <div id="tracker-result" class="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-4">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </div>
+      ` : ''}
+
+      <!-- Tab 3: Eligibility Checker (Feature 19) -->
+      ${activeAdmissionsTab === 'eligibility' ? `
+        <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div class="max-w-xl mx-auto space-y-4">
+            <h2 class="text-lg font-bold text-slate-900 dark:text-white text-center">Course Eligibility Calculator</h2>
+            <div class="space-y-3 text-xs">
+              <div>
+                <label class="block font-bold mb-1">Select Intended Course</label>
+                <select id="elig-course" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm">
+                  ${courses.map(c => `<option value="${c.id}">${c.name}</option>`).join('')}
+                </select>
+              </div>
+              <div>
+                <label class="block font-bold mb-1">Your 12th / Qualifying Score (%)</label>
+                <input type="number" id="elig-score" value="78" min="30" max="100" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm">
+              </div>
+              <button id="btn-check-elig" class="w-full py-3 rounded-xl bg-indigo-600 text-white font-bold text-xs">Calculate Eligibility</button>
+              <div id="elig-result" class="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 text-emerald-800 dark:text-emerald-300 font-medium">
+                ✓ You are eligible for B.Tech Computer Science & Engineering! Minimum cutoff requirement is 65%.
+              </div>
+            </div>
+          </div>
+        </div>
+      ` : ''}
+
+      <!-- Tab 4: Course Comparison Matrix (Feature 20) -->
+      ${activeAdmissionsTab === 'compare' ? `
+        <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm overflow-x-auto">
+          <h2 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Program Comparison Matrix</h2>
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="border-b border-slate-200 dark:border-slate-800 text-slate-400">
+                <th class="py-3 px-3">Program</th>
+                <th class="py-3 px-3">Duration</th>
+                <th class="py-3 px-3">Annual Tuition</th>
+                <th class="py-3 px-3">Median CTC</th>
+                <th class="py-3 px-3">Intake</th>
+                <th class="py-3 px-3">Key Specialization</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+              ${courses.map(c => `
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                  <td class="py-3 px-3 font-bold text-slate-900 dark:text-white">${c.name}</td>
+                  <td class="py-3 px-3 text-slate-500">${c.degree}</td>
+                  <td class="py-3 px-3 font-mono font-bold text-indigo-600">₹${c.feePerYear.toLocaleString()}</td>
+                  <td class="py-3 px-3 font-mono font-bold text-emerald-600">${c.medianPackage}</td>
+                  <td class="py-3 px-3">${c.intake} seats</td>
+                  <td class="py-3 px-3 text-slate-500">${c.highlights}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      ` : ''}
+
+      <!-- Tab 5: Fee Structure Calculator (Feature 22) -->
+      ${activeAdmissionsTab === 'fees' ? `
+        <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div class="max-w-xl mx-auto space-y-4">
+            <h2 class="text-lg font-bold text-slate-900 dark:text-white text-center">Interactive Fee Estimator</h2>
+            <div class="space-y-3 text-xs">
+              <div>
+                <label class="block font-bold mb-1">Select Degree</label>
+                <select id="fee-calc-course" class="w-full px-3 py-2 rounded-xl border bg-white dark:bg-slate-800">
+                  ${courses.map(c => `<option value="${c.feePerYear}">${c.name} (₹${c.feePerYear.toLocaleString()} / yr)</option>`).join('')}
+                </select>
+              </div>
+              <div>
+                <label class="block font-bold mb-1">Hostel Accommodation</label>
+                <select id="fee-calc-hostel" class="w-full px-3 py-2 rounded-xl border bg-white dark:bg-slate-800">
+                  <option value="0">Day Scholar (No Hostel)</option>
+                  <option value="75000">Triple Occupancy Non-AC (₹75,000 / yr)</option>
+                  <option value="95000">Double Occupancy AC (₹95,000 / yr)</option>
+                  <option value="120000">Single Occupancy AC Suite (₹1,20,000 / yr)</option>
+                </select>
+              </div>
+              <div class="pt-4 border-t flex items-center justify-between text-base font-black">
+                <span>Estimated Annual Investment:</span>
+                <span id="fee-total" class="text-indigo-600 font-mono text-xl">₹2,80,000</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      ` : ''}
+
+      <!-- Tab 6: Scholarship Information (Feature 23) -->
+      ${activeAdmissionsTab === 'scholarships' ? `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          ${scholarships.map(s => `
+            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300">
+                    ${s.waiver}
+                  </span>
+                  <span class="text-[11px] text-slate-400 font-semibold">${s.slots} Total Slots</span>
+                </div>
+                <h3 class="text-base font-bold text-slate-900 dark:text-white mt-1 mb-2">${s.title}</h3>
+                <p class="text-xs text-slate-500 leading-relaxed"><strong>Eligibility Criteria:</strong> ${s.criteria}</p>
+              </div>
+              <button class="mt-4 w-full py-2.5 rounded-xl bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 dark:bg-slate-800 text-xs font-bold transition-colors">
+                Apply for Scholarship
+              </button>
+            </div>
+          `).join('')}
+        </div>
+      ` : ''}
+
+    </div>
+  `;
+
+  // Tab switching
+  container.querySelectorAll('.adm-tab-btn').forEach(btn => {
+    btn.onclick = () => {
+      activeAdmissionsTab = btn.dataset.tab;
+      renderAdmissions(container);
+    };
+  });
+
+  // Application form submit
+  const applyForm = container.querySelector('#adm-apply-form');
+  if (applyForm) {
+    applyForm.onsubmit = (e) => {
+      e.preventDefault();
+      const applicantName = container.querySelector('#adm-name').value.trim();
+      const course = container.querySelector('#adm-course').value;
+      const app = store.submitAdmissionApplication({ applicantName, course });
+
+      triggerConfetti();
+      showToast(`Application submitted! Your Application ID is ${app.id}`, 'success');
+      activeAdmissionsTab = 'tracker';
+      renderAdmissions(container);
+
+      // Auto populate tracker
+      const trackerInput = container.querySelector('#tracker-input');
+      if (trackerInput) {
+        trackerInput.value = app.id;
+        updateTrackerDisplay(app.id);
+      }
+    };
+  }
+
+  // Tracker logic
+  function updateTrackerDisplay(appId) {
+    const box = container.querySelector('#tracker-result');
+    if (!box) return;
+
+    const app = store.checkApplicationStatus(appId);
+    if (!app) {
+      box.innerHTML = `
+        <div class="text-center py-4 text-red-500 text-xs font-semibold">
+          No application found matching ID "${escapeHtml(appId)}". Please check your ID and try again.
+        </div>
+      `;
+      return;
+    }
+
+    box.innerHTML = `
+      <div class="flex items-center justify-between border-b pb-3 border-slate-200 dark:border-slate-700">
+        <div>
+          <span class="text-[10px] uppercase font-bold text-slate-400">Application Number</span>
+          <div class="text-sm font-black font-mono text-indigo-600">${app.id}</div>
+        </div>
+        <span class="px-3 py-1 rounded-full text-xs font-bold ${app.status === 'Accepted' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}">
+          ${app.status}
+        </span>
+      </div>
+
+      <div class="space-y-2 text-xs">
+        <div><strong>Applicant Name:</strong> ${escapeHtml(app.applicantName)}</div>
+        <div><strong>Course:</strong> ${escapeHtml(app.course)}</div>
+        <div><strong>Date Submitted:</strong> ${app.dateSubmitted}</div>
+        <div class="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-900 dark:text-indigo-200">
+          <strong>Current Stage:</strong> ${escapeHtml(app.verificationStage)}<br>
+          <span class="text-[11px] text-slate-500">${escapeHtml(app.remarks)}</span>
+        </div>
+      </div>
+    `;
+  }
+
+  const trackerBtn = container.querySelector('#tracker-search-btn');
+  if (trackerBtn) {
+    trackerBtn.onclick = () => {
+      const val = container.querySelector('#tracker-input').value.trim();
+      updateTrackerDisplay(val);
+    };
+    // Run initially
+    const initialInput = container.querySelector('#tracker-input');
+    if (initialInput) updateTrackerDisplay(initialInput.value);
+  }
+
+  // Fee calculation logic
+  const feeCourse = container.querySelector('#fee-calc-course');
+  const feeHostel = container.querySelector('#fee-calc-hostel');
+  const feeTotal = container.querySelector('#fee-total');
+  function recalcFee() {
+    if (!feeCourse || !feeHostel || !feeTotal) return;
+    const t = (parseFloat(feeCourse.value) || 0) + (parseFloat(feeHostel.value) || 0);
+    feeTotal.textContent = `₹${t.toLocaleString()}`;
+  }
+  if (feeCourse) feeCourse.onchange = recalcFee;
+  if (feeHostel) feeHostel.onchange = recalcFee;
+  recalcFee();
+
+  if (window.lucide) window.lucide.createIcons();
+}
+
+
+// --- FILE: js/views/digitalId.js ---
+// CampusHub Digital Student ID Card View (Feature 34)
+
+
+
+function renderDigitalId(container) {
+  const profile = store.getProfile();
+  const inst = store.getInstitution();
+
+  container.innerHTML = `
+    <div class="space-y-6 max-w-4xl mx-auto">
+
+      <!-- Header & Action -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Digital Student ID Card</h1>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Official institution RFID identity pass for campus entry, library access, and exam verification.</p>
+        </div>
+
+        <button id="btn-print-id" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold shadow-md shadow-indigo-600/20 transition-all">
+          <i data-lucide="printer" class="w-4 h-4"></i>
+          <span>Print / Save ID PDF</span>
+        </button>
+      </div>
+
+      <!-- ID Cards Display (Front & Back) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+
+        <!-- ID Card Front -->
+        <div class="rounded-3xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700 bg-gradient-to-b from-indigo-900 via-slate-900 to-indigo-950 text-white p-6 relative">
+          <!-- Top Hologram Ribbon -->
+          <div class="flex items-center justify-between pb-4 border-b border-white/15">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-white text-indigo-900 font-bold flex items-center justify-center text-lg shadow-sm">
+                🎓
+              </div>
+              <div>
+                <div class="text-[11px] font-black uppercase tracking-wider text-indigo-300">${escapeHtml(inst.shortName || 'ST. XAVIER')}</div>
+                <div class="text-[9px] text-slate-300">Identity & Smart Access Pass</div>
+              </div>
+            </div>
+            <div class="px-2 py-0.5 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 text-[10px] font-bold tracking-widest uppercase">
+              STUDENT
+            </div>
+          </div>
+
+          <!-- Body: Photo & Details -->
+          <div class="flex items-center gap-5 my-6">
+            <div class="relative shrink-0">
+              <img src="${profile.avatar}" alt="Student Photo" class="w-24 h-28 rounded-2xl object-cover border-2 border-indigo-400 shadow-md">
+              <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-emerald-500 border-2 border-indigo-950 flex items-center justify-center text-[10px]">
+                ✓
+              </div>
+            </div>
+
+            <div class="space-y-1 min-w-0">
+              <h3 class="text-lg font-black text-white truncate">${escapeHtml(profile.name)}</h3>
+              <div class="font-mono text-xs font-bold text-indigo-300 tracking-wider">${escapeHtml(profile.rollNo)}</div>
+              <div class="text-xs text-slate-300 truncate">${escapeHtml(profile.degree)}</div>
+              <div class="text-[11px] text-slate-400 truncate">${escapeHtml(profile.department)}</div>
+              <div class="text-[11px] text-slate-400 font-semibold pt-1">Valid Thru: <strong>${profile.validUpto || 'June 2027'}</strong></div>
+            </div>
+          </div>
+
+          <!-- Card Bottom: Barcode Simulation & Chip -->
+          <div class="pt-4 border-t border-white/15 flex items-center justify-between">
+            <div>
+              <div class="font-mono text-[9px] tracking-widest text-slate-400">${profile.digitalIdBarcode || 'SXITM-2023-CS-1048'}</div>
+              <!-- Barcode visual simulation -->
+              <div class="flex items-center gap-0.5 mt-1 h-6">
+                ${[2,1,3,1,2,4,1,2,1,3,2,1,4,1,2,1,3,1,2,1].map(w => `
+                  <span class="bg-white h-full" style="width: ${w * 1.5}px"></span>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- RFID Chip icon -->
+            <div class="w-9 h-7 rounded-md bg-amber-400/30 border border-amber-400/60 flex items-center justify-center text-[10px] text-amber-200">
+              <i data-lucide="radio" class="w-4 h-4"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- ID Card Back -->
+        <div class="rounded-3xl overflow-hidden shadow-2xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 p-6 flex flex-col justify-between">
+          <div>
+            <!-- Magnetic stripe simulation -->
+            <div class="-mx-6 -mt-6 h-10 bg-slate-950 mb-5"></div>
+
+            <div class="flex items-start justify-between gap-4">
+              <div class="space-y-2 text-xs flex-1">
+                <div><span class="text-slate-400 font-bold uppercase text-[10px]">Blood Group:</span> <strong class="text-red-600">${profile.bloodGroup || 'O+ Positive'}</strong></div>
+                <div><span class="text-slate-400 font-bold uppercase text-[10px]">Date of Birth:</span> <strong>${profile.dob || '18 June 2004'}</strong></div>
+                <div><span class="text-slate-400 font-bold uppercase text-[10px]">Emergency Contact:</span> <strong>${profile.emergencyContact || '+91 98765 43210'}</strong></div>
+                <div><span class="text-slate-400 font-bold uppercase text-[10px]">Hostel Residence:</span> <strong>${profile.hostelResident || 'Hostel 2 • Room 304'}</strong></div>
+              </div>
+
+              <!-- QR Code Simulation -->
+              <div class="p-2 rounded-xl bg-white border border-slate-200 shadow-sm shrink-0 text-center">
+                <svg class="w-20 h-20 text-slate-900" viewBox="0 0 100 100" fill="currentColor">
+                  <path d="M10 10h30v30h-30z M15 15v20h20v-20z M20 20h10v10h-10z M60 10h30v30h-30z M65 15v20h20v-20z M70 20h10v10h-10z M10 60h30v30h-30z M15 65v20h20v-20z M20 70h10v10h-10z M50 20h5v10h-5z M50 60h10v5h-10z M65 60h5v10h-5z M80 65h10v10h-10z M60 80h10v10h-10z M75 80h15v5h-15z" />
+                </svg>
+                <span class="text-[8px] font-mono text-slate-500 font-bold">SCAN TO VERIFY</span>
+              </div>
+            </div>
+
+            <!-- Terms -->
+            <p class="text-[10px] text-slate-400 mt-4 leading-relaxed">
+              This card is the property of St. Xavier Institute of Technology. If found, please return to Security Desk or Call Ext. 4100. Unauthorized duplication is strictly prohibited.
+            </p>
+          </div>
+
+          <div class="pt-4 border-t border-slate-100 dark:border-slate-800 text-center">
+            <span class="text-[10px] font-bold text-slate-500">AUTHORIZED REGISTRAR SIGNATURE</span>
+            <div class="h-6 flex items-center justify-center font-serif italic text-indigo-600 dark:text-indigo-400 text-sm">
+              Arthur Pendelton
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  `;
+
+  const btnPrint = container.querySelector('#btn-print-id');
+  if (btnPrint) {
+    btnPrint.onclick = () => {
+      window.print();
+    };
+  }
+
+  if (window.lucide) window.lucide.createIcons();
+}
+
+
+// --- FILE: js/views/libraryStudy.js ---
+// CampusHub Digital Library, PYQs & AI Study Assistant View (Features 51-70)
+
+
+
+let activeLibTab = 'catalog'; // 'catalog', 'pyq', 'quizzes', 'ai'
+let librarySearchQuery = '';
+
+function renderLibraryStudy(container) {
+  const books = store.getBooks();
+  const pyqs = store.getPyqs();
+  const quizzes = store.getQuizzes();
+
+  let filteredBooks = books.filter(b => {
+    if (!librarySearchQuery.trim()) return true;
+    const q = librarySearchQuery.toLowerCase();
+    return b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q) || b.category.toLowerCase().includes(q) || b.isbn.toLowerCase().includes(q);
+  });
+
+  container.innerHTML = `
+    <div class="space-y-6">
+
+      <!-- Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Digital Library & Learning Hub</h1>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Book catalog, previous-year exam papers, interactive quizzes, and 24/7 AI Study Assistant.</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-semibold px-3 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300">
+            📚 Central Library: Open 08:00 AM - 11:00 PM
+          </span>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar border-b border-slate-200 dark:border-slate-800 text-xs sm:text-sm font-semibold">
+        <button data-tab="catalog" class="lib-tab-btn px-4 py-2.5 rounded-t-xl transition-all ${activeLibTab === 'catalog' ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/30' : 'text-slate-500 hover:text-slate-900'}">
+          Book Catalogue & Reservation
+        </button>
+        <button data-tab="pyq" class="lib-tab-btn px-4 py-2.5 rounded-t-xl transition-all ${activeLibTab === 'pyq' ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/30' : 'text-slate-500 hover:text-slate-900'}">
+          Previous Year Papers (PYQs)
+        </button>
+        <button data-tab="quizzes" class="lib-tab-btn px-4 py-2.5 rounded-t-xl transition-all ${activeLibTab === 'quizzes' ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/30' : 'text-slate-500 hover:text-slate-900'}">
+          Online Practice Quizzes
+        </button>
+        <button data-tab="ai" class="lib-tab-btn px-4 py-2.5 rounded-t-xl transition-all ${activeLibTab === 'ai' ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/30' : 'text-slate-500 hover:text-slate-900'}">
+          🤖 AI Study Assistant
+        </button>
+      </div>
+
+      <!-- Tab 1: Book Catalogue & Reservation (Features 51-54) -->
+      ${activeLibTab === 'catalog' ? `
+        <div class="space-y-4">
+          <!-- Search input -->
+          <div class="relative w-full max-w-md">
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+            <input type="text" id="lib-search" value="${escapeHtml(librarySearchQuery)}" placeholder="Search by book title, author, or ISBN..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            ${filteredBooks.map(b => `
+              <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm card-hover-lift flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 uppercase">${b.category}</span>
+                    <span class="text-[11px] font-mono text-slate-400">${b.shelf}</span>
+                  </div>
+                  <h3 class="text-base font-bold text-slate-900 dark:text-white line-clamp-2 mb-1">${escapeHtml(b.title)}</h3>
+                  <p class="text-xs text-slate-500 mb-3">By ${escapeHtml(b.author)}</p>
+                  <div class="text-[11px] text-slate-400 font-mono mb-4">ISBN: ${b.isbn}</div>
+                </div>
+
+                <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                  <div class="text-xs">
+                    <span class="${b.availableCopies > 0 ? 'text-emerald-600 font-bold' : 'text-amber-600 font-bold'}">
+                      ${b.availableCopies > 0 ? `✓ ${b.availableCopies} Copies Available` : '⏳ Checked Out'}
+                    </span>
+                  </div>
+
+                  <button data-book-id="${b.id}" class="btn-reserve-book px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
+                    b.reservedByMe
+                      ? 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300'
+                      : 'bg-indigo-600 text-white hover:bg-indigo-700'
+                  }">
+                    ${b.reservedByMe ? 'Reserved ✓' : 'Reserve Hold'}
+                  </button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : ''}
+
+      <!-- Tab 2: Previous Year Papers (Feature 56) -->
+      ${activeLibTab === 'pyq' ? `
+        <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-base font-bold text-slate-900 dark:text-white">University Past Examination Papers Archive</h2>
+            <span class="text-xs text-slate-400 font-semibold">${pyqs.length} Available PDFs</span>
+          </div>
+
+          <div class="divide-y divide-slate-100 dark:divide-slate-800 text-xs">
+            ${pyqs.map(p => `
+              <div class="py-3.5 flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3 min-w-0">
+                  <div class="w-8 h-8 rounded-xl bg-red-100 text-red-600 dark:bg-red-950 dark:text-red-400 flex items-center justify-center shrink-0 font-bold text-[10px]">
+                    PDF
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-slate-900 dark:text-white">${escapeHtml(p.subject)}</h4>
+                    <span class="text-slate-400 text-[11px]">${p.year} • ${p.semester} • Regulation ${p.regulation} (${p.paperType})</span>
+                  </div>
+                </div>
+
+                <button class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold transition-colors">
+                  Download PYQ
+                </button>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : ''}
+
+      <!-- Tab 3: Practice Quizzes (Features 60 & 61) -->
+      ${activeLibTab === 'quizzes' ? `
+        <div class="space-y-6">
+          ${quizzes.map(quiz => `
+            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4" data-quiz-id="${quiz.id}">
+              <div class="flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-purple-50 dark:bg-purple-950 text-purple-700 dark:text-purple-300 uppercase">${quiz.subject}</span>
+                  <h3 class="text-base font-bold text-slate-900 dark:text-white mt-1">${quiz.title}</h3>
+                </div>
+                <span class="text-xs text-slate-400">⏱️ ${quiz.timeLimitMinutes} Mins</span>
+              </div>
+
+              <div class="space-y-4 text-xs pt-2 border-t border-slate-100 dark:border-slate-800">
+                ${quiz.questions.map((qItem, qIdx) => `
+                  <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 space-y-2">
+                    <div class="font-bold text-slate-900 dark:text-white">Q${qIdx + 1}: ${escapeHtml(qItem.q)}</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      ${qItem.options.map((opt, optIdx) => `
+                        <label class="flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-indigo-500 cursor-pointer">
+                          <input type="radio" name="quiz-${quiz.id}-q-${qIdx}" value="${optIdx}" class="text-indigo-600">
+                          <span class="text-slate-700 dark:text-slate-300">${escapeHtml(opt)}</span>
+                        </label>
+                      `).join('')}
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+
+              <div class="flex items-center justify-between pt-2">
+                <button data-submit-quiz="${quiz.id}" class="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs shadow-md transition-all">
+                  Submit Quiz & View Score
+                </button>
+                <div class="quiz-score-result text-xs font-bold text-emerald-600"></div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      ` : ''}
+
+      <!-- Tab 4: AI Study Assistant (Feature 70) -->
+      ${activeLibTab === 'ai' ? `
+        <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-4 max-w-3xl mx-auto">
+          <div class="flex items-center gap-3 border-b pb-3 border-slate-100 dark:border-slate-800">
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-600 text-white flex items-center justify-center font-bold text-lg">
+              🤖
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-slate-900 dark:text-white">CampusHub AI Academic Tutor</h3>
+              <p class="text-xs text-slate-400">Ask any question on Operating Systems, DBMS, Algorithms, or exam prep</p>
+            </div>
+          </div>
+
+          <!-- Chat messages stream -->
+          <div id="ai-chat-messages" class="h-80 overflow-y-auto space-y-3 p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/40 text-xs">
+            <div class="flex items-start gap-2.5">
+              <span class="text-base">🤖</span>
+              <div class="p-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 max-w-[85%] text-slate-800 dark:text-slate-200">
+                Hello Alex! I am your AI Study Assistant. Ask me to explain concepts (e.g. "Explain TLB", "Difference between B-Tree and B+ Tree", or "Dijkstra algorithm complexity").
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat input -->
+          <div class="flex gap-2">
+            <input type="text" id="ai-chat-input" placeholder="Type your academic question..." class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            <button id="ai-chat-send" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-md transition-all">
+              Ask AI
+            </button>
+          </div>
+        </div>
+      ` : ''}
+
+    </div>
+  `;
+
+  // Tab switching
+  container.querySelectorAll('.lib-tab-btn').forEach(btn => {
+    btn.onclick = () => {
+      activeLibTab = btn.dataset.tab;
+      renderLibraryStudy(container);
+    };
+  });
+
+  // Reserve book toggle
+  container.querySelectorAll('.btn-reserve-book').forEach(btn => {
+    btn.onclick = () => {
+      const bookId = btn.dataset.bookId;
+      const isReserved = store.toggleReserveBook(bookId);
+      showToast(isReserved ? 'Book hold reserved! Pick up at Library Desk within 24h.' : 'Reservation cancelled.', isReserved ? 'success' : 'info');
+      renderLibraryStudy(container);
+    };
+  });
+
+  // Library search
+  const libSearch = container.querySelector('#lib-search');
+  if (libSearch) {
+    libSearch.oninput = (e) => {
+      librarySearchQuery = e.target.value;
+      renderLibraryStudy(container);
+    };
+  }
+
+  // Quiz submission
+  container.querySelectorAll('[data-submit-quiz]').forEach(btn => {
+    btn.onclick = () => {
+      const quizId = btn.dataset.submitQuiz;
+      const quiz = quizzes.find(q => q.id === quizId);
+      if (!quiz) return;
+
+      let score = 0;
+      quiz.questions.forEach((qItem, qIdx) => {
+        const selected = container.querySelector(`input[name="quiz-${quiz.id}-q-${qIdx}"]:checked`);
+        if (selected && parseInt(selected.value, 10) === qItem.answer) {
+          score++;
+        }
+      });
+
+      triggerConfetti();
+      const parent = btn.closest('.p-6');
+      const scoreBox = parent.querySelector('.quiz-score-result');
+      if (scoreBox) {
+        scoreBox.textContent = `Score: ${score} / ${quiz.questions.length} Correct (${Math.round((score/quiz.questions.length)*100)}%)`;
+      }
+      showToast(`Quiz completed! You scored ${score}/${quiz.questions.length}`, 'success');
+    };
+  });
+
+  // AI Study Assistant Chat logic
+  const aiInput = container.querySelector('#ai-chat-input');
+  const aiSend = container.querySelector('#ai-chat-send');
+  const aiMessages = container.querySelector('#ai-chat-messages');
+
+  const knowledgeBase = {
+    'tlb': 'Translation Lookaside Buffer (TLB) is a fast hardware associative cache in the CPU MMU that stores recent virtual-to-physical page mappings, reducing multi-level memory lookups from 200ns to under 2ns.',
+    'b+ tree': 'A B+ Tree stores all actual data records only in leaf nodes connected as a doubly linked list, while internal nodes store only routing keys. This allows ultra-fast range queries (BETWEEN x AND y) in SQL databases compared to standard B-Trees.',
+    'dijkstra': "Dijkstra's algorithm finds the shortest path from a single source vertex to all others in graphs with non-negative edge weights. Using a Min-Heap priority queue, its time complexity is O((V + E) log V).",
+    'osi': 'The OSI 7-layer model: 7. Application, 6. Presentation, 5. Session, 4. Transport (TCP/UDP), 3. Network (IP), 2. Data Link (Ethernet), 1. Physical.'
+  };
+
+  function sendAiQuery() {
+    if (!aiInput || !aiMessages) return;
+    const query = aiInput.value.trim();
+    if (!query) return;
+
+    // Append user message
+    const userDiv = document.createElement('div');
+    userDiv.className = 'flex items-start gap-2.5 justify-end';
+    userDiv.innerHTML = `<div class="p-3 rounded-2xl bg-indigo-600 text-white max-w-[85%]">${escapeHtml(query)}</div>`;
+    aiMessages.appendChild(userDiv);
+    aiInput.value = '';
+
+    // Simulate AI thinking and response
+    setTimeout(() => {
+      let reply = "That's an important topic for your semester exams. Make sure to review the lecture slides and solve the past 3 years' questions from our PYQ section!";
+      const qLower = query.toLowerCase();
+
+      for (const [k, ans] of Object.entries(knowledgeBase)) {
+        if (qLower.includes(k)) {
+          reply = ans;
+          break;
+        }
+      }
+
+      const aiDiv = document.createElement('div');
+      aiDiv.className = 'flex items-start gap-2.5';
+      aiDiv.innerHTML = `<span class="text-base">🤖</span><div class="p-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 max-w-[85%] text-slate-800 dark:text-slate-200">${reply}</div>`;
+      aiMessages.appendChild(aiDiv);
+      aiMessages.scrollTop = aiMessages.scrollHeight;
+    }, 400);
+  }
+
+  if (aiSend) aiSend.onclick = sendAiQuery;
+  if (aiInput) aiInput.onkeydown = (e) => { if (e.key === 'Enter') sendAiQuery(); };
+
+  if (window.lucide) window.lucide.createIcons();
+}
+
+
+// --- FILE: js/views/facultyDept.js ---
+// CampusHub Faculty & Department Hub View (Features 71-85)
+
+
+
+function renderFacultyDept(container) {
+  const faculty = store.getFaculty();
+  const appointments = store.getFacultyAppointments();
+
+  container.innerHTML = `
+    <div class="space-y-6">
+
+      <!-- Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Faculty & Department Hub</h1>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Faculty directory, live office availability status, research publications, and consultation booking.</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-semibold px-3 py-1.5 rounded-xl bg-purple-50 dark:bg-purple-950 text-purple-700 dark:text-purple-300">
+            👨‍🏫 480+ Full-Time Faculty Members
+          </span>
+        </div>
+      </div>
+
+      <!-- Active Booked Appointments Banner -->
+      ${appointments.length > 0 ? `
+        <div class="p-5 rounded-3xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-800 dark:text-indigo-300 flex items-center gap-2">
+              <i data-lucide="calendar-check" class="w-4 h-4 text-indigo-600"></i>
+              <span>Your Confirmed Faculty Appointments (${appointments.length})</span>
+            </h3>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            ${appointments.map(a => `
+              <div class="p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <div>
+                  <div class="font-bold text-slate-900 dark:text-white">${escapeHtml(a.facultyName)}</div>
+                  <div class="text-slate-500 text-[11px]">${escapeHtml(a.topic)}</div>
+                </div>
+                <div class="text-right">
+                  <div class="font-bold text-indigo-600">${a.time}</div>
+                  <div class="text-slate-400 text-[11px]">${a.date}</div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : ''}
+
+      <!-- Faculty Members Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        ${faculty.map(f => {
+          const statusColors = {
+            'In Office': 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-300',
+            'In Lecture': 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 border-amber-300',
+            'In Meeting': 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300 border-blue-300',
+            'On Leave': 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400 border-slate-300'
+          };
+          const badgeClass = statusColors[f.status] || statusColors['In Office'];
+
+          return `
+            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm card-hover-lift flex flex-col justify-between">
+              <div>
+                <div class="flex items-start justify-between gap-4 mb-4">
+                  <div class="flex items-center gap-3">
+                    <img src="${f.photo}" alt="${escapeHtml(f.name)}" class="w-14 h-14 rounded-2xl object-cover border-2 border-slate-200 dark:border-slate-700 shrink-0">
+                    <div>
+                      <h3 class="text-base font-bold text-slate-900 dark:text-white">${escapeHtml(f.name)}</h3>
+                      <div class="text-xs font-semibold text-indigo-600 dark:text-indigo-400">${escapeHtml(f.designation)}</div>
+                      <div class="text-[11px] text-slate-400">${escapeHtml(f.department)}</div>
+                    </div>
+                  </div>
+
+                  <!-- Live Availability Status (Feature 75) -->
+                  <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${badgeClass} shrink-0">
+                    ● ${f.status}
+                  </span>
+                </div>
+
+                <div class="space-y-2 text-xs text-slate-600 dark:text-slate-300 pt-3 border-t border-slate-100 dark:border-slate-800">
+                  <div class="flex items-center gap-2">
+                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-400"></i>
+                    <span><strong>Office:</strong> ${escapeHtml(f.room)} (${escapeHtml(f.phone)})</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <i data-lucide="mail" class="w-3.5 h-3.5 text-slate-400"></i>
+                    <span>${escapeHtml(f.email)}</span>
+                  </div>
+                  <div class="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-semibold">
+                    <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                    <span><strong>Office Hours:</strong> ${escapeHtml(f.officeHours)}</span>
+                  </div>
+                  <div class="pt-1 text-[11px] text-slate-500">
+                    <strong>Research Focus:</strong> ${escapeHtml(f.researchArea)}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Footer -->
+              <div class="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <span class="text-[11px] text-slate-400 font-mono">${f.publicationsCount} Scopus / IEEE Papers</span>
+                <button data-book-fac="${escapeHtml(f.name)}" class="btn-book-apt px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-sm transition-all">
+                  Book 1-on-1 Consultation
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+
+      <!-- Book Appointment Modal -->
+      <div id="apt-modal" class="fixed inset-0 z-50 hidden bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-2xl border border-slate-200 dark:border-slate-800 modal-enter">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-extrabold text-slate-900 dark:text-white">Schedule Faculty Consultation</h3>
+            <button id="apt-modal-close" class="p-1 rounded-lg text-slate-400 hover:text-slate-600">
+              <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+          </div>
+
+          <form id="apt-form" class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Faculty Member</label>
+              <input type="text" id="form-apt-faculty" readonly class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-sm font-bold">
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Date *</label>
+                <input type="date" id="form-apt-date" required value="${new Date().toISOString().split('T')[0]}" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Time Slot *</label>
+                <select id="form-apt-time" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm">
+                  <option value="02:30 PM">02:30 PM</option>
+                  <option value="03:15 PM">03:15 PM</option>
+                  <option value="04:00 PM">04:00 PM</option>
+                  <option value="04:45 PM">04:45 PM</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Meeting Purpose / Discussion Topic *</label>
+              <textarea id="form-apt-topic" required rows="3" placeholder="e.g. Capstone Project guidance, research paper review..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm"></textarea>
+            </div>
+
+            <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
+              <button type="button" id="apt-modal-cancel" class="px-4 py-2 rounded-xl text-slate-500 text-sm font-semibold">Cancel</button>
+              <button type="submit" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-md">Confirm Appointment</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  `;
+
+  // Modal logic
+  const modal = container.querySelector('#apt-modal');
+  const form = container.querySelector('#apt-form');
+  const closeBtn = container.querySelector('#apt-modal-close');
+  const cancelBtn = container.querySelector('#apt-modal-cancel');
+  const facInput = container.querySelector('#form-apt-faculty');
+
+  container.querySelectorAll('.btn-book-apt').forEach(btn => {
+    btn.onclick = () => {
+      facInput.value = btn.dataset.bookFac;
+      modal.classList.remove('hidden');
+    };
+  });
+
+  if (closeBtn) closeBtn.onclick = () => modal.classList.add('hidden');
+  if (cancelBtn) cancelBtn.onclick = () => modal.classList.add('hidden');
+
+  if (form) {
+    form.onsubmit = (e) => {
+      e.preventDefault();
+      const aptData = {
+        facultyName: facInput.value,
+        date: container.querySelector('#form-apt-date').value,
+        time: container.querySelector('#form-apt-time').value,
+        topic: container.querySelector('#form-apt-topic').value.trim()
+      };
+      store.bookFacultyAppointment(aptData);
+      triggerConfetti();
+      showToast('Faculty consultation appointment confirmed!', 'success');
+      modal.classList.add('hidden');
+      renderFacultyDept(container);
+    };
+  }
+
+  if (window.lucide) window.lucide.createIcons();
+}
+
+
+// --- FILE: js/views/facilitiesHostel.js ---
+// CampusHub Hostel, Cafeteria & Facility Bookings View (Features 116-130)
+
+
+
+let activeFacilityTab = 'mess'; // 'mess', 'hostel', 'booking', 'bus'
+
+function renderFacilitiesHostel(container) {
+  const mess = store.getMessMenu();
+  const hostel = store.getHostelAllocation();
+  const bookings = store.getFacilityBookings();
+  const buses = store.getBusRoutes();
+
+  container.innerHTML = `
+    <div class="space-y-6">
+
+      <!-- Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Hostel, Mess & Campus Facilities</h1>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Daily cafeteria menu, residential hostel room status, lab facility reservations, and transit routes.</p>
+        </div>
+
+        <button id="btn-quick-facility-book" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-sm font-semibold shadow-md shadow-orange-600/20 transition-all">
+          <i data-lucide="calendar-plus" class="w-4 h-4"></i>
+          <span>Book Facility</span>
+        </button>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar border-b border-slate-200 dark:border-slate-800 text-xs sm:text-sm font-semibold">
+        <button data-tab="mess" class="fac-tab-btn px-4 py-2.5 rounded-t-xl transition-all ${activeFacilityTab === 'mess' ? 'text-orange-600 dark:text-orange-400 border-b-2 border-orange-600 bg-orange-50/50 dark:bg-orange-950/30' : 'text-slate-500 hover:text-slate-900'}">
+          🍽️ Daily Cafeteria / Mess Menu
+        </button>
+        <button data-tab="hostel" class="fac-tab-btn px-4 py-2.5 rounded-t-xl transition-all ${activeFacilityTab === 'hostel' ? 'text-orange-600 dark:text-orange-400 border-b-2 border-orange-600 bg-orange-50/50 dark:bg-orange-950/30' : 'text-slate-500 hover:text-slate-900'}">
+          🏨 Hostel Room & Residence
+        </button>
+        <button data-tab="booking" class="fac-tab-btn px-4 py-2.5 rounded-t-xl transition-all ${activeFacilityTab === 'booking' ? 'text-orange-600 dark:text-orange-400 border-b-2 border-orange-600 bg-orange-50/50 dark:bg-orange-950/30' : 'text-slate-500 hover:text-slate-900'}">
+          🔬 Lab & Sports Facility Bookings
+        </button>
+        <button data-tab="bus" class="fac-tab-btn px-4 py-2.5 rounded-t-xl transition-all ${activeFacilityTab === 'bus' ? 'text-orange-600 dark:text-orange-400 border-b-2 border-orange-600 bg-orange-50/50 dark:bg-orange-950/30' : 'text-slate-500 hover:text-slate-900'}">
+          🚌 Campus Transit Bus Routes
+        </button>
+      </div>
+
+      <!-- Tab 1: Live Cafeteria & Mess Menu (Features 120 & 121) -->
+      ${activeFacilityTab === 'mess' ? `
+        <div class="space-y-4">
+          <div class="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-xs text-amber-900 dark:text-amber-200 flex items-center justify-between">
+            <span>📅 Today's Food Schedule (${mess.today}) • Freshly Prepared in Central Kitchen</span>
+            <span class="font-bold">FSSAI Certified Hygiene</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Breakfast -->
+            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold uppercase text-orange-600">Breakfast</span>
+                  <span class="text-[11px] text-slate-400">${mess.meals.breakfast.time}</span>
+                </div>
+                <div class="text-xs font-bold text-slate-900 dark:text-white mb-3">~ ${mess.meals.breakfast.calories}</div>
+                <ul class="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
+                  ${mess.meals.breakfast.items.map(it => `
+                    <li class="flex items-start gap-1.5">
+                      <span class="text-emerald-500">●</span>
+                      <span>${escapeHtml(it)}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+              <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-emerald-600 font-bold uppercase">
+                🟢 100% Vegetarian
+              </div>
+            </div>
+
+            <!-- Lunch -->
+            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold uppercase text-orange-600">Grand Lunch</span>
+                  <span class="text-[11px] text-slate-400">${mess.meals.lunch.time}</span>
+                </div>
+                <div class="text-xs font-bold text-slate-900 dark:text-white mb-3">~ ${mess.meals.lunch.calories}</div>
+                <ul class="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
+                  ${mess.meals.lunch.items.map(it => `
+                    <li class="flex items-start gap-1.5">
+                      <span class="text-amber-500">●</span>
+                      <span>${escapeHtml(it)}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+              <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-slate-500 font-bold uppercase">
+                🔴 Veg & Non-Veg Counters Available
+              </div>
+            </div>
+
+            <!-- Snacks -->
+            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold uppercase text-orange-600">Evening Snacks</span>
+                  <span class="text-[11px] text-slate-400">${mess.meals.snacks.time}</span>
+                </div>
+                <div class="text-xs font-bold text-slate-900 dark:text-white mb-3">~ ${mess.meals.snacks.calories}</div>
+                <ul class="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
+                  ${mess.meals.snacks.items.map(it => `
+                    <li class="flex items-start gap-1.5">
+                      <span class="text-emerald-500">●</span>
+                      <span>${escapeHtml(it)}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+              <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-emerald-600 font-bold uppercase">
+                🟢 Hot Tea & Savory Snacks
+              </div>
+            </div>
+
+            <!-- Dinner -->
+            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold uppercase text-orange-600">Nutritional Dinner</span>
+                  <span class="text-[11px] text-slate-400">${mess.meals.dinner.time}</span>
+                </div>
+                <div class="text-xs font-bold text-slate-900 dark:text-white mb-3">~ ${mess.meals.dinner.calories}</div>
+                <ul class="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
+                  ${mess.meals.dinner.items.map(it => `
+                    <li class="flex items-start gap-1.5">
+                      <span class="text-emerald-500">●</span>
+                      <span>${escapeHtml(it)}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+              <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-[10px] text-emerald-600 font-bold uppercase">
+                🟢 Balanced Vegetarian Dinner
+              </div>
+            </div>
+          </div>
+        </div>
+      ` : ''}
+
+      <!-- Tab 2: Hostel Room & Residence (Features 116-119) -->
+      ${activeFacilityTab === 'hostel' ? `
+        <div class="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+          <div class="flex items-center justify-between">
+            <h2 class="text-base font-bold text-slate-900 dark:text-white">Resident Hostel Details</h2>
+            <span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+              Active Resident
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 space-y-1">
+              <span class="text-slate-400 font-semibold uppercase text-[10px]">Hostel Block</span>
+              <div class="text-sm font-bold text-slate-900 dark:text-white">${escapeHtml(hostel.blockName)}</div>
+              <div class="text-slate-500">${escapeHtml(hostel.floor)}</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 space-y-1">
+              <span class="text-slate-400 font-semibold uppercase text-[10px]">Room Number</span>
+              <div class="text-sm font-bold text-indigo-600 dark:text-indigo-400">${escapeHtml(hostel.roomNo)}</div>
+              <div class="text-slate-500">Roommate: <strong>${escapeHtml(hostel.roommate)}</strong></div>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 space-y-1">
+              <span class="text-slate-400 font-semibold uppercase text-[10px]">Chief Warden</span>
+              <div class="text-sm font-bold text-slate-900 dark:text-white">${escapeHtml(hostel.wardenName)}</div>
+              <div class="text-slate-500 font-mono">${escapeHtml(hostel.wardenPhone)}</div>
+            </div>
+          </div>
+        </div>
+      ` : ''}
+
+      <!-- Tab 3: Lab & Sports Facility Bookings (Features 124-128) -->
+      ${activeFacilityTab === 'booking' ? `
+        <div class="space-y-4">
+          <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-base font-bold text-slate-900 dark:text-white">Active Facility Reservations</h3>
+              <span class="text-xs text-slate-400">${bookings.length} reservations</span>
+            </div>
+
+            <div class="divide-y divide-slate-100 dark:divide-slate-800 text-xs">
+              ${bookings.map(b => `
+                <div class="py-3.5 flex items-center justify-between gap-4">
+                  <div>
+                    <h4 class="font-bold text-slate-900 dark:text-white">${escapeHtml(b.facilityName)}</h4>
+                    <p class="text-slate-500 text-[11px]">Purpose: ${escapeHtml(b.purpose)}</p>
+                  </div>
+                  <div class="text-right">
+                    <div class="font-bold text-orange-600">${b.timeSlot}</div>
+                    <div class="text-slate-400 text-[11px]">📅 ${b.date} • <span class="text-emerald-600 font-bold">${b.status}</span></div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      ` : ''}
+
+      <!-- Tab 4: Campus Transit Bus Routes (Feature 130) -->
+      ${activeFacilityTab === 'bus' ? `
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          ${buses.map(bus => `
+            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 font-mono">
+                    ${bus.routeNo}
+                  </span>
+                  <span class="text-[11px] font-bold text-emerald-600">● ${bus.status}</span>
+                </div>
+                <h3 class="text-base font-bold text-slate-900 dark:text-white mt-1 mb-2">${bus.origin}</h3>
+                
+                <div class="space-y-1 text-xs text-slate-500 dark:text-slate-400 mb-4">
+                  <div><strong>Morning Pickup:</strong> ${bus.morningTime}</div>
+                  <div><strong>Evening Departure:</strong> ${bus.eveningTime}</div>
+                  <div class="pt-2 text-[11px]">
+                    <strong>Transit Stops:</strong><br>
+                    ${bus.stops.join(' ➔ ')}
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-3 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500 flex items-center justify-between">
+                <span>Driver: ${bus.driverName}</span>
+                <span class="font-mono text-indigo-600">${bus.driverPhone}</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      ` : ''}
+
+      <!-- Booking Modal -->
+      <div id="booking-modal" class="fixed inset-0 z-50 hidden bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-2xl border border-slate-200 dark:border-slate-800 modal-enter">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-extrabold text-slate-900 dark:text-white">Reserve Campus Facility</h3>
+            <button id="booking-modal-close" class="p-1 rounded-lg text-slate-400 hover:text-slate-600">
+              <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+          </div>
+
+          <form id="booking-form" class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Facility *</label>
+              <select id="form-bk-facility" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm">
+                <option value="HPC GPU Supercomputing Workstation">HPC GPU Supercomputing Workstation</option>
+                <option value="Indoor Badminton Court 1">Indoor Badminton Court 1</option>
+                <option value="Indoor Badminton Court 2">Indoor Badminton Court 2</option>
+                <option value="Dr. APJ Abdul Kalam Auditorium">Dr. APJ Abdul Kalam Auditorium (1500 Seats)</option>
+                <option value="Smart Conference Hall C">Smart Conference Hall C</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Date *</label>
+                <input type="date" id="form-bk-date" required value="${new Date().toISOString().split('T')[0]}" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Time Slot *</label>
+                <select id="form-bk-slot" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm">
+                  <option value="09:00 AM - 11:00 AM">09:00 AM - 11:00 AM</option>
+                  <option value="02:00 PM - 04:00 PM">02:00 PM - 04:00 PM</option>
+                  <option value="04:00 PM - 06:00 PM">04:00 PM - 06:00 PM</option>
+                  <option value="06:00 PM - 07:30 PM">06:00 PM - 07:30 PM</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase mb-1">Purpose *</label>
+              <input type="text" id="form-bk-purpose" required placeholder="e.g. Model training, Club event, Team practice" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm">
+            </div>
+
+            <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
+              <button type="button" id="booking-modal-cancel" class="px-4 py-2 rounded-xl text-slate-500 text-sm font-semibold">Cancel</button>
+              <button type="submit" class="px-5 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs shadow-md">Confirm Reservation</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  `;
+
+  // Tab switching
+  container.querySelectorAll('.fac-tab-btn').forEach(btn => {
+    btn.onclick = () => {
+      activeFacilityTab = btn.dataset.tab;
+      renderFacilitiesHostel(container);
+    };
+  });
+
+  // Modal logic
+  const modal = container.querySelector('#booking-modal');
+  const form = container.querySelector('#booking-form');
+  const closeBtn = container.querySelector('#booking-modal-close');
+  const cancelBtn = container.querySelector('#booking-modal-cancel');
+  const btnBook = container.querySelector('#btn-quick-facility-book');
+
+  if (btnBook) btnBook.onclick = () => modal.classList.remove('hidden');
+  if (closeBtn) closeBtn.onclick = () => modal.classList.add('hidden');
+  if (cancelBtn) cancelBtn.onclick = () => modal.classList.add('hidden');
+
+  if (form) {
+    form.onsubmit = (e) => {
+      e.preventDefault();
+      const bkData = {
+        facilityName: container.querySelector('#form-bk-facility').value,
+        date: container.querySelector('#form-bk-date').value,
+        timeSlot: container.querySelector('#form-bk-slot').value,
+        purpose: container.querySelector('#form-bk-purpose').value.trim()
+      };
+      store.bookFacility(bkData);
+      triggerConfetti();
+      showToast('Facility reserved successfully!', 'success');
+      modal.classList.add('hidden');
+      activeFacilityTab = 'booking';
+      renderFacilitiesHostel(container);
+    };
+  }
+
+  if (window.lucide) window.lucide.createIcons();
+}
+
+
+// --- FILE: js/views/studentServices.js ---
+// ============================================================
+// STUDENT SERVICES & GRIEVANCES VIEW (Features 131 - 140)
+// Campus Services, Grievances, Leave Passes, Certificates & Health
+// ============================================================
+
+
+function renderStudentServices(container) {
+  let activeTab = 'grievances'; // 'grievances' | 'leave' | 'certificates' | 'medical'
+
+  function render() {
+    const grievances = store.getGrievances();
+    const leaves = store.getLeaveApplications();
+    const certificates = store.getCertificates();
+    const medical = store.getMedicalCenter();
+    const profile = store.getProfile();
+
+    container.innerHTML = `
+      <div class="space-y-8 animate-fade-in pb-16">
+        <!-- Header Banner -->
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-teal-700 via-emerald-800 to-cyan-900 text-white p-8 md:p-10 shadow-xl">
+          <div class="relative z-10 max-w-2xl">
+            <span class="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-md text-emerald-100 border border-white/20 inline-block mb-3">
+              Features 131–140 • Campus Care & Welfare
+            </span>
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">Student Services & Grievance Cell</h1>
+            <p class="mt-3 text-emerald-100 text-sm md:text-base leading-relaxed">
+              Official institutional helpdesk, anonymous grievance redressal, hostel digital gate passes with warden QR, verified certificate issuance, and 24/7 campus emergency health center.
+            </p>
+          </div>
+          <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-teal-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex items-center space-x-2 border-b border-gray-200 dark:border-gray-800 pb-2 overflow-x-auto no-scrollbar">
+          <button id="tab-btn-grievances" class="px-5 py-2.5 rounded-xl font-medium text-sm transition-all flex items-center space-x-2 whitespace-nowrap ${
+            activeTab === 'grievances'
+              ? 'bg-teal-600 text-white shadow-md'
+              : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+          }">
+            <i data-lucide="shield-alert" class="w-4 h-4"></i>
+            <span>Grievance Cell & Tickets</span>
+          </button>
+          <button id="tab-btn-leave" class="px-5 py-2.5 rounded-xl font-medium text-sm transition-all flex items-center space-x-2 whitespace-nowrap ${
+            activeTab === 'leave'
+              ? 'bg-teal-600 text-white shadow-md'
+              : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+          }">
+            <i data-lucide="qr-code" class="w-4 h-4"></i>
+            <span>Hostel Leave & Gate Pass</span>
+          </button>
+          <button id="tab-btn-certificates" class="px-5 py-2.5 rounded-xl font-medium text-sm transition-all flex items-center space-x-2 whitespace-nowrap ${
+            activeTab === 'certificates'
+              ? 'bg-teal-600 text-white shadow-md'
+              : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+          }">
+            <i data-lucide="file-check" class="w-4 h-4"></i>
+            <span>Certificates & Letters</span>
+          </button>
+          <button id="tab-btn-medical" class="px-5 py-2.5 rounded-xl font-medium text-sm transition-all flex items-center space-x-2 whitespace-nowrap ${
+            activeTab === 'medical'
+              ? 'bg-teal-600 text-white shadow-md'
+              : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+          }">
+            <i data-lucide="heart-pulse" class="w-4 h-4"></i>
+            <span>Medical & Emergency 24/7</span>
+          </button>
+        </div>
+
+        <!-- Tab 1: Grievance Cell & Tickets -->
+        ${activeTab === 'grievances' ? `
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Submit Form -->
+            <div class="lg:col-span-1 bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm">
+              <div class="flex items-center space-x-3 mb-5">
+                <div class="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-900/30 text-teal-600 flex items-center justify-center">
+                  <i data-lucide="message-square-plus" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h3 class="font-bold text-gray-900 dark:text-white">Lodge a Grievance / Ticket</h3>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">Escalated directly to Welfare Dean</p>
+                </div>
+              </div>
+
+              <form id="grievance-form" class="space-y-4">
+                <div>
+                  <label class="block text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase mb-1">Issue Category</label>
+                  <select id="grv-cat" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-teal-500 dark:text-white">
+                    <option value="IT & Wi-Fi">IT & Wi-Fi Network</option>
+                    <option value="Hostel & Mess">Hostel & Mess Maintenance</option>
+                    <option value="Academics & Timetable">Academics & Timetable</option>
+                    <option value="Library & Lab Facilities">Library & Lab Facilities</option>
+                    <option value="Harassment / Anti-Ragging">Harassment / Anti-Ragging (High Priority)</option>
+                    <option value="General Administration">General Administration</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase mb-1">Subject / Summary</label>
+                  <input id="grv-title" required placeholder="e.g. Broken water purifier in Hostel 2" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-teal-500 dark:text-white" />
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase mb-1">Target Department</label>
+                  <input id="grv-dept" placeholder="e.g. Estate & Maintenance Office" value="Student Welfare & Maintenance Office" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-teal-500 dark:text-white" />
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase mb-1">Detailed Description</label>
+                  <textarea id="grv-desc" rows="3" placeholder="Provide specific room number, date, or context..." class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-teal-500 dark:text-white"></textarea>
+                </div>
+
+                <!-- Anonymous toggle -->
+                <div class="p-3.5 rounded-xl bg-teal-50/60 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-800/50 flex items-start space-x-3">
+                  <input type="checkbox" id="grv-anon" class="mt-0.5 rounded text-teal-600 focus:ring-teal-500 h-4 w-4" />
+                  <label for="grv-anon" class="text-xs text-teal-900 dark:text-teal-200 cursor-pointer">
+                    <span class="font-semibold block">Submit Anonymously</span>
+                    Your student ID, name, and email will be completely masked from the resolution officer.
+                  </label>
+                </div>
+
+                <button type="submit" class="w-full py-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-semibold text-sm transition-all shadow-md flex items-center justify-center space-x-2">
+                  <i data-lucide="send" class="w-4 h-4"></i>
+                  <span>Submit Ticket</span>
+                </button>
+              </form>
+            </div>
+
+            <!-- Grievance List -->
+            <div class="lg:col-span-2 space-y-4">
+              <div class="flex items-center justify-between">
+                <h3 class="font-bold text-gray-900 dark:text-white text-lg">My Submitted Tickets & Complaints</h3>
+                <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Total: ${grievances.length} tickets</span>
+              </div>
+
+              <div class="space-y-3">
+                ${grievances.map(grv => `
+                  <div class="bg-white dark:bg-gray-900 p-5 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:border-teal-300 dark:hover:border-teal-700 transition-all">
+                    <div class="flex items-start justify-between">
+                      <div class="space-y-1">
+                        <div class="flex items-center space-x-2">
+                          <span class="font-mono text-xs font-bold text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-900/30 px-2 py-0.5 rounded">${grv.id}</span>
+                          <span class="px-2 py-0.5 rounded text-xs font-semibold ${
+                            grv.status === 'Resolved' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300' :
+                            grv.status === 'In Progress' ? 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300' :
+                            'bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300'
+                          }">${grv.status}</span>
+                          ${grv.isAnonymous ? `<span class="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-[11px] px-2 py-0.5 rounded-full font-medium">Anonymous</span>` : ''}
+                        </div>
+                        <h4 class="font-bold text-gray-900 dark:text-white text-base">${grv.title}</h4>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Category: <span class="font-medium text-gray-700 dark:text-gray-300">${grv.category}</span> • Department: <span class="font-medium text-gray-700 dark:text-gray-300">${grv.department}</span></p>
+                      </div>
+                      <span class="text-xs text-gray-400">${grv.date}</span>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800 flex items-center space-x-2 text-xs">
+                      <i data-lucide="check-circle-2" class="w-4 h-4 text-teal-600 shrink-0"></i>
+                      <p class="text-gray-600 dark:text-gray-300 italic"><span class="font-semibold text-gray-800 dark:text-gray-200">Latest Action:</span> ${grv.resolutionNote || 'Under review by duty supervisor'}</p>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        ` : ''}
+
+        <!-- Tab 2: Hostel Leave & Gate Pass -->
+        ${activeTab === 'leave' ? `
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Apply Leave -->
+            <div class="lg:col-span-1 bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm">
+              <div class="flex items-center space-x-3 mb-5">
+                <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-900/30 text-purple-600 flex items-center justify-center">
+                  <i data-lucide="file-text" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h3 class="font-bold text-gray-900 dark:text-white">Request Gate Pass</h3>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">Automated Parent & Warden SMS</p>
+                </div>
+              </div>
+
+              <form id="leave-form" class="space-y-4">
+                <div>
+                  <label class="block text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase mb-1">Pass Type</label>
+                  <select id="lv-type" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-teal-500 dark:text-white">
+                    <option value="Out-Station / Weekend Pass">Out-Station / Weekend Pass</option>
+                    <option value="Day Outing Pass (City)">Day Outing Pass (City)</option>
+                    <option value="Emergency Medical Leave">Emergency Medical Leave</option>
+                    <option value="Academic Conference / Hackathon">Academic Conference / Hackathon</option>
+                  </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase mb-1">Departure</label>
+                    <input id="lv-from" type="date" required value="${new Date().toISOString().split('T')[0]}" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-teal-500 dark:text-white" />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase mb-1">Expected Return</label>
+                    <input id="lv-to" type="date" required class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-3.5 py-2 text-sm focus:outline-none focus:border-teal-500 dark:text-white" />
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase mb-1">Destination City / Place</label>
+                  <input id="lv-dest" required placeholder="e.g. Mysuru / Home Residence" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-teal-500 dark:text-white" />
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase mb-1">Reason for Leave</label>
+                  <textarea id="lv-reason" rows="2" required placeholder="State exact reason..." class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-teal-500 dark:text-white"></textarea>
+                </div>
+
+                <div class="text-[11px] text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-xl border border-gray-100 dark:border-gray-800">
+                  ⚠️ An OTP approval notification is automatically triggered to registered guardian mobile (+91 98450 99881).
+                </div>
+
+                <button type="submit" class="w-full py-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-semibold text-sm transition-all shadow-md flex items-center justify-center space-x-2">
+                  <i data-lucide="send" class="w-4 h-4"></i>
+                  <span>Submit Leave Request</span>
+                </button>
+              </form>
+            </div>
+
+            <!-- Passes List with QR Card -->
+            <div class="lg:col-span-2 space-y-4">
+              <h3 class="font-bold text-gray-900 dark:text-white text-lg">Active & Past Gate Passes</h3>
+
+              <div class="space-y-4">
+                ${leaves.map(lv => `
+                  <div class="bg-white dark:bg-gray-900 rounded-2xl border border-teal-200 dark:border-teal-900 p-6 shadow-md relative overflow-hidden">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-gray-100 dark:border-gray-800">
+                      <div>
+                        <div class="flex items-center space-x-2 mb-1">
+                          <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300 font-mono">${lv.id}</span>
+                          <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 flex items-center space-x-1">
+                            <i data-lucide="check" class="w-3 h-3"></i>
+                            <span>${lv.wardenStatus}</span>
+                          </span>
+                        </div>
+                        <h4 class="font-bold text-gray-900 dark:text-white text-lg">${lv.type}</h4>
+                        <p class="text-xs text-gray-500">Destination: <span class="font-semibold text-gray-700 dark:text-gray-300">${lv.destination}</span></p>
+                      </div>
+
+                      <!-- QR Code Preview -->
+                      <div class="flex items-center space-x-3 bg-gray-50 dark:bg-gray-800 p-2.5 rounded-xl border border-gray-200 dark:border-gray-700">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=70x70&data=VERIFIED_GATEPASS_${lv.id}_${profile.rollNo}" alt="Gate Pass QR" class="w-14 h-14 rounded-lg bg-white p-1 shadow-sm" />
+                        <div class="text-left">
+                          <p class="text-[11px] font-bold text-gray-800 dark:text-gray-200 uppercase">Security Gate QR</p>
+                          <p class="text-[10px] text-gray-500">Show to Main Gate Warden</p>
+                          <span class="inline-block mt-1 text-[10px] text-emerald-600 font-bold bg-emerald-50 dark:bg-emerald-950 px-1.5 py-0.5 rounded">Active</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 text-xs">
+                      <div>
+                        <p class="text-gray-400">Valid From</p>
+                        <p class="font-semibold text-gray-800 dark:text-gray-200">${lv.fromDate}</p>
+                      </div>
+                      <div>
+                        <p class="text-gray-400">Valid To</p>
+                        <p class="font-semibold text-gray-800 dark:text-gray-200">${lv.toDate}</p>
+                      </div>
+                      <div>
+                        <p class="text-gray-400">Parent Consent</p>
+                        <p class="font-semibold text-emerald-600">${lv.parentApprovalStatus}</p>
+                      </div>
+                      <div>
+                        <p class="text-gray-400">Student</p>
+                        <p class="font-semibold text-gray-800 dark:text-gray-200">${profile.name} (${profile.rollNo})</p>
+                      </div>
+                    </div>
+
+                    <div class="mt-3 text-xs text-gray-500 bg-gray-50 dark:bg-gray-800/40 p-2 rounded-lg">
+                      <span class="font-semibold">Reason:</span> ${lv.reason}
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        ` : ''}
+
+        <!-- Tab 3: Certificates & Letters -->
+        ${activeTab === 'certificates' ? `
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Request Certificate -->
+            <div class="lg:col-span-1 bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm">
+              <div class="flex items-center space-x-3 mb-5">
+                <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center">
+                  <i data-lucide="award" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h3 class="font-bold text-gray-900 dark:text-white">Apply for Certificate</h3>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">Digitally signed PDF with verification</p>
+                </div>
+              </div>
+
+              <form id="cert-form" class="space-y-4">
+                <div>
+                  <label class="block text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase mb-1">Certificate Type</label>
+                  <select id="cert-type" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-teal-500 dark:text-white">
+                    <option value="Bonafide Student Certificate">Bonafide Student Certificate</option>
+                    <option value="Estimated Tuition Fee Letter">Estimated Tuition Fee Letter</option>
+                    <option value="Medium of Instruction (English) Letter">Medium of Instruction (English) Letter</option>
+                    <option value="No Objection Certificate (NOC) for Internship">No Objection Certificate (NOC) for Internship</option>
+                    <option value="Character & Conduct Certificate">Character & Conduct Certificate</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold text-gray-600 dark:text-gray-300 uppercase mb-1">Purpose / Submission To</label>
+                  <input id="cert-purpose" required placeholder="e.g. Passport Office / SBI Education Loan / Visa" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-teal-500 dark:text-white" />
+                </div>
+
+                <div class="p-3 bg-blue-50/50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900 rounded-xl text-xs text-blue-900 dark:text-blue-200">
+                  ℹ️ Standard digital verification seal of St. Xavier's Institute of Technology is affixed automatically with a cryptographically verifiable serial number.
+                </div>
+
+                <button type="submit" class="w-full py-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-semibold text-sm transition-all shadow-md flex items-center justify-center space-x-2">
+                  <i data-lucide="printer" class="w-4 h-4"></i>
+                  <span>Generate Certificate</span>
+                </button>
+              </form>
+            </div>
+
+            <!-- Certificates List -->
+            <div class="lg:col-span-2 space-y-4">
+              <h3 class="font-bold text-gray-900 dark:text-white text-lg">My Issued Documents & Letters</h3>
+
+              <div class="space-y-4">
+                ${certificates.map(c => `
+                  <div class="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:border-blue-300 dark:hover:border-blue-700 transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                      <div class="flex items-center space-x-2">
+                        <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">${c.serialNo}</span>
+                        <span class="px-2 py-0.5 rounded text-xs font-semibold bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">${c.status}</span>
+                      </div>
+                      <h4 class="font-bold text-gray-900 dark:text-white text-base">${c.type}</h4>
+                      <p class="text-xs text-gray-500 dark:text-gray-400">Purpose: <span class="text-gray-800 dark:text-gray-200 font-medium">${c.purpose}</span> • Applied: ${c.date}</p>
+                    </div>
+
+                    <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-gray-100 dark:bg-gray-800 hover:bg-teal-600 hover:text-white text-gray-700 dark:text-gray-200 text-xs font-semibold transition-all flex items-center space-x-2 shadow-sm shrink-0">
+                      <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                      <span>Download PDF</span>
+                    </button>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        ` : ''}
+
+        <!-- Tab 4: Medical & Emergency 24/7 -->
+        ${activeTab === 'medical' ? `
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="md:col-span-2 bg-white dark:bg-gray-900 p-8 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm space-y-6">
+              <div class="flex items-center justify-between">
+                <div>
+                  <span class="px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300 inline-block mb-2">Emergency Response Centre</span>
+                  <h3 class="text-2xl font-black text-gray-900 dark:text-white">Campus Health & Wellness Hospital</h3>
+                </div>
+                <div class="w-12 h-12 rounded-2xl bg-red-50 dark:bg-red-900/30 text-red-600 flex items-center justify-center">
+                  <i data-lucide="activity" class="w-6 h-6"></i>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="p-4 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700">
+                  <p class="text-xs text-gray-500 font-medium">Doctor on Duty</p>
+                  <p class="text-base font-bold text-gray-900 dark:text-white mt-1">${medical.doctorOnDuty}</p>
+                  <span class="text-[11px] text-emerald-600 font-semibold flex items-center space-x-1 mt-1">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-ping"></span>
+                    <span>Currently In Consultation Room 1</span>
+                  </span>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700">
+                  <p class="text-xs text-gray-500 font-medium">Head Nurse</p>
+                  <p class="text-base font-bold text-gray-900 dark:text-white mt-1">${medical.nurseOnDuty}</p>
+                  <span class="text-[11px] text-gray-500 mt-1 block">Triage & First-Aid Station</span>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700">
+                  <p class="text-xs text-gray-500 font-medium">Operating Hours</p>
+                  <p class="text-sm font-bold text-gray-900 dark:text-white mt-1">${medical.timings}</p>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700">
+                  <p class="text-xs text-gray-500 font-medium">Pharmacy Dispensary</p>
+                  <p class="text-xs font-semibold text-emerald-600 mt-1">${medical.pharmacyStatus}</p>
+                </div>
+              </div>
+
+              <div class="p-5 rounded-2xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/60 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center space-x-3">
+                  <div class="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center shrink-0 animate-pulse">
+                    <i data-lucide="phone-call" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <p class="text-sm font-bold text-red-900 dark:text-red-200">Campus Ambulance Hotline (Direct Line)</p>
+                    <p class="text-xs text-red-700 dark:text-red-300 font-mono">${medical.ambulanceHotline}</p>
+                  </div>
+                </div>
+                <a href="tel:${medical.ambulanceHotline}" class="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-md transition-all shrink-0">
+                  Call Ambulance Now
+                </a>
+              </div>
+            </div>
+
+            <!-- Quick Contacts Card -->
+            <div class="bg-white dark:bg-gray-900 p-6 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm space-y-4">
+              <h4 class="font-bold text-gray-900 dark:text-white text-base">Key Emergency Numbers</h4>
+
+              <div class="space-y-3 text-xs">
+                <div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-800">
+                  <p class="font-bold text-gray-800 dark:text-gray-200">Campus Security Main Gate</p>
+                  <p class="text-gray-500 font-mono">+91 80 2345 6701</p>
+                </div>
+
+                <div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-800">
+                  <p class="font-bold text-gray-800 dark:text-gray-200">Women's Safety / Anti-Harassment Cell</p>
+                  <p class="text-gray-500 font-mono">+91 80 2345 6710 (24/7)</p>
+                </div>
+
+                <div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-800">
+                  <p class="font-bold text-gray-800 dark:text-gray-200">Hostel Chief Warden</p>
+                  <p class="text-gray-500 font-mono">+91 98450 11223</p>
+                </div>
+
+                <div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-800">
+                  <p class="font-bold text-gray-800 dark:text-gray-200">Mental Health & Counselling Helpline</p>
+                  <p class="text-gray-500 font-mono">1800-599-0019 (Toll Free)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ` : ''}
+      </div>
+    `;
+
+    if (window.lucide) window.lucide.createIcons();
+
+    // Event listeners
+    document.getElementById('tab-btn-grievances')?.addEventListener('click', () => { activeTab = 'grievances'; render(); });
+    document.getElementById('tab-btn-leave')?.addEventListener('click', () => { activeTab = 'leave'; render(); });
+    document.getElementById('tab-btn-certificates')?.addEventListener('click', () => { activeTab = 'certificates'; render(); });
+    document.getElementById('tab-btn-medical')?.addEventListener('click', () => { activeTab = 'medical'; render(); });
+
+    // Grievance submit
+    document.getElementById('grievance-form')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const title = document.getElementById('grv-title').value;
+      const category = document.getElementById('grv-cat').value;
+      const department = document.getElementById('grv-dept').value;
+      const isAnonymous = document.getElementById('grv-anon').checked;
+
+      store.submitGrievance({ title, category, department, isAnonymous });
+      render();
+    });
+
+    // Leave submit
+    document.getElementById('leave-form')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const type = document.getElementById('lv-type').value;
+      const fromDate = document.getElementById('lv-from').value;
+      const toDate = document.getElementById('lv-to').value;
+      const destination = document.getElementById('lv-dest').value;
+      const reason = document.getElementById('lv-reason').value;
+
+      store.submitLeaveApplication({ type, fromDate, toDate, destination, reason });
+      render();
+    });
+
+    // Certificate submit
+    document.getElementById('cert-form')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const type = document.getElementById('cert-type').value;
+      const purpose = document.getElementById('cert-purpose').value;
+
+      store.requestCertificate({ type, purpose });
+      render();
+    });
+  }
+
+  render();
+}
+
+
+// --- FILE: js/views/placements.js ---
+// ============================================================
+// PLACEMENTS & CAREER PORTAL VIEW (Features 147 - 148)
+// Corporate Drives, Job & Internship Engine, Skill Match
+// ============================================================
+
+
+function renderPlacements(container) {
+  let filterRole = 'all'; // 'all' | 'internship' | 'fulltime'
+  let searchQuery = '';
+
+  function render() {
+    const placements = store.getPlacements();
+    const profile = store.getProfile();
+    const studentSkills = (profile.skills || []).map(s => s.toLowerCase());
+
+    const filtered = placements.filter(job => {
+      const matchRole =
+        filterRole === 'all' ? true :
+        filterRole === 'internship' ? job.role.toLowerCase().includes('intern') :
+        !job.role.toLowerCase().includes('intern');
+
+      const matchQuery =
+        !searchQuery ||
+        job.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        job.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        job.skillsRequired.some(s => s.toLowerCase().includes(searchQuery.toLowerCase()));
+
+      return matchRole && matchQuery;
+    });
+
+    // Compute stats
+    const totalDrives = placements.length;
+    const appliedDrives = placements.filter(p => p.applied).length;
+
+    container.innerHTML = `
+      <div class="space-y-8 animate-fade-in pb-16">
+        <!-- Header Banner -->
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white p-8 md:p-10 shadow-xl">
+          <div class="relative z-10 max-w-2xl">
+            <span class="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-md text-indigo-100 border border-white/20 inline-block mb-3">
+              Features 147–148 • Corporate Relations & Placements
+            </span>
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">Training & Placement Cell</h1>
+            <p class="mt-3 text-indigo-100 text-sm md:text-base leading-relaxed">
+              Direct access to top-tier campus recruiters, AI-assisted skill matching, internship stipends, full-time offers, and real-time recruitment drive status.
+            </p>
+          </div>
+          <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        </div>
+
+        <!-- Institutional Placement Highlights -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="bg-white dark:bg-gray-900 p-5 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm text-center">
+            <span class="text-2xl md:text-3xl font-black text-indigo-600 dark:text-indigo-400">94.8%</span>
+            <p class="text-xs font-semibold text-gray-500 uppercase mt-1">Placement Rate</p>
+          </div>
+          <div class="bg-white dark:bg-gray-900 p-5 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm text-center">
+            <span class="text-2xl md:text-3xl font-black text-emerald-600 dark:text-emerald-400">₹62 LPA</span>
+            <p class="text-xs font-semibold text-gray-500 uppercase mt-1">Highest Package</p>
+          </div>
+          <div class="bg-white dark:bg-gray-900 p-5 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm text-center">
+            <span class="text-2xl md:text-3xl font-black text-blue-600 dark:text-blue-400">₹12.8 LPA</span>
+            <p class="text-xs font-semibold text-gray-500 uppercase mt-1">Average Package</p>
+          </div>
+          <div class="bg-white dark:bg-gray-900 p-5 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm text-center">
+            <span class="text-2xl md:text-3xl font-black text-purple-600 dark:text-purple-400">180+</span>
+            <p class="text-xs font-semibold text-gray-500 uppercase mt-1">Visiting Companies</p>
+          </div>
+        </div>
+
+        <!-- Student Eligibility Card -->
+        <div class="bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-transparent p-6 rounded-2xl border border-indigo-200 dark:border-indigo-900/60 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="flex items-center space-x-4">
+            <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center font-bold text-lg shadow-md">
+              ${profile.cgpa || '8.9'}
+            </div>
+            <div>
+              <div class="flex items-center space-x-2">
+                <h3 class="font-bold text-gray-900 dark:text-white text-base">${profile.name} • Eligibility Status</h3>
+                <span class="px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">All Clear (0 Backlogs)</span>
+              </div>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                Current CGPA: <span class="font-bold text-gray-800 dark:text-gray-200">${profile.cgpa || '8.9'}</span> • Registered for ${profile.branch} (Batch 2023–27) • Applied Drives: <span class="font-bold text-indigo-600">${appliedDrives} / ${totalDrives}</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-2">
+            <button class="px-4 py-2 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs font-semibold text-gray-700 dark:text-gray-300 shadow-sm hover:border-indigo-500 transition-all flex items-center space-x-1.5">
+              <i data-lucide="file-text" class="w-4 h-4 text-indigo-600"></i>
+              <span>View Verified Resume</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Search & Filter Controls -->
+        <div class="flex flex-col sm:flex-row gap-3 items-center justify-between">
+          <div class="relative w-full sm:w-80">
+            <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3.5 top-3.5"></i>
+            <input id="plc-search" type="text" placeholder="Search company, skills, or role..." value="${searchQuery}" class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:outline-none focus:border-indigo-500 dark:text-white" />
+          </div>
+
+          <div class="flex items-center space-x-2 w-full sm:w-auto overflow-x-auto no-scrollbar">
+            <button id="flt-all" class="px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+              filterRole === 'all'
+                ? 'bg-indigo-600 text-white shadow-sm'
+                : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-800'
+            }">All Opportunities</button>
+            <button id="flt-intern" class="px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+              filterRole === 'internship'
+                ? 'bg-indigo-600 text-white shadow-sm'
+                : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-800'
+            }">Internships Only</button>
+            <button id="flt-fulltime" class="px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+              filterRole === 'fulltime'
+                ? 'bg-indigo-600 text-white shadow-sm'
+                : 'bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-800'
+            }">Full-Time Roles</button>
+          </div>
+        </div>
+
+        <!-- Drives Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          ${filtered.map(job => {
+            // Calculate skill match
+            const matchedSkills = job.skillsRequired.filter(s =>
+              studentSkills.some(userSkill => userSkill.includes(s.toLowerCase()) || s.toLowerCase().includes(userSkill))
+            );
+            const matchScore = Math.round((matchedSkills.length / job.skillsRequired.length) * 100);
+
+            return `
+              <div class="bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 p-6 shadow-sm hover:shadow-md transition-all space-y-4 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-start justify-between">
+                    <div>
+                      <span class="px-2.5 py-1 rounded-full text-[11px] font-bold ${
+                        job.role.toLowerCase().includes('intern')
+                          ? 'bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300'
+                          : 'bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300'
+                      }">
+                        ${job.role.toLowerCase().includes('intern') ? 'Summer Internship' : 'Full-Time Job'}
+                      </span>
+                      <h3 class="text-xl font-extrabold text-gray-900 dark:text-white mt-2">${job.company}</h3>
+                      <p class="text-sm font-semibold text-indigo-600 dark:text-indigo-400">${job.role}</p>
+                    </div>
+
+                    <div class="text-right">
+                      <span class="text-base font-black text-gray-900 dark:text-white">${job.ctc}</span>
+                      <p class="text-[11px] text-gray-400">${job.location}</p>
+                    </div>
+                  </div>
+
+                  <!-- Requirements & Match -->
+                  <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800 space-y-3">
+                    <div class="flex items-center justify-between text-xs">
+                      <span class="text-gray-500">Min CGPA Required: <span class="font-bold text-gray-800 dark:text-gray-200">${job.eligibilityCgpa}</span></span>
+                      <div class="flex items-center space-x-1 font-semibold ${
+                        matchScore >= 70 ? 'text-emerald-600' : 'text-amber-600'
+                      }">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                        <span>${matchScore}% Skill Match</span>
+                      </div>
+                    </div>
+
+                    <!-- Skills Tags -->
+                    <div class="flex flex-wrap gap-1.5">
+                      ${job.skillsRequired.map(skill => {
+                        const isMatch = studentSkills.some(us => us.includes(skill.toLowerCase()) || skill.toLowerCase().includes(us));
+                        return `
+                          <span class="text-[11px] px-2 py-0.5 rounded-md font-medium ${
+                            isMatch
+                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800'
+                              : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
+                          }">
+                            ${isMatch ? '✓ ' : ''}${skill}
+                          </span>
+                        `;
+                      }).join('')}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pt-3 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+                  <div class="text-xs text-gray-400">
+                    <span>Deadline: <span class="font-semibold text-gray-700 dark:text-gray-300">${job.deadline}</span></span>
+                  </div>
+
+                  ${job.applied ? `
+                    <div class="flex items-center space-x-2">
+                      <span class="px-3 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-bold border border-emerald-200 dark:border-emerald-900 flex items-center space-x-1">
+                        <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                        <span>${job.status}</span>
+                      </span>
+                    </div>
+                  ` : `
+                    <button data-apply-id="${job.id}" class="btn-apply-job px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-md transition-all flex items-center space-x-1.5">
+                      <span>Apply Now</span>
+                      <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                    </button>
+                  `}
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+
+    if (window.lucide) window.lucide.createIcons();
+
+    // Event listeners
+    document.getElementById('plc-search')?.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      render();
+    });
+
+    document.getElementById('flt-all')?.addEventListener('click', () => { filterRole = 'all'; render(); });
+    document.getElementById('flt-intern')?.addEventListener('click', () => { filterRole = 'internship'; render(); });
+    document.getElementById('flt-fulltime')?.addEventListener('click', () => { filterRole = 'fulltime'; render(); });
+
+    container.querySelectorAll('.btn-apply-job').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const jobId = btn.getAttribute('data-apply-id');
+        store.applyPlacement(jobId);
+        render();
+      });
+    });
+  }
+
+  render();
+}
+
+
+// --- FILE: js/views/adminAnalytics.js ---
+// ============================================================
+// ADMIN ANALYTICS & ROLE SWITCHER VIEW (Features 149 - 150)
+// Executive Dashboard, Department Matrix & Role Modes
+// ============================================================
+
+
+function renderAdminAnalytics(container) {
+  function render() {
+    const metrics = store.getAdminMetrics();
+    const currentRole = store.getRole();
+    const depts = metrics.departmentBreakdown || [];
+    const trends = metrics.placementTrend || [];
+    const logs = metrics.systemLogs || [];
+
+    container.innerHTML = `
+      <div class="space-y-8 animate-fade-in pb-16">
+        <!-- Header Banner -->
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-gray-900 to-zinc-950 text-white p-8 md:p-10 shadow-xl border border-gray-800">
+          <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="max-w-xl">
+              <span class="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/10 backdrop-blur-md text-amber-300 border border-amber-400/20 inline-block mb-3">
+                Features 149–150 • Executive Institutional Analytics
+              </span>
+              <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">Executive Management Portal</h1>
+              <p class="mt-3 text-gray-300 text-sm md:text-base leading-relaxed">
+                Central command console for institutional governance, academic accreditation, real-time KPI metrics, and role-based persona switching.
+              </p>
+            </div>
+
+            <!-- Role Switcher Control -->
+            <div class="bg-gray-800/80 backdrop-blur-md p-4 rounded-2xl border border-gray-700 shadow-lg space-y-2 shrink-0">
+              <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider block">Active User Persona</span>
+              <div class="grid grid-cols-2 gap-2">
+                ${['Student', 'Faculty', 'Admin', 'Applicant'].map(role => `
+                  <button data-role="${role}" class="btn-role-switch px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center space-x-1.5 ${
+                    currentRole === role
+                      ? 'bg-amber-500 text-gray-950 shadow-md ring-2 ring-amber-400'
+                      : 'bg-gray-700 text-gray-200 hover:bg-gray-600'
+                  }">
+                    <i data-lucide="${
+                      role === 'Student' ? 'graduation-cap' :
+                      role === 'Faculty' ? 'user-check' :
+                      role === 'Admin' ? 'shield-check' : 'compass'
+                    }" class="w-3.5 h-3.5"></i>
+                    <span>${role}</span>
+                  </button>
+                `).join('')}
+              </div>
+              <p class="text-[11px] text-gray-400 text-center mt-1">Simulating permissions for: <strong class="text-amber-300">${currentRole}</strong></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Institutional Key Performance Indicators (KPIs) -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div class="bg-white dark:bg-gray-900 p-5 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm text-center">
+            <span class="text-2xl font-black text-gray-900 dark:text-white">${metrics.totalStudents || 8420}</span>
+            <p class="text-[11px] font-semibold text-gray-500 uppercase mt-1">Total Students</p>
+          </div>
+
+          <div class="bg-white dark:bg-gray-900 p-5 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm text-center">
+            <span class="text-2xl font-black text-gray-900 dark:text-white">${metrics.facultyCount || 380}</span>
+            <p class="text-[11px] font-semibold text-gray-500 uppercase mt-1">Full-Time Faculty</p>
+          </div>
+
+          <div class="bg-white dark:bg-gray-900 p-5 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm text-center">
+            <span class="text-2xl font-black text-emerald-600 dark:text-emerald-400">${metrics.placementRate || '94.8%'}</span>
+            <p class="text-[11px] font-semibold text-gray-500 uppercase mt-1">Placement Rate</p>
+          </div>
+
+          <div class="bg-white dark:bg-gray-900 p-5 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm text-center">
+            <span class="text-2xl font-black text-blue-600 dark:text-blue-400">${metrics.avgAttendance || '82.4%'}</span>
+            <p class="text-[11px] font-semibold text-gray-500 uppercase mt-1">Avg Attendance</p>
+          </div>
+
+          <div class="bg-white dark:bg-gray-900 p-5 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm text-center">
+            <span class="text-2xl font-black text-purple-600 dark:text-purple-400">${metrics.researchGrants || '₹14.2 Cr'}</span>
+            <p class="text-[11px] font-semibold text-gray-500 uppercase mt-1">R&D Grants</p>
+          </div>
+
+          <div class="bg-white dark:bg-gray-900 p-5 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm text-center">
+            <span class="text-2xl font-black text-amber-500">${metrics.activeGrievances || 3}</span>
+            <p class="text-[11px] font-semibold text-gray-500 uppercase mt-1">Open Tickets</p>
+          </div>
+        </div>
+
+        <!-- Department Performance Matrix -->
+        <div class="bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 p-6 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-lg font-bold text-gray-900 dark:text-white">Academic Departments Health Matrix</h3>
+              <p class="text-xs text-gray-500">Student enrollment, faculty ratio, attendance, and placement performance by discipline</p>
+            </div>
+            <button onclick="alert('Exporting Departmental Audit Report (CSV)...')" class="px-3.5 py-1.5 rounded-xl border border-gray-200 dark:border-gray-700 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center space-x-1">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i>
+              <span>Export CSV</span>
+            </button>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-gray-50 dark:bg-gray-800 text-xs text-gray-500 dark:text-gray-400 uppercase">
+                <tr>
+                  <th class="py-3 px-4 rounded-l-xl">Department</th>
+                  <th class="py-3 px-4">Enrolled Students</th>
+                  <th class="py-3 px-4">Faculty Staff</th>
+                  <th class="py-3 px-4">Student-Faculty Ratio</th>
+                  <th class="py-3 px-4">Avg Attendance</th>
+                  <th class="py-3 px-4 rounded-r-xl">Placement Rate</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+                ${depts.map(d => `
+                  <tr class="hover:bg-gray-50/50 dark:hover:bg-gray-800/50 transition-colors">
+                    <td class="py-3.5 px-4 font-bold text-gray-900 dark:text-white">${d.dept}</td>
+                    <td class="py-3.5 px-4 text-gray-600 dark:text-gray-300">${d.students}</td>
+                    <td class="py-3.5 px-4 text-gray-600 dark:text-gray-300">${d.faculty}</td>
+                    <td class="py-3.5 px-4 font-mono text-xs text-indigo-600 dark:text-indigo-400 font-bold">${Math.round(d.students / d.faculty)}:1</td>
+                    <td class="py-3.5 px-4">
+                      <div class="flex items-center space-x-2">
+                        <span class="text-xs font-bold text-gray-700 dark:text-gray-300">${d.avgAttendance}</span>
+                        <div class="w-16 bg-gray-200 dark:bg-gray-700 h-1.5 rounded-full overflow-hidden">
+                          <div class="bg-blue-500 h-full" style="width: ${d.avgAttendance}"></div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="py-3.5 px-4 font-bold text-emerald-600 dark:text-emerald-400">${d.placementRate}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Historical Trends & System Logs -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- Placement & CTC Growth Trends -->
+          <div class="bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 p-6 shadow-sm space-y-4">
+            <h3 class="text-base font-bold text-gray-900 dark:text-white flex items-center space-x-2">
+              <i data-lucide="trending-up" class="w-4 h-4 text-emerald-600"></i>
+              <span>4-Year Placement & CTC Growth</span>
+            </h3>
+
+            <div class="space-y-3">
+              ${trends.map(t => `
+                <div class="p-4 rounded-2xl bg-gray-50 dark:bg-gray-800 flex items-center justify-between">
+                  <div class="space-y-0.5">
+                    <span class="font-bold text-gray-900 dark:text-white text-base">Class of ${t.year}</span>
+                    <p class="text-xs text-gray-500">Placement Success: <strong class="text-emerald-600">${t.rate}%</strong></p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm font-black text-gray-900 dark:text-white">Avg: ${t.avg}</p>
+                    <p class="text-xs text-indigo-600 font-semibold">Max: ${t.highest}</p>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Audit & System Event Logs -->
+          <div class="bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 p-6 shadow-sm space-y-4">
+            <h3 class="text-base font-bold text-gray-900 dark:text-white flex items-center space-x-2">
+              <i data-lucide="terminal" class="w-4 h-4 text-amber-500"></i>
+              <span>Institutional Audit & Action Log</span>
+            </h3>
+
+            <div class="space-y-3">
+              ${logs.map(log => `
+                <div class="p-3 rounded-xl border border-gray-100 dark:border-gray-800 flex items-start space-x-3 text-xs">
+                  <div class="w-2 h-2 rounded-full mt-1.5 shrink-0 ${
+                    log.type === 'academic' ? 'bg-blue-500' :
+                    log.type === 'it' ? 'bg-purple-500' :
+                    log.type === 'placement' ? 'bg-emerald-500' : 'bg-amber-500'
+                  }"></div>
+                  <div class="flex-1">
+                    <p class="font-medium text-gray-800 dark:text-gray-200">${log.event}</p>
+                    <span class="text-[11px] text-gray-400">${log.time}</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Administration Operations -->
+        <div class="bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-transparent p-6 rounded-3xl border border-amber-200 dark:border-amber-900/60 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h4 class="font-bold text-gray-900 dark:text-white">Administrative Emergency & Governance Action Hub</h4>
+            <p class="text-xs text-gray-500">Trigger university-wide broadcasts or download NAAC/NIRF accreditation packages</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button onclick="alert('Campus Broadcast sent to all 8,420 registered student emails and mobile push notifications!')" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-gray-950 font-bold text-xs shadow-md transition-all flex items-center space-x-1.5">
+              <i data-lucide="radio" class="w-4 h-4"></i>
+              <span>Broadcast Campus Alert</span>
+            </button>
+            <button onclick="alert('Generating 2026 NAAC SSR & NIRF Institutional Data Archive...')" class="px-4 py-2 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-xs font-semibold text-gray-700 dark:text-gray-300 hover:border-amber-500 transition-all">
+              NAAC / NIRF Dossier
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    if (window.lucide) window.lucide.createIcons();
+
+    // Role switcher listeners
+    container.querySelectorAll('.btn-role-switch').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const newRole = btn.getAttribute('data-role');
+        store.setRole(newRole);
+        render();
+      });
+    });
+  }
+
+  render();
+}
+
+
 // --- FILE: js/app.js ---
-// CampusHub Main Application Controller & Router
+// CampusHub Main Application Controller & Router (150 Features Master Edition)
 
 
 
-// Import Views
+// Pre-existing Views
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+// New Feature Views (150 Master Spec)
 
 
 
@@ -6190,18 +9006,37 @@ const ROUTES = {
   '': { title: 'CampusHub', render: renderLanding, isLanding: true },
   '#': { title: 'CampusHub', render: renderLanding, isLanding: true },
   '#landing': { title: 'CampusHub — Welcome', render: renderLanding, isLanding: true },
-  '#dashboard': { title: 'Dashboard', icon: 'layout-dashboard', render: renderDashboard },
-  '#timetable': { title: 'Timetable', icon: 'calendar', render: renderTimetable },
-  '#attendance': { title: 'Attendance', icon: 'check-check', render: renderAttendance },
-  '#assignments': { title: 'Assignments', icon: 'check-square', render: renderAssignments },
+
+  // Academics & Core
+  '#dashboard': { title: 'Student Dashboard', icon: 'layout-dashboard', render: renderDashboard },
+  '#digitalid': { title: 'Digital ID Card', icon: 'badge-check', render: renderDigitalId },
+  '#timetable': { title: 'Class Timetable', icon: 'calendar', render: renderTimetable },
+  '#attendance': { title: 'Attendance Tracker', icon: 'check-check', render: renderAttendance },
+  '#assignments': { title: 'Assignments & Tasks', icon: 'check-square', render: renderAssignments },
   '#study': { title: 'Study & Pomodoro', icon: 'timer', render: renderStudyPlanner },
-  '#events': { title: 'Campus Events', icon: 'sparkles', render: renderEvents },
-  '#notes': { title: 'Notes & Files', icon: 'book-open', render: renderNotes },
+  '#notes': { title: 'Notes & Resources', icon: 'book-open', render: renderNotes },
   '#gpa': { title: 'GPA Calculator', icon: 'calculator', render: renderGpaCalculator },
-  '#clubs': { title: 'Campus Clubs', icon: 'users', render: renderClubs },
+
+  // College & Admissions
+  '#about': { title: 'Campus & Vision', icon: 'landmark', render: renderCampusAbout },
+  '#admissions': { title: 'Admissions 2026', icon: 'graduation-cap', render: renderAdmissions },
+  '#faculty': { title: 'Faculty & Mentors', icon: 'user-check', render: renderFacultyDept },
+
+  // Learning & Library
+  '#library': { title: 'Central Library & AI', icon: 'library', render: renderLibraryStudy },
+
+  // Campus Life & Facilities
+  '#facilities': { title: 'Hostel, Mess & Bus', icon: 'home', render: renderFacilitiesHostel },
+  '#events': { title: 'Campus Events', icon: 'sparkles', render: renderEvents },
+  '#clubs': { title: 'Clubs & Societies', icon: 'users', render: renderClubs },
   '#lostfound': { title: 'Lost & Found', icon: 'help-circle', render: renderLostFound },
-  '#marketplace': { title: 'Marketplace', icon: 'shopping-bag', render: renderMarketplace },
-  '#profile': { title: 'Profile', icon: 'user', render: renderProfile },
+  '#marketplace': { title: 'Peer Marketplace', icon: 'shopping-bag', render: renderMarketplace },
+
+  // Welfare, Career & Admin
+  '#services': { title: 'Services & Grievances', icon: 'shield-alert', render: renderStudentServices },
+  '#placements': { title: 'Training & Placements', icon: 'briefcase', render: renderPlacements },
+  '#admin': { title: 'Executive Analytics', icon: 'bar-chart-3', render: renderAdminAnalytics },
+  '#profile': { title: 'Student Profile', icon: 'user', render: renderProfile },
 };
 
 class App {
@@ -6210,6 +9045,10 @@ class App {
     this.currentHash = window.location.hash || '#landing';
     this.mobileSidebarOpen = false;
     this.notifDropdownOpen = false;
+    this.chatbotOpen = false;
+    this.chatMessages = [
+      { sender: 'bot', text: 'Hello! I am CampusBot, your 24/7 AI university assistant. Ask me anything about admissions, cafeteria food, hostel gate passes, placement packages, or exam papers!' }
+    ];
 
     this.init();
   }
@@ -6259,20 +9098,54 @@ class App {
       return total > 0 && ((attended / total) * 100) < (s.targetPercentage || 75);
     }).length;
 
-    // Build navigation items
-    const navItems = [
-      { hash: '#dashboard', label: 'Dashboard', icon: 'layout-dashboard' },
-      { hash: '#timetable', label: 'Class Timetable', icon: 'calendar' },
-      { hash: '#attendance', label: 'Attendance Tracker', icon: 'check-check', badge: lowAttCount > 0 ? `${lowAttCount} alert` : null, badgeColor: 'bg-red-500' },
-      { hash: '#assignments', label: 'Assignments', icon: 'check-square', badge: pendingCount > 0 ? pendingCount : null, badgeColor: 'bg-amber-500' },
-      { hash: '#study', label: 'Study & Pomodoro', icon: 'timer' },
-      { hash: '#events', label: 'College Events', icon: 'sparkles' },
-      { hash: '#notes', label: 'Notes & Resources', icon: 'book-open' },
-      { hash: '#gpa', label: 'GPA Calculator', icon: 'calculator' },
-      { hash: '#clubs', label: 'Campus Clubs', icon: 'users' },
-      { hash: '#lostfound', label: 'Lost & Found', icon: 'help-circle' },
-      { hash: '#marketplace', label: 'Marketplace', icon: 'shopping-bag' },
-      { hash: '#profile', label: 'Student Profile', icon: 'user' },
+    // Grouped Navigation Sections
+    const navSections = [
+      {
+        title: 'Academics & Core',
+        items: [
+          { hash: '#dashboard', label: 'Dashboard', icon: 'layout-dashboard' },
+          { hash: '#digitalid', label: 'Digital ID Card', icon: 'badge-check', badge: 'QR Verified', badgeColor: 'bg-emerald-600' },
+          { hash: '#timetable', label: 'Class Timetable', icon: 'calendar' },
+          { hash: '#attendance', label: 'Attendance Tracker', icon: 'check-check', badge: lowAttCount > 0 ? `${lowAttCount} alert` : null, badgeColor: 'bg-red-500' },
+          { hash: '#assignments', label: 'Assignments', icon: 'check-square', badge: pendingCount > 0 ? pendingCount : null, badgeColor: 'bg-amber-500' },
+          { hash: '#study', label: 'Study & Pomodoro', icon: 'timer' },
+          { hash: '#notes', label: 'Notes & Files', icon: 'book-open' },
+          { hash: '#gpa', label: 'GPA Calculator', icon: 'calculator' },
+        ]
+      },
+      {
+        title: 'University & Admissions',
+        items: [
+          { hash: '#about', label: 'Campus & Vision', icon: 'landmark' },
+          { hash: '#admissions', label: 'Admissions 2026', icon: 'graduation-cap', badge: 'Open', badgeColor: 'bg-indigo-500' },
+          { hash: '#faculty', label: 'Faculty Directory', icon: 'user-check' },
+        ]
+      },
+      {
+        title: 'Learning & Library',
+        items: [
+          { hash: '#library', label: 'Library & AI Tutor', icon: 'library' },
+        ]
+      },
+      {
+        title: 'Campus Life & Facilities',
+        items: [
+          { hash: '#facilities', label: 'Hostel, Mess & Bus', icon: 'home' },
+          { hash: '#events', label: 'College Events', icon: 'sparkles' },
+          { hash: '#clubs', label: 'Campus Clubs', icon: 'users' },
+          { hash: '#lostfound', label: 'Lost & Found', icon: 'help-circle' },
+          { hash: '#marketplace', label: 'Marketplace', icon: 'shopping-bag' },
+        ]
+      },
+      {
+        title: 'Services & Career',
+        items: [
+          { hash: '#services', label: 'Services & Grievances', icon: 'shield-alert' },
+          { hash: '#placements', label: 'Placements & Drives', icon: 'briefcase', badge: 'Google', badgeColor: 'bg-purple-600' },
+          { hash: '#admin', label: 'Executive Analytics', icon: 'bar-chart-3' },
+          { hash: '#profile', label: 'Student Profile', icon: 'user' },
+        ]
+      }
     ];
 
     this.root.innerHTML = `
@@ -6285,14 +9158,14 @@ class App {
         <aside id="app-sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-slate-900 border-r border-slate-200/80 dark:border-slate-800 flex flex-col transition-transform duration-300 transform -translate-x-full lg:translate-x-0 lg:static lg:inset-auto shrink-0 shadow-lg lg:shadow-none">
           
           <!-- Logo & Brand Header -->
-          <div class="h-16 flex items-center justify-between px-5 border-b border-slate-100 dark:border-slate-800">
+          <div class="h-16 flex items-center justify-between px-5 border-b border-slate-100 dark:border-slate-800 shrink-0">
             <a href="#landing" class="flex items-center gap-2.5 group">
               <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center text-white font-bold text-lg shadow-md shadow-indigo-500/25 group-hover:scale-105 transition-transform">
                 🎓
               </div>
               <div>
                 <span class="text-lg font-black tracking-tight bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">CampusHub</span>
-                <span class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Student Portal</span>
+                <span class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider">150 Features Suite</span>
               </div>
             </a>
 
@@ -6302,37 +9175,44 @@ class App {
             </button>
           </div>
 
-          <!-- Navigation Links Scroll Area -->
-          <nav class="flex-1 overflow-y-auto p-3 space-y-1">
-            ${navItems.map(item => {
-              const isActive = currentHash === item.hash;
-              return `
-                <a href="${item.hash}" class="nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
-                  isActive
-                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
-                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100'
-                }">
-                  <div class="flex items-center gap-3 min-w-0">
-                    <i data-lucide="${item.icon}" class="w-4 h-4 shrink-0"></i>
-                    <span class="truncate">${item.label}</span>
-                  </div>
-                  ${item.badge ? `
-                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold text-white ${item.badgeColor || 'bg-indigo-500'} shrink-0 shadow-xs">
-                      ${item.badge}
-                    </span>
-                  ` : ''}
-                </a>
-              `;
-            }).join('')}
+          <!-- Grouped Navigation Links Scroll Area -->
+          <nav class="flex-1 overflow-y-auto p-3 space-y-4 no-scrollbar">
+            ${navSections.map(section => `
+              <div>
+                <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1.5">${section.title}</p>
+                <div class="space-y-0.5">
+                  ${section.items.map(item => {
+                    const isActive = currentHash === item.hash;
+                    return `
+                      <a href="${item.hash}" class="nav-link flex items-center justify-between px-3 py-2 rounded-xl text-xs sm:text-[13px] font-medium transition-all ${
+                        isActive
+                          ? 'bg-indigo-600 text-white font-semibold shadow-sm shadow-indigo-600/20'
+                          : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100'
+                      }">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                          <i data-lucide="${item.icon}" class="w-4 h-4 shrink-0 ${isActive ? 'text-white' : 'text-slate-500'}"></i>
+                          <span class="truncate">${item.label}</span>
+                        </div>
+                        ${item.badge ? `
+                          <span class="px-1.5 py-0.5 rounded-full text-[9px] font-bold text-white ${item.badgeColor || 'bg-indigo-500'} shrink-0 shadow-xs">
+                            ${item.badge}
+                          </span>
+                        ` : ''}
+                      </a>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            `).join('')}
           </nav>
 
           <!-- Sidebar Footer: Student Profile Mini Card -->
-          <div class="p-3 border-t border-slate-100 dark:border-slate-800">
+          <div class="p-3 border-t border-slate-100 dark:border-slate-800 shrink-0">
             <a href="#profile" class="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group">
               <img src="${profile.avatar}" alt="${escapeHtml(profile.name)}" class="w-9 h-9 rounded-xl object-cover border border-slate-200 dark:border-slate-700 shrink-0">
               <div class="min-w-0 flex-1">
                 <div class="text-xs font-bold text-slate-900 dark:text-white truncate group-hover:text-indigo-600">${escapeHtml(profile.name)}</div>
-                <div class="text-[11px] text-slate-400 truncate">${escapeHtml(profile.rollNo)}</div>
+                <div class="text-[11px] text-slate-400 truncate">${escapeHtml(profile.rollNo)} • ${profile.year}</div>
               </div>
               <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
             </a>
@@ -6355,7 +9235,7 @@ class App {
               <!-- Global Search Trigger Bar -->
               <button id="header-search-trigger" class="flex-1 hidden sm:flex items-center gap-3 px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-slate-600 text-xs font-medium border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all text-left">
                 <i data-lucide="search" class="w-4 h-4 text-indigo-500"></i>
-                <span class="truncate">Search tasks, classes, events, notes...</span>
+                <span class="truncate">Search 150 campus features, courses, books, faculty...</span>
                 <kbd class="ml-auto text-[10px] px-1.5 py-0.5 rounded bg-white dark:bg-slate-700 text-slate-500 font-mono shadow-xs">Ctrl K</kbd>
               </button>
 
@@ -6370,7 +9250,7 @@ class App {
               <!-- Back to Landing Page -->
               <a href="#landing" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                 <i data-lucide="home" class="w-4 h-4"></i>
-                <span>Landing</span>
+                <span>Home</span>
               </a>
 
               <!-- Theme Switcher -->
@@ -6450,14 +9330,70 @@ class App {
               <i data-lucide="check-square" class="w-5 h-5"></i>
               <span>Tasks</span>
             </a>
-            <a href="#profile" class="flex flex-col items-center py-1 px-2 text-[10px] font-semibold ${currentHash === '#profile' ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-500'}">
-              <i data-lucide="user" class="w-5 h-5"></i>
-              <span>Profile</span>
+            <a href="#services" class="flex flex-col items-center py-1 px-2 text-[10px] font-semibold ${currentHash === '#services' ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-500'}">
+              <i data-lucide="shield-alert" class="w-5 h-5"></i>
+              <span>Services</span>
             </a>
           </div>
 
         </div>
 
+      </div>
+
+      <!-- Feature 141: Floating 24/7 AI Campus Chatbot Widget -->
+      <div id="campus-ai-bot-container" class="fixed bottom-6 right-6 z-40">
+        <!-- Floating Trigger Button -->
+        <button id="btn-toggle-chatbot" class="relative group p-3.5 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-xl hover:shadow-indigo-500/40 hover:scale-105 active:scale-95 transition-all flex items-center justify-center">
+          <i data-lucide="bot" class="w-6 h-6"></i>
+          <span class="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900 animate-pulse"></span>
+          <span class="hidden group-hover:inline-block absolute right-14 whitespace-nowrap bg-slate-900 text-white text-xs font-semibold px-3 py-1.5 rounded-xl shadow-lg">
+            Ask CampusBot AI (24/7)
+          </span>
+        </button>
+
+        <!-- Chatbot Window Popover -->
+        <div id="campus-ai-window" class="hidden absolute bottom-16 right-0 w-[90vw] sm:w-96 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col h-[500px] z-50">
+          <!-- Chat Header -->
+          <div class="p-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white flex items-center justify-between">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center">
+                <i data-lucide="bot" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-sm leading-none">CampusBot AI</h4>
+                <p class="text-[10px] text-indigo-100 mt-1 flex items-center space-x-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
+                  <span>Instant University Knowledge Base</span>
+                </p>
+              </div>
+            </div>
+            <button id="btn-close-chatbot" class="p-1 rounded-lg text-white/80 hover:text-white">
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <!-- Messages Scroll Area -->
+          <div id="chatbot-messages" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs">
+            <!-- Messages rendered dynamically -->
+          </div>
+
+          <!-- Quick Chips -->
+          <div class="p-2 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 flex items-center space-x-1.5 overflow-x-auto no-scrollbar text-[11px]">
+            <button class="chat-chip px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 whitespace-nowrap hover:border-indigo-500">Cafeteria Menu</button>
+            <button class="chat-chip px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 whitespace-nowrap hover:border-indigo-500">Hostel Pass</button>
+            <button class="chat-chip px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 whitespace-nowrap hover:border-indigo-500">Placements</button>
+            <button class="chat-chip px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 whitespace-nowrap hover:border-indigo-500">Admissions</button>
+            <button class="chat-chip px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 whitespace-nowrap hover:border-indigo-500">Emergency</button>
+          </div>
+
+          <!-- Chat Input -->
+          <form id="chatbot-form" class="p-3 border-t border-slate-100 dark:border-slate-800 flex items-center space-x-2 bg-white dark:bg-slate-900">
+            <input id="chatbot-input" type="text" placeholder="Type your query..." class="flex-1 px-3 py-2 bg-slate-100 dark:bg-slate-800 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white" />
+            <button type="submit" class="p-2 rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 transition-colors">
+              <i data-lucide="send" class="w-3.5 h-3.5"></i>
+            </button>
+          </form>
+        </div>
       </div>
     `;
 
@@ -6469,6 +9405,7 @@ class App {
 
     // Attach listeners for app shell components
     this.attachShellListeners();
+    this.attachChatbotListeners();
 
     // Refresh icons
     if (window.lucide) window.lucide.createIcons();
@@ -6531,12 +9468,104 @@ class App {
     }
   }
 
-  updateShellCounters() {
-    // Re-render current app layout to reflect counts if not on landing
-    if (this.currentHash !== '#landing' && this.currentHash !== '') {
-      // Re-trigger icons
-      if (window.lucide) window.lucide.createIcons();
+  attachChatbotListeners() {
+    const trigger = document.getElementById('btn-toggle-chatbot');
+    const windowEl = document.getElementById('campus-ai-window');
+    const closeBtn = document.getElementById('btn-close-chatbot');
+    const form = document.getElementById('chatbot-form');
+    const input = document.getElementById('chatbot-input');
+    const messagesContainer = document.getElementById('chatbot-messages');
+
+    const renderChatMessages = () => {
+      if (!messagesContainer) return;
+      messagesContainer.innerHTML = this.chatMessages.map(msg => `
+        <div class="flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}">
+          <div class="max-w-[80%] p-3 rounded-2xl ${
+            msg.sender === 'user'
+              ? 'bg-indigo-600 text-white rounded-br-none'
+              : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-bl-none'
+          }">
+            ${msg.text}
+          </div>
+        </div>
+      `).join('');
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    };
+
+    const answerQuery = (q) => {
+      const lower = q.toLowerCase();
+      let response = '';
+
+      if (lower.includes('mess') || lower.includes('food') || lower.includes('cafeteria') || lower.includes('menu')) {
+        const mess = store.getMessMenu();
+        response = `Today's menu (${mess.today}): Breakfast is ${mess.meals.breakfast.items[0]}. Lunch is ${mess.meals.lunch.items[0]}. Dinner is ${mess.meals.dinner.items[0]}. Check #facilities for full calorie counts!`;
+      } else if (lower.includes('leave') || lower.includes('gate pass') || lower.includes('warden')) {
+        response = `You can apply for an Out-Station or Day Outing gate pass under #services. Warden status and instant Security Gate QR are generated automatically with SMS consent to your parents.`;
+      } else if (lower.includes('admission') || lower.includes('fee') || lower.includes('course') || lower.includes('eligibility')) {
+        response = `Admissions for 2026-27 are open! B.Tech CSE fee is ₹2,20,000/yr with 180 seats. Merit cut-off is 94.5 percentile. Apply or check fee calculator at #admissions.`;
+      } else if (lower.includes('placement') || lower.includes('job') || lower.includes('package') || lower.includes('intern')) {
+        response = `St. Xavier's placement rate is 94.8% with ₹62 LPA highest (Google India) and ₹12.8 LPA average. Google, Microsoft, and NVIDIA drives are active now at #placements!`;
+      } else if (lower.includes('doctor') || lower.includes('medical') || lower.includes('emergency') || lower.includes('ambulance')) {
+        const med = store.getMedicalCenter();
+        response = `Campus Medical Hospital is open 24/7. Doctor on duty: ${med.doctorOnDuty}. Direct Ambulance Hotline: ${med.ambulanceHotline}.`;
+      } else if (lower.includes('library') || lower.includes('book') || lower.includes('pyq') || lower.includes('question paper')) {
+        response = `The Central Library houses 85,000+ volumes and offers instant book hold reservations, past 5 years' university PYQ exam papers, and an interactive AI study tutor under #library.`;
+      } else if (lower.includes('attendance') || lower.includes('bunk')) {
+        response = `CampusHub tracks subject-wise attendance against your 75% target with smart bunk calculation. Check #attendance to see how many classes you can afford to miss or need to attend.`;
+      } else {
+        response = `CampusBot AI here! I can help you navigate all 150 features of St. Xavier's CampusHub. Try checking our Central Library (#library), Placement Cell (#placements), or Services Desk (#services)!`;
+      }
+
+      this.chatMessages.push({ sender: 'bot', text: response });
+      renderChatMessages();
+    };
+
+    if (trigger && windowEl) {
+      trigger.onclick = () => {
+        this.chatbotOpen = !this.chatbotOpen;
+        if (this.chatbotOpen) {
+          windowEl.classList.remove('hidden');
+          renderChatMessages();
+          if (input) input.focus();
+        } else {
+          windowEl.classList.add('hidden');
+        }
+      };
     }
+
+    if (closeBtn && windowEl) {
+      closeBtn.onclick = () => {
+        this.chatbotOpen = false;
+        windowEl.classList.add('hidden');
+      };
+    }
+
+    if (form && input) {
+      form.onsubmit = (e) => {
+        e.preventDefault();
+        const text = input.value.trim();
+        if (!text) return;
+        this.chatMessages.push({ sender: 'user', text });
+        input.value = '';
+        renderChatMessages();
+
+        setTimeout(() => answerQuery(text), 400);
+      };
+    }
+
+    document.querySelectorAll('.chat-chip').forEach(chip => {
+      chip.onclick = () => {
+        const text = chip.innerText;
+        this.chatMessages.push({ sender: 'user', text });
+        renderChatMessages();
+        setTimeout(() => answerQuery(text), 300);
+      };
+    });
+  }
+
+  updateShellCounters() {
+    // Refresh icons
+    if (window.lucide) window.lucide.createIcons();
   }
 
   setupGlobalSearch() {
@@ -6582,7 +9611,7 @@ class App {
       if (!q) {
         resultsContainer.innerHTML = `
           <div class="text-center py-8 text-slate-400 text-xs font-medium">
-            Search for classes, assignments, events, notes, clubs, or marketplace listings...
+            Search 150 campus features: classes, books, admissions, faculty, buses, placements, events...
           </div>
         `;
         return;
@@ -6594,8 +9623,40 @@ class App {
       const notes = store.getNotes();
       const clubs = store.getClubs();
       const marketplace = store.getMarketplace();
+      const books = store.getBooks();
+      const faculty = store.getFaculty();
+      const placements = store.getPlacements();
+      const busRoutes = store.getBusRoutes();
 
       const hits = [];
+
+      // Books (Features 51-70)
+      books.forEach(b => {
+        if (b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q) || b.category.toLowerCase().includes(q)) {
+          hits.push({ type: 'Library Book', title: b.title, desc: `${b.author} • ${b.category} • Shelf: ${b.shelfLocation}`, link: '#library', icon: 'book', color: 'text-emerald-500' });
+        }
+      });
+
+      // Faculty (Features 71-85)
+      faculty.forEach(f => {
+        if (f.name.toLowerCase().includes(q) || f.department.toLowerCase().includes(q) || f.designation.toLowerCase().includes(q)) {
+          hits.push({ type: 'Faculty', title: f.name, desc: `${f.designation}, ${f.department} • Cabin: ${f.cabin}`, link: '#faculty', icon: 'user-check', color: 'text-blue-500' });
+        }
+      });
+
+      // Placements (Features 147-148)
+      placements.forEach(p => {
+        if (p.company.toLowerCase().includes(q) || p.role.toLowerCase().includes(q) || p.skillsRequired.some(s => s.toLowerCase().includes(q))) {
+          hits.push({ type: 'Placement Drive', title: `${p.company} — ${p.role}`, desc: `CTC: ${p.ctc} • Location: ${p.location}`, link: '#placements', icon: 'briefcase', color: 'text-purple-500' });
+        }
+      });
+
+      // Bus Routes (Features 120-130)
+      busRoutes.forEach(br => {
+        if (br.routeNo.toLowerCase().includes(q) || br.origin.toLowerCase().includes(q) || br.stops.some(s => s.toLowerCase().includes(q))) {
+          hits.push({ type: 'Bus Route', title: `${br.routeNo}: ${br.origin}`, desc: `Morning: ${br.morningTime} • Status: ${br.status}`, link: '#facilities', icon: 'bus', color: 'text-amber-500' });
+        }
+      });
 
       // Classes
       timetable.forEach(c => {
@@ -6648,7 +9709,7 @@ class App {
       } else {
         resultsContainer.innerHTML = `
           <div class="space-y-1">
-            ${hits.slice(0, 10).map(hit => `
+            ${hits.slice(0, 12).map(hit => `
               <a href="${hit.link}" class="search-result-item flex items-center justify-between p-3 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group">
                 <div class="flex items-center gap-3 min-w-0">
                   <div class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 ${hit.color}">

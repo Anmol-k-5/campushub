@@ -1,8 +1,8 @@
-// CampusHub Main Application Controller & Router
+// CampusHub Main Application Controller & Router (150 Features Master Edition)
 import { store } from './store.js';
 import { escapeHtml, showToast } from './utils.js';
 
-// Import Views
+// Pre-existing Views
 import { renderLanding } from './views/landing.js';
 import { renderDashboard } from './views/dashboard.js';
 import { renderTimetable } from './views/timetable.js';
@@ -17,23 +17,53 @@ import { renderLostFound } from './views/lostFound.js';
 import { renderMarketplace } from './views/marketplace.js';
 import { renderProfile } from './views/profile.js';
 
+// New Feature Views (150 Master Spec)
+import { renderCampusAbout } from './views/campusAbout.js';
+import { renderAdmissions } from './views/admissions.js';
+import { renderDigitalId } from './views/digitalId.js';
+import { renderLibraryStudy } from './views/libraryStudy.js';
+import { renderFacultyDept } from './views/facultyDept.js';
+import { renderFacilitiesHostel } from './views/facilitiesHostel.js';
+import { renderStudentServices } from './views/studentServices.js';
+import { renderPlacements } from './views/placements.js';
+import { renderAdminAnalytics } from './views/adminAnalytics.js';
+
 // Route configuration
 const ROUTES = {
   '': { title: 'CampusHub', render: renderLanding, isLanding: true },
   '#': { title: 'CampusHub', render: renderLanding, isLanding: true },
   '#landing': { title: 'CampusHub — Welcome', render: renderLanding, isLanding: true },
-  '#dashboard': { title: 'Dashboard', icon: 'layout-dashboard', render: renderDashboard },
-  '#timetable': { title: 'Timetable', icon: 'calendar', render: renderTimetable },
-  '#attendance': { title: 'Attendance', icon: 'check-check', render: renderAttendance },
-  '#assignments': { title: 'Assignments', icon: 'check-square', render: renderAssignments },
+
+  // Academics & Core
+  '#dashboard': { title: 'Student Dashboard', icon: 'layout-dashboard', render: renderDashboard },
+  '#digitalid': { title: 'Digital ID Card', icon: 'badge-check', render: renderDigitalId },
+  '#timetable': { title: 'Class Timetable', icon: 'calendar', render: renderTimetable },
+  '#attendance': { title: 'Attendance Tracker', icon: 'check-check', render: renderAttendance },
+  '#assignments': { title: 'Assignments & Tasks', icon: 'check-square', render: renderAssignments },
   '#study': { title: 'Study & Pomodoro', icon: 'timer', render: renderStudyPlanner },
-  '#events': { title: 'Campus Events', icon: 'sparkles', render: renderEvents },
-  '#notes': { title: 'Notes & Files', icon: 'book-open', render: renderNotes },
+  '#notes': { title: 'Notes & Resources', icon: 'book-open', render: renderNotes },
   '#gpa': { title: 'GPA Calculator', icon: 'calculator', render: renderGpaCalculator },
-  '#clubs': { title: 'Campus Clubs', icon: 'users', render: renderClubs },
+
+  // College & Admissions
+  '#about': { title: 'Campus & Vision', icon: 'landmark', render: renderCampusAbout },
+  '#admissions': { title: 'Admissions 2026', icon: 'graduation-cap', render: renderAdmissions },
+  '#faculty': { title: 'Faculty & Mentors', icon: 'user-check', render: renderFacultyDept },
+
+  // Learning & Library
+  '#library': { title: 'Central Library & AI', icon: 'library', render: renderLibraryStudy },
+
+  // Campus Life & Facilities
+  '#facilities': { title: 'Hostel, Mess & Bus', icon: 'home', render: renderFacilitiesHostel },
+  '#events': { title: 'Campus Events', icon: 'sparkles', render: renderEvents },
+  '#clubs': { title: 'Clubs & Societies', icon: 'users', render: renderClubs },
   '#lostfound': { title: 'Lost & Found', icon: 'help-circle', render: renderLostFound },
-  '#marketplace': { title: 'Marketplace', icon: 'shopping-bag', render: renderMarketplace },
-  '#profile': { title: 'Profile', icon: 'user', render: renderProfile },
+  '#marketplace': { title: 'Peer Marketplace', icon: 'shopping-bag', render: renderMarketplace },
+
+  // Welfare, Career & Admin
+  '#services': { title: 'Services & Grievances', icon: 'shield-alert', render: renderStudentServices },
+  '#placements': { title: 'Training & Placements', icon: 'briefcase', render: renderPlacements },
+  '#admin': { title: 'Executive Analytics', icon: 'bar-chart-3', render: renderAdminAnalytics },
+  '#profile': { title: 'Student Profile', icon: 'user', render: renderProfile },
 };
 
 class App {
@@ -42,6 +72,10 @@ class App {
     this.currentHash = window.location.hash || '#landing';
     this.mobileSidebarOpen = false;
     this.notifDropdownOpen = false;
+    this.chatbotOpen = false;
+    this.chatMessages = [
+      { sender: 'bot', text: 'Hello! I am CampusBot, your 24/7 AI university assistant. Ask me anything about admissions, cafeteria food, hostel gate passes, placement packages, or exam papers!' }
+    ];
 
     this.init();
   }
@@ -91,20 +125,54 @@ class App {
       return total > 0 && ((attended / total) * 100) < (s.targetPercentage || 75);
     }).length;
 
-    // Build navigation items
-    const navItems = [
-      { hash: '#dashboard', label: 'Dashboard', icon: 'layout-dashboard' },
-      { hash: '#timetable', label: 'Class Timetable', icon: 'calendar' },
-      { hash: '#attendance', label: 'Attendance Tracker', icon: 'check-check', badge: lowAttCount > 0 ? `${lowAttCount} alert` : null, badgeColor: 'bg-red-500' },
-      { hash: '#assignments', label: 'Assignments', icon: 'check-square', badge: pendingCount > 0 ? pendingCount : null, badgeColor: 'bg-amber-500' },
-      { hash: '#study', label: 'Study & Pomodoro', icon: 'timer' },
-      { hash: '#events', label: 'College Events', icon: 'sparkles' },
-      { hash: '#notes', label: 'Notes & Resources', icon: 'book-open' },
-      { hash: '#gpa', label: 'GPA Calculator', icon: 'calculator' },
-      { hash: '#clubs', label: 'Campus Clubs', icon: 'users' },
-      { hash: '#lostfound', label: 'Lost & Found', icon: 'help-circle' },
-      { hash: '#marketplace', label: 'Marketplace', icon: 'shopping-bag' },
-      { hash: '#profile', label: 'Student Profile', icon: 'user' },
+    // Grouped Navigation Sections
+    const navSections = [
+      {
+        title: 'Academics & Core',
+        items: [
+          { hash: '#dashboard', label: 'Dashboard', icon: 'layout-dashboard' },
+          { hash: '#digitalid', label: 'Digital ID Card', icon: 'badge-check', badge: 'QR Verified', badgeColor: 'bg-emerald-600' },
+          { hash: '#timetable', label: 'Class Timetable', icon: 'calendar' },
+          { hash: '#attendance', label: 'Attendance Tracker', icon: 'check-check', badge: lowAttCount > 0 ? `${lowAttCount} alert` : null, badgeColor: 'bg-red-500' },
+          { hash: '#assignments', label: 'Assignments', icon: 'check-square', badge: pendingCount > 0 ? pendingCount : null, badgeColor: 'bg-amber-500' },
+          { hash: '#study', label: 'Study & Pomodoro', icon: 'timer' },
+          { hash: '#notes', label: 'Notes & Files', icon: 'book-open' },
+          { hash: '#gpa', label: 'GPA Calculator', icon: 'calculator' },
+        ]
+      },
+      {
+        title: 'University & Admissions',
+        items: [
+          { hash: '#about', label: 'Campus & Vision', icon: 'landmark' },
+          { hash: '#admissions', label: 'Admissions 2026', icon: 'graduation-cap', badge: 'Open', badgeColor: 'bg-indigo-500' },
+          { hash: '#faculty', label: 'Faculty Directory', icon: 'user-check' },
+        ]
+      },
+      {
+        title: 'Learning & Library',
+        items: [
+          { hash: '#library', label: 'Library & AI Tutor', icon: 'library' },
+        ]
+      },
+      {
+        title: 'Campus Life & Facilities',
+        items: [
+          { hash: '#facilities', label: 'Hostel, Mess & Bus', icon: 'home' },
+          { hash: '#events', label: 'College Events', icon: 'sparkles' },
+          { hash: '#clubs', label: 'Campus Clubs', icon: 'users' },
+          { hash: '#lostfound', label: 'Lost & Found', icon: 'help-circle' },
+          { hash: '#marketplace', label: 'Marketplace', icon: 'shopping-bag' },
+        ]
+      },
+      {
+        title: 'Services & Career',
+        items: [
+          { hash: '#services', label: 'Services & Grievances', icon: 'shield-alert' },
+          { hash: '#placements', label: 'Placements & Drives', icon: 'briefcase', badge: 'Google', badgeColor: 'bg-purple-600' },
+          { hash: '#admin', label: 'Executive Analytics', icon: 'bar-chart-3' },
+          { hash: '#profile', label: 'Student Profile', icon: 'user' },
+        ]
+      }
     ];
 
     this.root.innerHTML = `
@@ -117,14 +185,14 @@ class App {
         <aside id="app-sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-slate-900 border-r border-slate-200/80 dark:border-slate-800 flex flex-col transition-transform duration-300 transform -translate-x-full lg:translate-x-0 lg:static lg:inset-auto shrink-0 shadow-lg lg:shadow-none">
           
           <!-- Logo & Brand Header -->
-          <div class="h-16 flex items-center justify-between px-5 border-b border-slate-100 dark:border-slate-800">
+          <div class="h-16 flex items-center justify-between px-5 border-b border-slate-100 dark:border-slate-800 shrink-0">
             <a href="#landing" class="flex items-center gap-2.5 group">
               <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center text-white font-bold text-lg shadow-md shadow-indigo-500/25 group-hover:scale-105 transition-transform">
                 🎓
               </div>
               <div>
                 <span class="text-lg font-black tracking-tight bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">CampusHub</span>
-                <span class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Student Portal</span>
+                <span class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider">150 Features Suite</span>
               </div>
             </a>
 
@@ -134,37 +202,44 @@ class App {
             </button>
           </div>
 
-          <!-- Navigation Links Scroll Area -->
-          <nav class="flex-1 overflow-y-auto p-3 space-y-1">
-            ${navItems.map(item => {
-              const isActive = currentHash === item.hash;
-              return `
-                <a href="${item.hash}" class="nav-link flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
-                  isActive
-                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
-                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100'
-                }">
-                  <div class="flex items-center gap-3 min-w-0">
-                    <i data-lucide="${item.icon}" class="w-4 h-4 shrink-0"></i>
-                    <span class="truncate">${item.label}</span>
-                  </div>
-                  ${item.badge ? `
-                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold text-white ${item.badgeColor || 'bg-indigo-500'} shrink-0 shadow-xs">
-                      ${item.badge}
-                    </span>
-                  ` : ''}
-                </a>
-              `;
-            }).join('')}
+          <!-- Grouped Navigation Links Scroll Area -->
+          <nav class="flex-1 overflow-y-auto p-3 space-y-4 no-scrollbar">
+            ${navSections.map(section => `
+              <div>
+                <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1.5">${section.title}</p>
+                <div class="space-y-0.5">
+                  ${section.items.map(item => {
+                    const isActive = currentHash === item.hash;
+                    return `
+                      <a href="${item.hash}" class="nav-link flex items-center justify-between px-3 py-2 rounded-xl text-xs sm:text-[13px] font-medium transition-all ${
+                        isActive
+                          ? 'bg-indigo-600 text-white font-semibold shadow-sm shadow-indigo-600/20'
+                          : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100'
+                      }">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                          <i data-lucide="${item.icon}" class="w-4 h-4 shrink-0 ${isActive ? 'text-white' : 'text-slate-500'}"></i>
+                          <span class="truncate">${item.label}</span>
+                        </div>
+                        ${item.badge ? `
+                          <span class="px-1.5 py-0.5 rounded-full text-[9px] font-bold text-white ${item.badgeColor || 'bg-indigo-500'} shrink-0 shadow-xs">
+                            ${item.badge}
+                          </span>
+                        ` : ''}
+                      </a>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            `).join('')}
           </nav>
 
           <!-- Sidebar Footer: Student Profile Mini Card -->
-          <div class="p-3 border-t border-slate-100 dark:border-slate-800">
+          <div class="p-3 border-t border-slate-100 dark:border-slate-800 shrink-0">
             <a href="#profile" class="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group">
               <img src="${profile.avatar}" alt="${escapeHtml(profile.name)}" class="w-9 h-9 rounded-xl object-cover border border-slate-200 dark:border-slate-700 shrink-0">
               <div class="min-w-0 flex-1">
                 <div class="text-xs font-bold text-slate-900 dark:text-white truncate group-hover:text-indigo-600">${escapeHtml(profile.name)}</div>
-                <div class="text-[11px] text-slate-400 truncate">${escapeHtml(profile.rollNo)}</div>
+                <div class="text-[11px] text-slate-400 truncate">${escapeHtml(profile.rollNo)} • ${profile.year}</div>
               </div>
               <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
             </a>
@@ -187,7 +262,7 @@ class App {
               <!-- Global Search Trigger Bar -->
               <button id="header-search-trigger" class="flex-1 hidden sm:flex items-center gap-3 px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-slate-600 text-xs font-medium border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all text-left">
                 <i data-lucide="search" class="w-4 h-4 text-indigo-500"></i>
-                <span class="truncate">Search tasks, classes, events, notes...</span>
+                <span class="truncate">Search 150 campus features, courses, books, faculty...</span>
                 <kbd class="ml-auto text-[10px] px-1.5 py-0.5 rounded bg-white dark:bg-slate-700 text-slate-500 font-mono shadow-xs">Ctrl K</kbd>
               </button>
 
@@ -202,7 +277,7 @@ class App {
               <!-- Back to Landing Page -->
               <a href="#landing" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                 <i data-lucide="home" class="w-4 h-4"></i>
-                <span>Landing</span>
+                <span>Home</span>
               </a>
 
               <!-- Theme Switcher -->
@@ -282,14 +357,70 @@ class App {
               <i data-lucide="check-square" class="w-5 h-5"></i>
               <span>Tasks</span>
             </a>
-            <a href="#profile" class="flex flex-col items-center py-1 px-2 text-[10px] font-semibold ${currentHash === '#profile' ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-500'}">
-              <i data-lucide="user" class="w-5 h-5"></i>
-              <span>Profile</span>
+            <a href="#services" class="flex flex-col items-center py-1 px-2 text-[10px] font-semibold ${currentHash === '#services' ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-500'}">
+              <i data-lucide="shield-alert" class="w-5 h-5"></i>
+              <span>Services</span>
             </a>
           </div>
 
         </div>
 
+      </div>
+
+      <!-- Feature 141: Floating 24/7 AI Campus Chatbot Widget -->
+      <div id="campus-ai-bot-container" class="fixed bottom-6 right-6 z-40">
+        <!-- Floating Trigger Button -->
+        <button id="btn-toggle-chatbot" class="relative group p-3.5 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-xl hover:shadow-indigo-500/40 hover:scale-105 active:scale-95 transition-all flex items-center justify-center">
+          <i data-lucide="bot" class="w-6 h-6"></i>
+          <span class="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900 animate-pulse"></span>
+          <span class="hidden group-hover:inline-block absolute right-14 whitespace-nowrap bg-slate-900 text-white text-xs font-semibold px-3 py-1.5 rounded-xl shadow-lg">
+            Ask CampusBot AI (24/7)
+          </span>
+        </button>
+
+        <!-- Chatbot Window Popover -->
+        <div id="campus-ai-window" class="hidden absolute bottom-16 right-0 w-[90vw] sm:w-96 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col h-[500px] z-50">
+          <!-- Chat Header -->
+          <div class="p-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white flex items-center justify-between">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center">
+                <i data-lucide="bot" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-sm leading-none">CampusBot AI</h4>
+                <p class="text-[10px] text-indigo-100 mt-1 flex items-center space-x-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
+                  <span>Instant University Knowledge Base</span>
+                </p>
+              </div>
+            </div>
+            <button id="btn-close-chatbot" class="p-1 rounded-lg text-white/80 hover:text-white">
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <!-- Messages Scroll Area -->
+          <div id="chatbot-messages" class="flex-1 p-4 overflow-y-auto space-y-3 text-xs">
+            <!-- Messages rendered dynamically -->
+          </div>
+
+          <!-- Quick Chips -->
+          <div class="p-2 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 flex items-center space-x-1.5 overflow-x-auto no-scrollbar text-[11px]">
+            <button class="chat-chip px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 whitespace-nowrap hover:border-indigo-500">Cafeteria Menu</button>
+            <button class="chat-chip px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 whitespace-nowrap hover:border-indigo-500">Hostel Pass</button>
+            <button class="chat-chip px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 whitespace-nowrap hover:border-indigo-500">Placements</button>
+            <button class="chat-chip px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 whitespace-nowrap hover:border-indigo-500">Admissions</button>
+            <button class="chat-chip px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 whitespace-nowrap hover:border-indigo-500">Emergency</button>
+          </div>
+
+          <!-- Chat Input -->
+          <form id="chatbot-form" class="p-3 border-t border-slate-100 dark:border-slate-800 flex items-center space-x-2 bg-white dark:bg-slate-900">
+            <input id="chatbot-input" type="text" placeholder="Type your query..." class="flex-1 px-3 py-2 bg-slate-100 dark:bg-slate-800 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:text-white" />
+            <button type="submit" class="p-2 rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 transition-colors">
+              <i data-lucide="send" class="w-3.5 h-3.5"></i>
+            </button>
+          </form>
+        </div>
       </div>
     `;
 
@@ -301,6 +432,7 @@ class App {
 
     // Attach listeners for app shell components
     this.attachShellListeners();
+    this.attachChatbotListeners();
 
     // Refresh icons
     if (window.lucide) window.lucide.createIcons();
@@ -363,12 +495,104 @@ class App {
     }
   }
 
-  updateShellCounters() {
-    // Re-render current app layout to reflect counts if not on landing
-    if (this.currentHash !== '#landing' && this.currentHash !== '') {
-      // Re-trigger icons
-      if (window.lucide) window.lucide.createIcons();
+  attachChatbotListeners() {
+    const trigger = document.getElementById('btn-toggle-chatbot');
+    const windowEl = document.getElementById('campus-ai-window');
+    const closeBtn = document.getElementById('btn-close-chatbot');
+    const form = document.getElementById('chatbot-form');
+    const input = document.getElementById('chatbot-input');
+    const messagesContainer = document.getElementById('chatbot-messages');
+
+    const renderChatMessages = () => {
+      if (!messagesContainer) return;
+      messagesContainer.innerHTML = this.chatMessages.map(msg => `
+        <div class="flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}">
+          <div class="max-w-[80%] p-3 rounded-2xl ${
+            msg.sender === 'user'
+              ? 'bg-indigo-600 text-white rounded-br-none'
+              : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-bl-none'
+          }">
+            ${msg.text}
+          </div>
+        </div>
+      `).join('');
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    };
+
+    const answerQuery = (q) => {
+      const lower = q.toLowerCase();
+      let response = '';
+
+      if (lower.includes('mess') || lower.includes('food') || lower.includes('cafeteria') || lower.includes('menu')) {
+        const mess = store.getMessMenu();
+        response = `Today's menu (${mess.today}): Breakfast is ${mess.meals.breakfast.items[0]}. Lunch is ${mess.meals.lunch.items[0]}. Dinner is ${mess.meals.dinner.items[0]}. Check #facilities for full calorie counts!`;
+      } else if (lower.includes('leave') || lower.includes('gate pass') || lower.includes('warden')) {
+        response = `You can apply for an Out-Station or Day Outing gate pass under #services. Warden status and instant Security Gate QR are generated automatically with SMS consent to your parents.`;
+      } else if (lower.includes('admission') || lower.includes('fee') || lower.includes('course') || lower.includes('eligibility')) {
+        response = `Admissions for 2026-27 are open! B.Tech CSE fee is ₹2,20,000/yr with 180 seats. Merit cut-off is 94.5 percentile. Apply or check fee calculator at #admissions.`;
+      } else if (lower.includes('placement') || lower.includes('job') || lower.includes('package') || lower.includes('intern')) {
+        response = `St. Xavier's placement rate is 94.8% with ₹62 LPA highest (Google India) and ₹12.8 LPA average. Google, Microsoft, and NVIDIA drives are active now at #placements!`;
+      } else if (lower.includes('doctor') || lower.includes('medical') || lower.includes('emergency') || lower.includes('ambulance')) {
+        const med = store.getMedicalCenter();
+        response = `Campus Medical Hospital is open 24/7. Doctor on duty: ${med.doctorOnDuty}. Direct Ambulance Hotline: ${med.ambulanceHotline}.`;
+      } else if (lower.includes('library') || lower.includes('book') || lower.includes('pyq') || lower.includes('question paper')) {
+        response = `The Central Library houses 85,000+ volumes and offers instant book hold reservations, past 5 years' university PYQ exam papers, and an interactive AI study tutor under #library.`;
+      } else if (lower.includes('attendance') || lower.includes('bunk')) {
+        response = `CampusHub tracks subject-wise attendance against your 75% target with smart bunk calculation. Check #attendance to see how many classes you can afford to miss or need to attend.`;
+      } else {
+        response = `CampusBot AI here! I can help you navigate all 150 features of St. Xavier's CampusHub. Try checking our Central Library (#library), Placement Cell (#placements), or Services Desk (#services)!`;
+      }
+
+      this.chatMessages.push({ sender: 'bot', text: response });
+      renderChatMessages();
+    };
+
+    if (trigger && windowEl) {
+      trigger.onclick = () => {
+        this.chatbotOpen = !this.chatbotOpen;
+        if (this.chatbotOpen) {
+          windowEl.classList.remove('hidden');
+          renderChatMessages();
+          if (input) input.focus();
+        } else {
+          windowEl.classList.add('hidden');
+        }
+      };
     }
+
+    if (closeBtn && windowEl) {
+      closeBtn.onclick = () => {
+        this.chatbotOpen = false;
+        windowEl.classList.add('hidden');
+      };
+    }
+
+    if (form && input) {
+      form.onsubmit = (e) => {
+        e.preventDefault();
+        const text = input.value.trim();
+        if (!text) return;
+        this.chatMessages.push({ sender: 'user', text });
+        input.value = '';
+        renderChatMessages();
+
+        setTimeout(() => answerQuery(text), 400);
+      };
+    }
+
+    document.querySelectorAll('.chat-chip').forEach(chip => {
+      chip.onclick = () => {
+        const text = chip.innerText;
+        this.chatMessages.push({ sender: 'user', text });
+        renderChatMessages();
+        setTimeout(() => answerQuery(text), 300);
+      };
+    });
+  }
+
+  updateShellCounters() {
+    // Refresh icons
+    if (window.lucide) window.lucide.createIcons();
   }
 
   setupGlobalSearch() {
@@ -414,7 +638,7 @@ class App {
       if (!q) {
         resultsContainer.innerHTML = `
           <div class="text-center py-8 text-slate-400 text-xs font-medium">
-            Search for classes, assignments, events, notes, clubs, or marketplace listings...
+            Search 150 campus features: classes, books, admissions, faculty, buses, placements, events...
           </div>
         `;
         return;
@@ -426,8 +650,40 @@ class App {
       const notes = store.getNotes();
       const clubs = store.getClubs();
       const marketplace = store.getMarketplace();
+      const books = store.getBooks();
+      const faculty = store.getFaculty();
+      const placements = store.getPlacements();
+      const busRoutes = store.getBusRoutes();
 
       const hits = [];
+
+      // Books (Features 51-70)
+      books.forEach(b => {
+        if (b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q) || b.category.toLowerCase().includes(q)) {
+          hits.push({ type: 'Library Book', title: b.title, desc: `${b.author} • ${b.category} • Shelf: ${b.shelfLocation}`, link: '#library', icon: 'book', color: 'text-emerald-500' });
+        }
+      });
+
+      // Faculty (Features 71-85)
+      faculty.forEach(f => {
+        if (f.name.toLowerCase().includes(q) || f.department.toLowerCase().includes(q) || f.designation.toLowerCase().includes(q)) {
+          hits.push({ type: 'Faculty', title: f.name, desc: `${f.designation}, ${f.department} • Cabin: ${f.cabin}`, link: '#faculty', icon: 'user-check', color: 'text-blue-500' });
+        }
+      });
+
+      // Placements (Features 147-148)
+      placements.forEach(p => {
+        if (p.company.toLowerCase().includes(q) || p.role.toLowerCase().includes(q) || p.skillsRequired.some(s => s.toLowerCase().includes(q))) {
+          hits.push({ type: 'Placement Drive', title: `${p.company} — ${p.role}`, desc: `CTC: ${p.ctc} • Location: ${p.location}`, link: '#placements', icon: 'briefcase', color: 'text-purple-500' });
+        }
+      });
+
+      // Bus Routes (Features 120-130)
+      busRoutes.forEach(br => {
+        if (br.routeNo.toLowerCase().includes(q) || br.origin.toLowerCase().includes(q) || br.stops.some(s => s.toLowerCase().includes(q))) {
+          hits.push({ type: 'Bus Route', title: `${br.routeNo}: ${br.origin}`, desc: `Morning: ${br.morningTime} • Status: ${br.status}`, link: '#facilities', icon: 'bus', color: 'text-amber-500' });
+        }
+      });
 
       // Classes
       timetable.forEach(c => {
@@ -480,7 +736,7 @@ class App {
       } else {
         resultsContainer.innerHTML = `
           <div class="space-y-1">
-            ${hits.slice(0, 10).map(hit => `
+            ${hits.slice(0, 12).map(hit => `
               <a href="${hit.link}" class="search-result-item flex items-center justify-between p-3 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group">
                 <div class="flex items-center gap-3 min-w-0">
                   <div class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 ${hit.color}">

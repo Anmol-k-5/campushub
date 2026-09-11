@@ -245,6 +245,78 @@ export function renderLanding(container) {
             <p class="text-sm text-slate-600 dark:text-slate-400">Academic portfolio with skills, achievements, joined societies, custom avatars, and data backup.</p>
           </a>
 
+          <!-- 13. Digital ID Card (New) -->
+          <a href="#digitalid" class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 transition-all card-hover-lift block group">
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="badge-check" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">13. Digital Student ID</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">Printable, verified digital identity card with dynamic QR code & barcode for campus gates and library.</p>
+          </a>
+
+          <!-- 14. Admissions & Eligibility (New) -->
+          <a href="#admissions" class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 dark:hover:border-blue-500/50 transition-all card-hover-lift block group">
+            <div class="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">14. Admissions 2026</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">Online application, real-time application tracker, eligibility checker, and transparent fee calculators.</p>
+          </a>
+
+          <!-- 15. Central Library & AI Tutor (New) -->
+          <a href="#library" class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-purple-500/50 dark:hover:border-purple-500/50 transition-all card-hover-lift block group">
+            <div class="w-10 h-10 rounded-xl bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="library" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">15. Library & AI Tutor</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">85,000+ volume catalogue with live book holds, past 5 years' university PYQ exam papers, and AI tutor.</p>
+          </a>
+
+          <!-- 16. Faculty Directory & Cabin Status (New) -->
+          <a href="#faculty" class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-500/50 dark:hover:border-amber-500/50 transition-all card-hover-lift block group">
+            <div class="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="user-check" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">16. Faculty & Mentors</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">Real-time cabin availability (In Office / Lecture), consultation slot booking, and research profiles.</p>
+          </a>
+
+          <!-- 17. Hostel, Mess & Transit (New) -->
+          <a href="#facilities" class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-rose-500/50 dark:hover:border-rose-500/50 transition-all card-hover-lift block group">
+            <div class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950 text-rose-600 dark:text-rose-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="home" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">17. Hostel, Mess & Bus</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">Daily nutrition meal menus, room allocations, high-performance computing lab bookings, and bus GPS routes.</p>
+          </a>
+
+          <!-- 18. Welfare, Grievance & Gate Passes (New) -->
+          <a href="#services" class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-teal-500/50 dark:hover:border-teal-500/50 transition-all card-hover-lift block group">
+            <div class="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-950 text-teal-600 dark:text-teal-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="shield-alert" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">18. Services & Grievances</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">Anonymous grievance redressal, hostel leave gate passes with warden QR verification, and 24/7 medical hotline.</p>
+          </a>
+
+          <!-- 19. Placements & Drives (New) -->
+          <a href="#placements" class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 dark:hover:border-indigo-500/50 transition-all card-hover-lift block group">
+            <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="briefcase" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">19. Training & Placements</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">94.8% placement rate, ₹62 LPA top package, AI skill matching, and one-click recruiter drive applications.</p>
+          </a>
+
+          <!-- 20. Executive Analytics (New) -->
+          <a href="#admin" class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-slate-500/50 dark:hover:border-slate-500/50 transition-all card-hover-lift block group">
+            <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="bar-chart-3" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">20. Executive Analytics</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">Institutional intelligence, department matrix, accreditation reports, and live role-switcher persona simulator.</p>
+          </a>
+
         </div>
       </section>
 
