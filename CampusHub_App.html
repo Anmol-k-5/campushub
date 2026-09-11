@@ -1629,9 +1629,15 @@ class Store {
   initAuth() {
     const user = api.getCurrentUser();
     if (user) {
+      this.state = this.loadState();
       this.state.profile = { ...this.state.profile, ...user };
       this.state.currentRole = user.role || 'Student';
     }
+  }
+
+  getUserStorageKey() {
+    const user = api.getCurrentUser();
+    return user ? `campushub_state_user_${user.id}` : STORAGE_KEY;
   }
 
   getCurrentUser() {
@@ -1642,18 +1648,33 @@ class Store {
     return !!api.getCurrentUser();
   }
 
-  setCurrentUser(user) {
+  async setCurrentUser(user) {
     if (user) {
       this.state.profile = { ...this.state.profile, ...user };
       this.state.currentRole = user.role || 'Student';
+      try {
+        const remoteState = await api.getUserData('full_state');
+        if (remoteState) {
+          this.state = { ...initialData, ...remoteState, profile: { ...this.state.profile, ...user } };
+        } else {
+          const localSaved = localStorage.getItem(this.getUserStorageKey());
+          if (localSaved) {
+            this.state = { ...initialData, ...JSON.parse(localSaved), profile: { ...this.state.profile, ...user } };
+          }
+        }
+      } catch (e) {
+        console.warn('Could not load remote state', e);
+      }
       this.saveState();
       this.emit('auth:updated', user);
       this.emit('profile:updated', this.state.profile);
+      this.emit('*', { event: 'user_switched' });
     }
   }
 
   logout() {
     api.logout();
+    this.state = JSON.parse(JSON.stringify(initialData));
     this.state.profile = {
       name: 'Guest Visitor',
       email: 'guest@campus.edu',
@@ -1671,11 +1692,13 @@ class Store {
     this.saveState();
     this.emit('auth:updated', null);
     this.emit('profile:updated', this.state.profile);
+    this.emit('*', { event: 'user_logged_out' });
   }
 
   loadState() {
+    const key = this.getUserStorageKey();
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
+      const saved = localStorage.getItem(key);
       if (saved) {
         const parsed = JSON.parse(saved);
         return { ...initialData, ...parsed };
@@ -1683,13 +1706,15 @@ class Store {
     } catch (err) {
       console.warn('Could not parse saved state, resetting to initialData', err);
     }
-    this.saveState(initialData);
     return JSON.parse(JSON.stringify(initialData));
   }
 
   saveState(stateToSave = this.state) {
+    const key = this.getUserStorageKey();
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
+      localStorage.setItem(key, JSON.stringify(stateToSave));
+      // Asynchronously sync to SQLite backend
+      api.saveUserData('full_state', stateToSave).catch(() => {});
     } catch (err) {
       console.error('Failed to save to localStorage:', err);
     }
