@@ -27,12 +27,16 @@ import { renderFacilitiesHostel } from './views/facilitiesHostel.js';
 import { renderStudentServices } from './views/studentServices.js';
 import { renderPlacements } from './views/placements.js';
 import { renderAdminAnalytics } from './views/adminAnalytics.js';
+import { renderAuth } from './views/auth.js';
 
 // Route configuration
 const ROUTES = {
   '': { title: 'CampusHub', render: renderLanding, isLanding: true },
   '#': { title: 'CampusHub', render: renderLanding, isLanding: true },
   '#landing': { title: 'CampusHub — Welcome', render: renderLanding, isLanding: true },
+  '#login': { title: 'Sign In', icon: 'log-in', render: renderAuth },
+  '#register': { title: 'Create Account', icon: 'user-plus', render: renderAuth },
+  '#auth': { title: 'Authentication', icon: 'log-in', render: renderAuth },
 
   // Academics & Core
   '#dashboard': { title: 'Student Dashboard', icon: 'layout-dashboard', render: renderDashboard },
@@ -87,6 +91,7 @@ class App {
 
     // Subscribe to state changes to update badges & shell UI
     store.subscribe('*', () => this.updateShellCounters());
+    store.subscribe('auth:updated', () => this.handleRouting());
   }
 
   handleRouting() {
@@ -167,6 +172,7 @@ class App {
       {
         title: 'Services & Career',
         items: [
+          { hash: '#login', label: 'Sign In / Register', icon: 'log-in', badge: 'Auth', badgeColor: 'bg-emerald-500' },
           { hash: '#services', label: 'Services & Grievances', icon: 'shield-alert' },
           { hash: '#placements', label: 'Placements & Drives', icon: 'briefcase', badge: 'Google', badgeColor: 'bg-purple-600' },
           { hash: '#admin', label: 'Executive Analytics', icon: 'bar-chart-3' },
@@ -324,10 +330,24 @@ class App {
                 </div>
               </div>
 
-              <!-- Profile avatar quick link -->
-              <a href="#profile" class="p-0.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:ring-2 hover:ring-indigo-500 transition-all">
-                <img src="${profile.avatar}" alt="Avatar" class="w-8 h-8 rounded-lg object-cover">
-              </a>
+              <!-- Profile avatar & Auth Action -->
+              <div class="flex items-center space-x-1 sm:space-x-2">
+                <a href="#profile" class="p-0.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:ring-2 hover:ring-indigo-500 transition-all flex items-center gap-1.5 pr-2">
+                  <img src="${profile.avatar}" alt="Avatar" class="w-8 h-8 rounded-lg object-cover">
+                  <span class="hidden md:inline-block text-xs font-bold text-slate-700 dark:text-slate-200">${escapeHtml(profile.name.split(' ')[0])}</span>
+                </a>
+
+                ${store.isLoggedIn() ? `
+                  <button id="btn-header-logout" title="Sign Out (${escapeHtml(profile.email)})" class="p-2 rounded-xl text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors">
+                    <i data-lucide="log-out" class="w-4 h-4"></i>
+                  </button>
+                ` : `
+                  <a href="#login" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-sm transition-all flex items-center space-x-1">
+                    <i data-lucide="log-in" class="w-3.5 h-3.5"></i>
+                    <span>Sign In</span>
+                  </a>
+                `}
+              </div>
 
             </div>
           </header>
@@ -491,6 +511,15 @@ class App {
         store.markAllNotificationsRead();
         showToast('All notifications marked as read', 'info');
         this.renderAppLayout(ROUTES[this.currentHash] || ROUTES['#dashboard'], this.currentHash);
+      };
+    }
+
+    const logoutBtn = document.getElementById('btn-header-logout');
+    if (logoutBtn) {
+      logoutBtn.onclick = () => {
+        store.logout();
+        showToast('Logged out successfully.', 'info');
+        window.location.hash = '#landing';
       };
     }
   }

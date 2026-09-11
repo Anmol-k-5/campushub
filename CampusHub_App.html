@@ -1323,8 +1323,296 @@ function triggerConfetti() {
 }
 
 
+// --- FILE: js/api.js ---
+// ============================================================
+// CAMPUSHUB API & MULTI-USER AUTHENTICATION CLIENT
+// Dual-Mode: REST API (server.py) + Client-Side Multi-Account Fallback
+// ============================================================
+
+class ApiClient {
+  constructor() {
+    this.baseUrl = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1')
+      ? ''
+      : '';
+    this.tokenKey = 'campushub_session_token';
+    this.userKey = 'campushub_current_user';
+    this.offlineUsersKey = 'campushub_offline_accounts';
+    this.offlineDataPrefix = 'campushub_user_data_';
+    this.serverAvailable = null; // cached status
+  }
+
+  getToken() {
+    return localStorage.getItem(this.tokenKey);
+  }
+
+  setSession(token, user) {
+    if (token) localStorage.setItem(this.tokenKey, token);
+    if (user) localStorage.setItem(this.userKey, JSON.stringify(user));
+  }
+
+  clearSession() {
+    localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.userKey);
+  }
+
+  getCurrentUser() {
+    try {
+      const raw = localStorage.getItem(this.userKey);
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  // Check if server REST API is alive
+  async checkServerHealth() {
+    try {
+      const res = await fetch('/api/health', { method: 'GET', signal: AbortSignal.timeout(2000) });
+      this.serverAvailable = res.ok;
+      return this.serverAvailable;
+    } catch {
+      this.serverAvailable = false;
+      return false;
+    }
+  }
+
+  // Password hashing helper for offline mode using browser Web Crypto API
+  async hashPassword(password) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password + '_campushub_salt_2026');
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  // ------------------------------------------------------------
+  // AUTHENTICATION: LOGIN
+  // ------------------------------------------------------------
+  async login(email, password) {
+    const isOnline = await this.checkServerHealth();
+
+    if (isOnline) {
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || 'Login failed.');
+        }
+        this.setSession(data.token, data.user);
+        return { success: true, user: data.user, token: data.token };
+      } catch (err) {
+        if (err.message && !err.message.includes('fetch')) throw err;
+      }
+    }
+
+    // Fallback: Local multi-account verification
+    return await this.localLogin(email, password);
+  }
+
+  async localLogin(email, password) {
+    const cleanEmail = email.trim().toLowerCase();
+    const accounts = this.getLocalAccounts();
+    const user = accounts.find(a => a.email.toLowerCase() === cleanEmail);
+
+    if (!user) {
+      // Check for built-in demo credentials
+      if (cleanEmail === 'alex@campus.edu' && password === 'campus123') {
+        const demoUser = {
+          id: 'demo-1',
+          name: 'Alex Rivera',
+          email: 'alex@campus.edu',
+          rollNo: 'CS21B042',
+          department: 'Computer Science & Engineering',
+          role: 'Student',
+          year: '3rd Year',
+          avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80'
+        };
+        const token = 'offline_token_' + Date.now();
+        this.setSession(token, demoUser);
+        return { success: true, user: demoUser, token };
+      } else if (cleanEmail === 'faculty@campus.edu' && password === 'faculty123') {
+        const facUser = {
+          id: 'demo-2',
+          name: 'Dr. Sarah Vance',
+          email: 'faculty@campus.edu',
+          rollNo: 'FAC-CS-01',
+          department: 'Computer Science & Engineering',
+          role: 'Faculty',
+          year: 'Professor',
+          avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80'
+        };
+        const token = 'offline_token_' + Date.now();
+        this.setSession(token, facUser);
+        return { success: true, user: facUser, token };
+      }
+      throw new Error('Invalid email or password. Please check your credentials.');
+    }
+
+    const hashedInput = await this.hashPassword(password);
+    if (user.passwordHash !== hashedInput) {
+      throw new Error('Invalid email or password. Please check your credentials.');
+    }
+
+    const token = 'offline_token_' + Date.now();
+    const safeUser = { ...user };
+    delete safeUser.passwordHash;
+    this.setSession(token, safeUser);
+    return { success: true, user: safeUser, token };
+  }
+
+  // ------------------------------------------------------------
+  // AUTHENTICATION: REGISTER
+  // ------------------------------------------------------------
+  async register(userData) {
+    const isOnline = await this.checkServerHealth();
+
+    if (isOnline) {
+      try {
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(userData)
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || 'Registration failed.');
+        }
+        this.setSession(data.token, data.user);
+        return { success: true, user: data.user, token: data.token };
+      } catch (err) {
+        if (err.message && !err.message.includes('fetch')) throw err;
+      }
+    }
+
+    // Fallback: Local multi-account registration
+    return await this.localRegister(userData);
+  }
+
+  async localRegister(userData) {
+    const cleanEmail = userData.email.trim().toLowerCase();
+    const accounts = this.getLocalAccounts();
+
+    if (accounts.some(a => a.email.toLowerCase() === cleanEmail)) {
+      throw new Error('An account with this email address already exists.');
+    }
+
+    const passwordHash = await this.hashPassword(userData.password);
+    const userId = 'usr_' + Date.now();
+    const newUser = {
+      id: userId,
+      name: userData.name.trim(),
+      email: cleanEmail,
+      rollNo: userData.rollNo || `STU-${Math.floor(1000 + Math.random() * 9000)}`,
+      department: userData.department || 'Computer Science & Engineering',
+      role: userData.role || 'Student',
+      year: userData.year || '1st Year',
+      avatar: `https://api.dicebear.com/7.x/bottts/svg?seed=${cleanEmail}`,
+      passwordHash,
+      createdAt: new Date().toISOString()
+    };
+
+    accounts.push(newUser);
+    localStorage.setItem(this.offlineUsersKey, JSON.stringify(accounts));
+
+    const token = 'offline_token_' + Date.now();
+    const safeUser = { ...newUser };
+    delete safeUser.passwordHash;
+    this.setSession(token, safeUser);
+    return { success: true, user: safeUser, token };
+  }
+
+  getLocalAccounts() {
+    try {
+      const raw = localStorage.getItem(this.offlineUsersKey);
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  // ------------------------------------------------------------
+  // AUTHENTICATION: LOGOUT
+  // ------------------------------------------------------------
+  async logout() {
+    const token = this.getToken();
+    if (token) {
+      try {
+        await fetch('/api/auth/logout', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+      } catch {}
+    }
+    this.clearSession();
+    return true;
+  }
+
+  // ------------------------------------------------------------
+  // USER DATA STORAGE & SYNC
+  // ------------------------------------------------------------
+  async getUserData(key) {
+    const user = this.getCurrentUser();
+    if (!user) return null;
+
+    const token = this.getToken();
+    if (token && !token.startsWith('offline_')) {
+      try {
+        const res = await fetch('/api/data', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const body = await res.json();
+          if (body.data && body.data[key]) return body.data[key];
+        }
+      } catch {}
+    }
+
+    // Local user data slice
+    try {
+      const raw = localStorage.getItem(`${this.offlineDataPrefix}${user.id}_${key}`);
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  async saveUserData(key, content) {
+    const user = this.getCurrentUser();
+    if (!user) return false;
+
+    // Save locally
+    localStorage.setItem(`${this.offlineDataPrefix}${user.id}_${key}`, JSON.stringify(content));
+
+    // Save to remote server if connected
+    const token = this.getToken();
+    if (token && !token.startsWith('offline_')) {
+      try {
+        await fetch('/api/data', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ key, content })
+        });
+      } catch {}
+    }
+    return true;
+  }
+}
+
+const api = new ApiClient();
+
+
 // --- FILE: js/store.js ---
 // CampusHub State Store & Persistence Layer - Extended for 150 Features
+
 
 
 const STORAGE_KEY = 'campushub_state_v2';
@@ -1335,6 +1623,54 @@ class Store {
     this.listeners = new Map();
     this.state = this.loadState();
     this.initTheme();
+    this.initAuth();
+  }
+
+  initAuth() {
+    const user = api.getCurrentUser();
+    if (user) {
+      this.state.profile = { ...this.state.profile, ...user };
+      this.state.currentRole = user.role || 'Student';
+    }
+  }
+
+  getCurrentUser() {
+    return api.getCurrentUser() || this.state.profile;
+  }
+
+  isLoggedIn() {
+    return !!api.getCurrentUser();
+  }
+
+  setCurrentUser(user) {
+    if (user) {
+      this.state.profile = { ...this.state.profile, ...user };
+      this.state.currentRole = user.role || 'Student';
+      this.saveState();
+      this.emit('auth:updated', user);
+      this.emit('profile:updated', this.state.profile);
+    }
+  }
+
+  logout() {
+    api.logout();
+    this.state.profile = {
+      name: 'Guest Visitor',
+      email: 'guest@campus.edu',
+      rollNo: 'GUEST',
+      department: 'General Public',
+      branch: 'General',
+      year: 'Visitor',
+      semester: 'N/A',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=guest',
+      bio: 'Exploring CampusHub public portal',
+      skills: [],
+      joinedClubs: []
+    };
+    this.state.currentRole = 'Applicant';
+    this.saveState();
+    this.emit('auth:updated', null);
+    this.emit('profile:updated', this.state.profile);
   }
 
   loadState() {
@@ -1992,12 +2328,16 @@ function renderLanding(container) {
             </div>
           </div>
 
-          <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 sm:gap-3">
+            <a href="#login" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs sm:text-sm font-semibold transition-all">
+              <i data-lucide="log-in" class="w-4 h-4"></i>
+              <span>Sign In</span>
+            </a>
             <button id="landing-theme-toggle" class="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="Toggle theme">
               <i data-lucide="${store.getTheme() === 'dark' ? 'sun' : 'moon'}" class="w-5 h-5"></i>
             </button>
             <a href="#dashboard" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm shadow-md shadow-indigo-600/30 transition-all hover:scale-[1.02] active:scale-[0.98]">
-              <span>Open Dashboard</span>
+              <span>Dashboard</span>
               <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </a>
           </div>
@@ -2326,6 +2666,268 @@ function renderLanding(container) {
   if (window.lucide) {
     window.lucide.createIcons();
   }
+}
+
+
+// --- FILE: js/views/auth.js ---
+// ============================================================
+// CAMPUSHUB AUTHENTICATION VIEW (Sign In & Sign Up)
+// User registration, password authentication, and session handling
+// ============================================================
+
+
+
+
+function renderAuth(container) {
+  let mode = window.location.hash === '#register' ? 'register' : 'login'; // 'login' | 'register'
+  let errorMessage = '';
+  let isLoading = false;
+
+  function render() {
+    container.innerHTML = `
+      <div class="min-h-[80vh] flex items-center justify-center p-4">
+        <div class="w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-2xl overflow-hidden animate-fade-in">
+          
+          <!-- Auth Header Banner -->
+          <div class="p-8 text-center bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-600 text-white relative">
+            <div class="w-14 h-14 mx-auto rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-2xl shadow-lg mb-3">
+              🎓
+            </div>
+            <h2 class="text-2xl font-black tracking-tight">CampusHub Account</h2>
+            <p class="text-xs text-indigo-100 mt-1">
+              ${mode === 'login' ? 'Sign in to access your private college dashboard' : 'Join thousands of students and faculty on CampusHub'}
+            </p>
+
+            <!-- Mode Switcher Tabs -->
+            <div class="flex items-center justify-center mt-6 p-1 bg-black/20 rounded-2xl max-w-xs mx-auto">
+              <button id="btn-switch-login" class="flex-1 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                mode === 'login' ? 'bg-white text-indigo-700 shadow-md' : 'text-white/80 hover:text-white'
+              }">
+                Sign In
+              </button>
+              <button id="btn-switch-register" class="flex-1 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                mode === 'register' ? 'bg-white text-indigo-700 shadow-md' : 'text-white/80 hover:text-white'
+              }">
+                Register
+              </button>
+            </div>
+          </div>
+
+          <!-- Form Area -->
+          <div class="p-6 sm:p-8 space-y-5">
+            ${errorMessage ? `
+              <div class="p-3.5 rounded-2xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-red-700 dark:text-red-300 text-xs font-medium flex items-center space-x-2">
+                <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
+                <span>${errorMessage}</span>
+              </div>
+            ` : ''}
+
+            ${mode === 'login' ? `
+              <!-- Sign In Form -->
+              <form id="auth-login-form" class="space-y-4">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1.5">Email Address</label>
+                  <div class="relative">
+                    <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
+                    <input id="login-email" type="email" required placeholder="name@campus.edu" value="alex@campus.edu" class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:border-indigo-500 dark:text-white" />
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex items-center justify-between mb-1.5">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">Password</label>
+                  </div>
+                  <div class="relative">
+                    <i data-lucide="lock" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
+                    <input id="login-password" type="password" required placeholder="••••••••" value="campus123" class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:border-indigo-500 dark:text-white" />
+                  </div>
+                </div>
+
+                <button type="submit" ${isLoading ? 'disabled' : ''} class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center space-x-2 disabled:opacity-50">
+                  ${isLoading ? `
+                    <span class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                    <span>Authenticating...</span>
+                  ` : `
+                    <span>Sign In</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                  `}
+                </button>
+
+                <!-- Demo Accounts Quick Fill -->
+                <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+                  <span class="text-[11px] font-semibold text-slate-400 block mb-2 text-center uppercase tracking-wider">One-Click Demo Personas</span>
+                  <div class="grid grid-cols-3 gap-2">
+                    <button type="button" class="btn-demo px-2 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950 text-[11px] font-bold text-slate-700 dark:text-slate-300 transition-colors" data-email="alex@campus.edu" data-pass="campus123">
+                      Student
+                    </button>
+                    <button type="button" class="btn-demo px-2 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950 text-[11px] font-bold text-slate-700 dark:text-slate-300 transition-colors" data-email="sarah.vance@campus.edu" data-pass="faculty123">
+                      Faculty
+                    </button>
+                    <button type="button" class="btn-demo px-2 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950 text-[11px] font-bold text-slate-700 dark:text-slate-300 transition-colors" data-email="admin@campus.edu" data-pass="admin123">
+                      Admin
+                    </button>
+                  </div>
+                </div>
+              </form>
+            ` : `
+              <!-- Register Form -->
+              <form id="auth-register-form" class="space-y-4">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Full Name</label>
+                  <div class="relative">
+                    <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
+                    <input id="reg-name" required placeholder="e.g. Jordan Miller" class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:border-indigo-500 dark:text-white" />
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Email Address</label>
+                  <div class="relative">
+                    <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
+                    <input id="reg-email" type="email" required placeholder="jordan.miller@campus.edu" class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:border-indigo-500 dark:text-white" />
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Create Password</label>
+                  <div class="relative">
+                    <i data-lucide="lock" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5"></i>
+                    <input id="reg-password" type="password" required minlength="6" placeholder="At least 6 characters" class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:border-indigo-500 dark:text-white" />
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Role</label>
+                    <select id="reg-role" class="w-full py-2.5 px-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium focus:outline-none focus:border-indigo-500 dark:text-white">
+                      <option value="Student">Student</option>
+                      <option value="Faculty">Faculty</option>
+                      <option value="Admin">Administrator</option>
+                      <option value="Applicant">Applicant</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Academic Year</label>
+                    <select id="reg-year" class="w-full py-2.5 px-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium focus:outline-none focus:border-indigo-500 dark:text-white">
+                      <option value="1st Year">1st Year</option>
+                      <option value="2nd Year">2nd Year</option>
+                      <option value="3rd Year">3rd Year</option>
+                      <option value="4th Year">4th Year</option>
+                      <option value="Postgraduate">Postgraduate</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-1">Department</label>
+                  <select id="reg-dept" class="w-full py-2.5 px-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium focus:outline-none focus:border-indigo-500 dark:text-white">
+                    <option value="Computer Science & Engineering">Computer Science & Engineering</option>
+                    <option value="Electronics & Communication">Electronics & Communication</option>
+                    <option value="Information Science & AI">Information Science & AI</option>
+                    <option value="Mechanical Engineering">Mechanical Engineering</option>
+                    <option value="Civil & Environmental">Civil & Environmental</option>
+                  </select>
+                </div>
+
+                <button type="submit" ${isLoading ? 'disabled' : ''} class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center space-x-2 disabled:opacity-50">
+                  ${isLoading ? `
+                    <span class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                    <span>Creating Account...</span>
+                  ` : `
+                    <span>Create My Account</span>
+                    <i data-lucide="user-plus" class="w-4 h-4"></i>
+                  `}
+                </button>
+              </form>
+            `}
+          </div>
+
+          <!-- Footer -->
+          <div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/40 border-t border-slate-100 dark:border-slate-800 text-center text-xs text-slate-500">
+            <span>Encrypted with SHA-256 & Salt • SQLite DB Ready</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    if (window.lucide) window.lucide.createIcons();
+
+    // Mode switch
+    document.getElementById('btn-switch-login')?.addEventListener('click', () => {
+      mode = 'login';
+      errorMessage = '';
+      render();
+    });
+
+    document.getElementById('btn-switch-register')?.addEventListener('click', () => {
+      mode = 'register';
+      errorMessage = '';
+      render();
+    });
+
+    // Demo pills fill
+    container.querySelectorAll('.btn-demo').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const emailInput = document.getElementById('login-email');
+        const passInput = document.getElementById('login-password');
+        if (emailInput && passInput) {
+          emailInput.value = btn.getAttribute('data-email');
+          passInput.value = btn.getAttribute('data-pass');
+        }
+      });
+    });
+
+    // Login submit
+    document.getElementById('auth-login-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const pass = document.getElementById('login-password').value;
+
+      isLoading = true;
+      errorMessage = '';
+      render();
+
+      try {
+        const res = await api.login(email, pass);
+        store.setCurrentUser(res.user);
+        showToast(`Welcome back, ${res.user.name.split(' ')[0]}!`, 'success');
+        window.location.hash = '#dashboard';
+      } catch (err) {
+        errorMessage = err.message || 'Login failed.';
+        isLoading = false;
+        render();
+      }
+    });
+
+    // Register submit
+    document.getElementById('auth-register-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('reg-name').value;
+      const email = document.getElementById('reg-email').value;
+      const password = document.getElementById('reg-password').value;
+      const role = document.getElementById('reg-role').value;
+      const year = document.getElementById('reg-year').value;
+      const department = document.getElementById('reg-dept').value;
+
+      isLoading = true;
+      errorMessage = '';
+      render();
+
+      try {
+        const res = await api.register({ name, email, password, role, year, department });
+        store.setCurrentUser(res.user);
+        showToast(`Account created! Welcome to CampusHub, ${name.split(' ')[0]}!`, 'success');
+        window.location.hash = '#dashboard';
+      } catch (err) {
+        errorMessage = err.message || 'Registration failed.';
+        isLoading = false;
+        render();
+      }
+    });
+  }
+
+  render();
 }
 
 
@@ -9190,11 +9792,15 @@ function renderAdminAnalytics(container) {
 
 
 
+
 // Route configuration
 const ROUTES = {
   '': { title: 'CampusHub', render: renderLanding, isLanding: true },
   '#': { title: 'CampusHub', render: renderLanding, isLanding: true },
   '#landing': { title: 'CampusHub — Welcome', render: renderLanding, isLanding: true },
+  '#login': { title: 'Sign In', icon: 'log-in', render: renderAuth },
+  '#register': { title: 'Create Account', icon: 'user-plus', render: renderAuth },
+  '#auth': { title: 'Authentication', icon: 'log-in', render: renderAuth },
 
   // Academics & Core
   '#dashboard': { title: 'Student Dashboard', icon: 'layout-dashboard', render: renderDashboard },
@@ -9249,6 +9855,7 @@ class App {
 
     // Subscribe to state changes to update badges & shell UI
     store.subscribe('*', () => this.updateShellCounters());
+    store.subscribe('auth:updated', () => this.handleRouting());
   }
 
   handleRouting() {
@@ -9329,6 +9936,7 @@ class App {
       {
         title: 'Services & Career',
         items: [
+          { hash: '#login', label: 'Sign In / Register', icon: 'log-in', badge: 'Auth', badgeColor: 'bg-emerald-500' },
           { hash: '#services', label: 'Services & Grievances', icon: 'shield-alert' },
           { hash: '#placements', label: 'Placements & Drives', icon: 'briefcase', badge: 'Google', badgeColor: 'bg-purple-600' },
           { hash: '#admin', label: 'Executive Analytics', icon: 'bar-chart-3' },
@@ -9486,10 +10094,24 @@ class App {
                 </div>
               </div>
 
-              <!-- Profile avatar quick link -->
-              <a href="#profile" class="p-0.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:ring-2 hover:ring-indigo-500 transition-all">
-                <img src="${profile.avatar}" alt="Avatar" class="w-8 h-8 rounded-lg object-cover">
-              </a>
+              <!-- Profile avatar & Auth Action -->
+              <div class="flex items-center space-x-1 sm:space-x-2">
+                <a href="#profile" class="p-0.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:ring-2 hover:ring-indigo-500 transition-all flex items-center gap-1.5 pr-2">
+                  <img src="${profile.avatar}" alt="Avatar" class="w-8 h-8 rounded-lg object-cover">
+                  <span class="hidden md:inline-block text-xs font-bold text-slate-700 dark:text-slate-200">${escapeHtml(profile.name.split(' ')[0])}</span>
+                </a>
+
+                ${store.isLoggedIn() ? `
+                  <button id="btn-header-logout" title="Sign Out (${escapeHtml(profile.email)})" class="p-2 rounded-xl text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors">
+                    <i data-lucide="log-out" class="w-4 h-4"></i>
+                  </button>
+                ` : `
+                  <a href="#login" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-sm transition-all flex items-center space-x-1">
+                    <i data-lucide="log-in" class="w-3.5 h-3.5"></i>
+                    <span>Sign In</span>
+                  </a>
+                `}
+              </div>
 
             </div>
           </header>
@@ -9653,6 +10275,15 @@ class App {
         store.markAllNotificationsRead();
         showToast('All notifications marked as read', 'info');
         this.renderAppLayout(ROUTES[this.currentHash] || ROUTES['#dashboard'], this.currentHash);
+      };
+    }
+
+    const logoutBtn = document.getElementById('btn-header-logout');
+    if (logoutBtn) {
+      logoutBtn.onclick = () => {
+        store.logout();
+        showToast('Logged out successfully.', 'info');
+        window.location.hash = '#landing';
       };
     }
   }

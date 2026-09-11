@@ -1,5 +1,6 @@
 // CampusHub State Store & Persistence Layer - Extended for 150 Features
 import { initialData } from './sampleData.js';
+import { api } from './api.js';
 
 const STORAGE_KEY = 'campushub_state_v2';
 const THEME_KEY = 'campushub_theme';
@@ -9,6 +10,54 @@ class Store {
     this.listeners = new Map();
     this.state = this.loadState();
     this.initTheme();
+    this.initAuth();
+  }
+
+  initAuth() {
+    const user = api.getCurrentUser();
+    if (user) {
+      this.state.profile = { ...this.state.profile, ...user };
+      this.state.currentRole = user.role || 'Student';
+    }
+  }
+
+  getCurrentUser() {
+    return api.getCurrentUser() || this.state.profile;
+  }
+
+  isLoggedIn() {
+    return !!api.getCurrentUser();
+  }
+
+  setCurrentUser(user) {
+    if (user) {
+      this.state.profile = { ...this.state.profile, ...user };
+      this.state.currentRole = user.role || 'Student';
+      this.saveState();
+      this.emit('auth:updated', user);
+      this.emit('profile:updated', this.state.profile);
+    }
+  }
+
+  logout() {
+    api.logout();
+    this.state.profile = {
+      name: 'Guest Visitor',
+      email: 'guest@campus.edu',
+      rollNo: 'GUEST',
+      department: 'General Public',
+      branch: 'General',
+      year: 'Visitor',
+      semester: 'N/A',
+      avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=guest',
+      bio: 'Exploring CampusHub public portal',
+      skills: [],
+      joinedClubs: []
+    };
+    this.state.currentRole = 'Applicant';
+    this.saveState();
+    this.emit('auth:updated', null);
+    this.emit('profile:updated', this.state.profile);
   }
 
   loadState() {

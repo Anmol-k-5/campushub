@@ -1,2 +1,6 @@
 cloudflared.exe
 *.log
+campus.db
+*.db
+__pycache__/
+

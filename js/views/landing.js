@@ -20,12 +20,16 @@ export function renderLanding(container) {
             </div>
           </div>
 
-          <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 sm:gap-3">
+            <a href="#login" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs sm:text-sm font-semibold transition-all">
+              <i data-lucide="log-in" class="w-4 h-4"></i>
+              <span>Sign In</span>
+            </a>
             <button id="landing-theme-toggle" class="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="Toggle theme">
               <i data-lucide="${store.getTheme() === 'dark' ? 'sun' : 'moon'}" class="w-5 h-5"></i>
             </button>
             <a href="#dashboard" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm shadow-md shadow-indigo-600/30 transition-all hover:scale-[1.02] active:scale-[0.98]">
-              <span>Open Dashboard</span>
+              <span>Dashboard</span>
               <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </a>
           </div>
